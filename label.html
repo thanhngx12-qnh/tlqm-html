@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhãn Tặng Cờ Tổ Quốc (A4 chia 2 A5 - Đen Trắng)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-family: 'Roboto', sans-serif;
+            color: #000; /* Chữ mặc định đen */
+        }
+
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            z-index: 9999;
+        }
+        .print-btn:hover { background-color: #000; }
+
+        @page {
+            size: A4 portrait;
+            margin: 0;
+        }
+
+        .page {
+            width: 210mm;
+            height: 297mm;
+            background: white;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- LABEL CONTAINER (A5 Size area) --- */
+        .label-area {
+            width: 100%;
+            height: 50%; /* Chia đôi A4 */
+            padding: 10mm;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Đường cắt giữa trang */
+        .cut-line-middle {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            border-top: 1px dashed #000;
+            z-index: 10;
+        }
+        .cut-icon {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            background: #fff;
+            padding: 0 5px;
+            color: #000;
+            font-size: 12px;
+        }
+
+        /* KHUNG NỘI DUNG CHÍNH - Đơn giản hóa */
+        .content-box {
+            width: 100%;
+            height: 100%;
+            border: 2px solid #000; /* Viền đơn giản */
+            border-radius: 4px;
+            position: relative;
+            padding: 20px 30px;
+            background-color: #fff;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* --- BACKGROUND WATERMARK --- */
+        .bg-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%; /* Logo to ở giữa */
+            opacity: 0.08; /* Độ mờ */
+            z-index: 0;
+            pointer-events: none;
+            filter: grayscale(100%);
+        }
+
+        /* --- CONTENT STYLING --- */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #000; /* Viền mảnh hơn */
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-img {
+            height: 55px;
+            filter: grayscale(100%);
+        }
+
+        .company-name {
+            text-align: right;
+            color: #000;
+            font-weight: 700;
+            font-size: 11pt; /* Bé lại */
+            text-transform: uppercase;
+            font-family: 'Roboto', sans-serif; /* Font đơn giản không uốn lượn */
+        }
+
+        /* Khu vực nội dung chính căn giữa */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-title {
+            text-align: center;
+            color: #000;
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 42pt;
+            text-transform: uppercase;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            text-shadow: none; 
+        }
+
+        .sub-title {
+            text-align: center;
+            color: #000;
+            font-weight: 700;
+            font-size: 18pt;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            line-height: 1.4;
+        }
+
+        .signature-block {
+            text-align: right;
+            font-size: 12pt;
+            position: relative;
+            z-index: 1;
+            font-style: italic;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            color: #000;
+        }
+
+        .footer-address {
+            border-top: 1px solid #000; /* Viền liền mảnh đơn giản */
+            padding-top: 10px;
+            text-align: center;
+            font-size: 10pt;
+            color: #000;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media print {
+            body { background: none; }
+            .print-btn { display: none; }
+            .page { width: 210mm; height: 297mm; margin: 0; box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="print-btn" onclick="window.print()">🖨️ IN NHÃN TẶNG CỜ (B&W)</button>
+
+    <div class="page">
+        
+        <!-- NHÃN 1 (NỬA TRÊN) -->
+        <div class="label-area">
+            <div class="content-box">
+                <!-- Logo chìm thay cho ngôi sao -->
+                <img src="Logo.png" class="bg-watermark" onerror="this.style.display='none'">
+                
+                <div class="header">
+                    <img src="Logo.png" alt="Logo" class="logo-img" onerror="this.src='https://placehold.co/100x50?text=LOGO'">
+                    <div class="company-name">Công ty Cổ phần<br>Tà Lùng Quang Minh</div>
+                </div>
+
+                <div class="main-content">
+                    <div class="main-title">KÍNH TẶNG</div>
+                    <div class="sub-title">MỪNG XUÂN BÍNH NGỌ<br>TẶNG BÀ CON XÃ PHỤC HÒA</div>
+                </div>
+
+                <div class="signature-block">
+                    Trân trọng kính tặng,<br>
+                    <strong>Ngày 04/02/2026</strong>
+                </div>
+
+                <div class="footer-address">
+                    Cửa khẩu Quốc tế Tà Lùng, xã Phục Hoà, tỉnh Cao Bằng
+                </div>
+            </div>
+        </div>
+
+        <!-- ĐƯỜNG CẮT -->
+        <div class="cut-line-middle"><span class="cut-icon">✂ Cắt tại đây</span></div>
+
+        <!-- NHÃN 2 (NỬA DƯỚI - COPY NỘI DUNG NHÃN 1) -->
+        <div class="label-area">
+            <div class="content-box">
+                <!-- Logo chìm -->
+                <img src="Logo.png" class="bg-watermark" onerror="this.style.display='none'">
+                
+                <div class="header">
+                    <img src="Logo.png" alt="Logo" class="logo-img" onerror="this.src='https://placehold.co/100x50?text=LOGO'">
+                    <div class="company-name">Công ty Cổ phần<br>Tà Lùng Quang Minh</div>
+                </div>
+
+                <div class="main-content">
+                    <div class="main-title">KÍNH TẶNG<br>CỜ TỔ QUỐC</div>
+                    <div class="sub-title">MỪNG XUÂN BÍNH NGỌ<br>TẶNG BÀ CON XÃ PHỤC HÒA</div>
+                </div>
+
+                <div class="signature-block">
+                    Trân trọng kính tặng,<br>
+                    <strong>Ngày 04/02/2026</strong>
+                </div>
+
+                <div class="footer-address">
+                    Cửa khẩu Quốc tế Tà Lùng, xã Phục Hoà, tỉnh Cao Bằng
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

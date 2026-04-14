@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banner Chúc Mừng Đại Hội Đảng XIV - Phiên bản Hiện Đại</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* KHUNG CHÍNH 16:9 */
+        .banner-container {
+            width: 1280px;
+            height: 720px;
+            position: relative;
+            /* Nền đỏ đậm sang trọng */
+            background: linear-gradient(105deg, #8B0000 0%, #D80000 50%, #B22222 100%);
+            box-shadow: 0 0 60px rgba(0,0,0,0.9);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        /* --- BACKGROUND EFFECTS --- */
+        
+        /* 1. Hiệu ứng lụa (Silk Wave) */
+        .silk-wave {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    120deg,
+                    rgba(255,255,255,0.05) 0px,
+                    rgba(255,255,255,0.05) 1px,
+                    transparent 1px,
+                    transparent 40px
+                ),
+                linear-gradient(
+                    to right, 
+                    rgba(0,0,0,0.3) 0%, 
+                    transparent 40%, 
+                    rgba(0,0,0,0.1) 100%
+                );
+            mix-blend-mode: overlay;
+            z-index: 1;
+        }
+
+        /* 2. Họa tiết Hoa Sen cách điệu lớn mờ (Background Decor) */
+        .lotus-bg {
+            position: absolute;
+            right: -100px;
+            bottom: -150px;
+            width: 800px;
+            height: 800px;
+            opacity: 0.1;
+            z-index: 0;
+            fill: #FFD700;
+        }
+
+        /* --- SAFE ZONE 14:9 --- */
+        .safe-area {
+            position: absolute;
+            top: 0;
+            left: 6.25%;
+            width: 87.5%;
+            height: 100%;
+            z-index: 10;
+            display: flex;
+            align-items: center; /* Căn giữa theo chiều dọc */
+            justify-content: space-between; /* Chia đều trái phải */
+            padding: 40px;
+        }
+
+        /* --- LEFT COLUMN: TYPOGRAPHY --- */
+        .content-left {
+            width: 55%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            z-index: 20;
+        }
+
+        /* Đường kẻ trang trí dọc */
+        .vertical-line {
+            position: absolute;
+            left: -20px;
+            top: 10%;
+            height: 80%;
+            width: 6px;
+            background: linear-gradient(to bottom, transparent, #FFD700, transparent);
+        }
+
+        .top-label {
+            font-family: 'Roboto', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.5);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            font-size: 72px; /* Chữ cực lớn */
+            line-height: 1.1;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            
+            /* Hiệu ứng chữ mạ vàng 3D */
+            background: linear-gradient(to right, #FFD700 20%, #FFFACD 50%, #FFD700 80%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 5px 0 #8B4513) drop-shadow(0 15px 20px rgba(0,0,0,0.5));
+        }
+
+        .highlight-box {
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.2) 0%, transparent 100%);
+            border-left: 5px solid #FFD700;
+            padding: 10px 20px;
+            margin-top: 10px;
+        }
+
+        .highlight-text {
+            color: #fff;
+            font-size: 20px;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        /* --- RIGHT COLUMN: VISUALS --- */
+        .content-right {
+            width: 45%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Khung hình tròn trang trọng */
+        .circle-frame {
+            width: 450px;
+            height: 450px;
+            position: relative;
+            display: flex;
+            flex-direction: column; /* Xếp chồng dọc trong khung tròn */
+            align-items: center;
+            justify-content: center;
+            
+            /* Hiệu ứng hào quang */
+            background: radial-gradient(circle, rgba(255,215,0,0.15) 0%, transparent 70%);
+        }
+
+        /* Viền trang trí xung quanh */
+        .circle-border-spin {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px dashed rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+            animation: spin 120s linear infinite;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .image-group {
+            display: flex;
+            gap: 15px; /* Giảm gap một chút để 2 ảnh gần nhau hơn */
+            position: relative;
+            z-index: 10;
+            /* Đã bỏ transform: rotate */
+            justify-content: center;
+        }
+
+        .visual-img {
+            height: 140px; /* Cố định chiều cao */
+            width: 200px;  /* Cố định chiều rộng để cùng size */
+            object-fit: cover; /* Đảm bảo ảnh phủ kín khung */
+            filter: drop-shadow(0 20px 30px rgba(0,0,0,0.6));
+            border: 2px solid #fff; /* Viền trắng nhỏ lại */
+            padding: 2px;
+            background: #fff;
+            transform: scale(1);
+            transition: transform 0.3s;
+        }
+        
+        /* Hiệu ứng xếp chồng */
+        .visual-img:first-child {
+            /* Đã bỏ transform: rotate/translate */
+            z-index: 1;
+        }
+        .visual-img:last-child {
+            /* Đã bỏ transform: rotate/translate */
+            z-index: 2;
+        }
+
+        /* --- FOOTER / LOGO (Bottom Left) --- */
+        .footer-logo {
+            position: absolute;
+            bottom: 30px;
+            left: 6.25%; /* Căn theo safe area */
+            display: flex;
+            align-items: center;
+            z-index: 30;
+        }
+
+        .footer-logo img {
+            height: 60px;
+            width: auto;
+            margin-right: 15px;
+            background: #fff;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        .footer-text h3 {
+            color: #FFD700;
+            font-size: 16px;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+        .footer-text p {
+            color: rgba(255,255,255,0.8);
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        /* Hiệu ứng hạt bụi vàng bay (Particles) */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#FFD700 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.3;
+            animation: moveParticles 20s linear infinite;
+        }
+        @keyframes moveParticles {
+             from { background-position: 0 0; }
+             to { background-position: 100px 100px; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="banner-container">
+        <!-- Background Effects -->
+        <div class="silk-wave"></div>
+        <div class="particles"></div>
+        
+        <!-- SVG Lotus Background (Hoa sen mờ) -->
+        <svg class="lotus-bg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 80 Q30 80 20 60 Q10 40 50 10 Q90 40 80 60 Q70 80 50 80 Z" />
+            <path d="M20 60 Q5 50 15 30" fill="none" stroke="#FFD700" stroke-width="0.5"/>
+            <path d="M80 60 Q95 50 85 30" fill="none" stroke="#FFD700" stroke-width="0.5"/>
+            <!-- (Simple abstract shape for demo) -->
+        </svg>
+
+        <!-- Safe Area -->
+        <div class="safe-area">
+            
+            <!-- Cột Trái: Nội dung chữ -->
+            <div class="content-left">
+                <div class="vertical-line"></div>
+                
+                <div class="top-label">NHIỆT LIỆT CHÚC MỪNG</div>
+                
+                <h1 class="main-title">
+                    ĐẠI HỘI ĐẢNG<br>TOÀN QUỐC<br>LẦN THỨ XIV
+                </h1>
+
+                <div class="highlight-box">
+                    <div class="highlight-text">"Đoàn kết - Dân chủ - Kỷ cương - Sáng tạo - Phát triển"</div>
+                </div>
+            </div>
+
+            <!-- Cột Phải: Hình ảnh -->
+            <div class="content-right">
+                <div class="circle-frame">
+                    <div class="circle-border-spin"></div>
+                    
+                    <div class="image-group">
+                        <!-- Ảnh 1: Búa Liềm (Cờ Đảng) -->
+                        <img 
+                            src="https://images.hcmcpv.org.vn/res/news/2024/02/24-02-2024-ve-su-dung-co-dang-va-hinh-anh-co-dang-cong-san-viet-nam-A3C3304C.jpg" 
+                            class="visual-img"
+                            alt="Cờ Đảng" 
+                            onerror="this.onerror=null; this.src='https://placehold.co/200x300/da251d/feca57?text=CO+DANG'"
+                        >
+
+                        <!-- Ảnh 2: Cờ Tổ Quốc (Sao Vàng) -->
+                        <img 
+                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/1280px-Flag_of_Vietnam.svg.png" 
+                            class="visual-img"
+                            alt="Cờ Tổ Quốc" 
+                            onerror="this.onerror=null; this.src='https://placehold.co/200x300/da251d/ffff00?text=CO+VN'"
+                        >
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer Logo (Đặt ở góc trái dưới, thẳng hàng với chữ) -->
+        <div class="footer-logo">
+            <img 
+                src="Logo.png" 
+                alt="Logo Phú Anh" 
+                onerror="this.onerror=null; this.src='https://placehold.co/100x100?text=LOGO'"
+            >
+            <div class="footer-text">
+                <h3>CÔNG TY TNHH THƯƠNG MẠI VẬN TẢI PHÚ ANH</h3>
+                <p>Đồng hành cùng sự phát triển của đất nước</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

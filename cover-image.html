@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Cover - Tà Lùng Quang Minh (Upgraded)</title>
+    
+    <!-- Nâng cấp Font chữ sang Montserrat cao cấp hơn -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;0,800;0,900;1,500&display=swap" rel="stylesheet">
+    
+    <!-- Tích hợp FontAwesome cho icon sắc nét -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #cbd5e1;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* KHUNG CHUẨN FACEBOOK COVER (851px x 315px) */
+        .cover-container {
+            width: 851px;
+            height: 315px;
+            position: relative;
+            background-color: #fff;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        /* --- TONE MÀU NÂNG CẤP (GRADIENT) --- */
+        :root {
+            --blue-dark: #071a33;
+            --blue-light: #16407b;
+            --red-main: #e6192b;
+            --red-dark: #a40d1b;
+            --gold: #facc15;
+            --white: #ffffff;
+        }
+
+        /* --- LỚP NỀN HÌNH ẢNH (Bên phải) --- */
+        .image-layer {
+            position: absolute;
+            top: 0; right: 0;
+            width: 100%; 
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: right center;
+            /* Filter làm ảnh đậm đà hơn */
+            filter: contrast(1.1) brightness(0.85);
+        }
+
+        /* --- LỚP CẮT CHÉO ĐỎ (Red Stripe) --- */
+        /* Thay vì skewX, dùng clip-path để song song tuyệt đối với lớp xanh */
+        .red-layer {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--red-main), var(--red-dark));
+            clip-path: polygon(0 0, 66.5% 0, 52.5% 100%, 0% 100%);
+            z-index: 2;
+        }
+
+        /* --- LỚP CẮT CHÉO XANH (Blue Content Background) --- */
+        .blue-layer {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-light) 100%);
+            clip-path: polygon(0 0, 65% 0, 51% 100%, 0% 100%);
+            z-index: 3;
+        }
+
+        /* Họa tiết nền lưới (Grid Pattern) nâng cấp */
+        .bg-pattern {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 20px 20px;
+            z-index: 4;
+            opacity: 0.8;
+            clip-path: polygon(0 0, 65% 0, 51% 100%, 0% 100%); /* Giới hạn trong vùng xanh */
+        }
+
+        /* --- VÙNG CHỨA NỘI DUNG --- */
+        .content-area {
+            position: absolute;
+            top: 0; left: 0;
+            width: 58%; /* Giới hạn nội dung không bị lẹm vào đường chéo */
+            height: 100%;
+            padding: 25px 35px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* 1. Header: Logo & Tên */
+        .header-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-img {
+            height: 45px;
+            background: var(--white);
+            padding: 5px;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: 1px solid var(--gold);
+        }
+
+        .company-name {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--white);
+            text-transform: uppercase;
+            line-height: 1.3;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .company-name span {
+            color: var(--gold);
+            font-weight: 900;
+            font-size: 16px;
+        }
+
+        /* 2. Slogan */
+        .slogan-box {
+            margin-top: -5px;
+        }
+
+        .slogan-main {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--white);
+            text-transform: uppercase;
+            line-height: 1.2;
+            margin-bottom: 4px;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+        }
+        
+        .slogan-main span {
+            color: var(--red-main);
+            /* Phủ gradient cho chữ đỏ nổi bật hơn */
+            background: linear-gradient(to right, #ff4d4d, var(--red-main));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none; /* Tắt shadow để gradient hoạt động tốt */
+        }
+
+        .slogan-sub {
+            font-size: 11px;
+            font-weight: 500;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-left: 3px solid var(--red-main);
+            padding-left: 10px;
+        }
+
+        /* 3. Dịch vụ (Nâng cấp thiết kế Glassmorphism) */
+        .services-list {
+            display: flex;
+            gap: 15px;
+            margin-top: 5px;
+        }
+        
+        .service-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 6px 12px 6px 6px;
+            border-radius: 0px; /* Bo tròn dạng viên thuốc */
+            backdrop-filter: blur(5px);
+        }
+
+        .service-icon-box {
+            width: 26px;
+            height: 26px;
+            background: var(--red-main);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            box-shadow: 0 2px 5px rgba(230, 25, 43, 0.4);
+        }
+
+        .service-icon-box i {
+            font-size: 11px;
+            color: var(--white);
+        }
+
+        .service-text {
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--white);
+            text-transform: uppercase;
+            line-height: 1.2;
+            letter-spacing: 0.5px;
+        }
+
+        /* 4. Liên hệ (Thiết kế thanh lịch) */
+        .contact-info {
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 0px;
+            padding: 10px 15px;
+            border-left: 3px solid var(--gold);
+            display: grid;
+            grid-template-columns: auto auto; 
+            gap: 8px 25px;
+            margin-right: 20px;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            font-size: 10px;
+            color: #f8fafc;
+            font-weight: 500;
+        }
+        
+        .contact-row i {
+            color: var(--gold);
+            font-size: 12px;
+            margin-right: 8px;
+            width: 14px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="cover-container">
+        
+        <!-- Hình ảnh (Nền dưới cùng) -->
+        <div class="image-layer">
+            <img src="image.png" 
+                 class="hero-image" 
+                 alt="Logistics Background"
+                 onerror="this.src='https://images.unsplash.com/photo-1586528116311-ad8ed7c1590f?q=80&w=1200&auto=format&fit=crop'">
+        </div>
+
+        <!-- Các mảng cắt chéo tạo điểm nhấn -->
+        <div class="red-layer"></div>
+        <div class="blue-layer"></div>
+        <div class="bg-pattern"></div>
+
+        <!-- Nội dung chính -->
+        <div class="content-area">
+            
+            <!-- Logo & Tên -->
+            <div class="header-box">
+                <img src="Logo.png" alt="Logo" class="logo-img" onerror="this.src='https://placehold.co/100x100?text=LOGO'">
+                <div class="company-name">
+                    Công ty Cổ phần<br><span>Tà Lùng Quang Minh</span>
+                </div>
+            </div>
+
+            <!-- Slogan -->
+            <div class="slogan-box">
+                <div class="slogan-main">KẾT NỐI BIÊN GIỚI<br><span>VƯƠN TỚI TOÀN CẦU</span></div>
+                <div class="slogan-sub">Giải pháp Logistics toàn diện & tin cậy</div>
+            </div>
+
+            <!-- Dịch vụ -->
+            <div class="services-list">
+                <div class="service-item">
+                    <div class="service-icon-box"><i class="fa-solid fa-truck-fast"></i></div>
+                    <span class="service-text">VẬN TẢI<br>ĐƯỜNG BỘ</span>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon-box"><i class="fa-solid fa-warehouse"></i></div>
+                    <span class="service-text">KHO BÃI<br>LOGISTICS</span>
+                </div>
+                <div class="service-item">
+                    <div class="service-icon-box"><i class="fa-solid fa-file-signature"></i></div>
+                    <span class="service-text">XUẤT<br>NHẬP KHẨU</span>
+                </div>
+            </div>
+
+            <!-- Liên hệ -->
+            <div class="contact-info">
+                <div class="contact-row">
+                    <i class="fa-solid fa-phone-volume"></i>
+                    <span>+84 96 332 03 35</span>
+                </div>
+                <div class="contact-row">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span>info@talunglogistics.com</span>
+                </div>
+                <div class="contact-row" style="grid-column: span 2;">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Cửa khẩu Quốc tế Tà Lùng, xã Phục Hòa, tỉnh Cao Bằng</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

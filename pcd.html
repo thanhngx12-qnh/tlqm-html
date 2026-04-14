@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phiếu Chấm Điểm Văn Nghệ (Đen Trắng)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-family: 'Roboto', sans-serif;
+            font-size: 11pt;
+            color: #000;
+        }
+
+        /* Nút in (Vẫn để màu để dễ nhìn trên màn hình, không in ra) */
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 9999;
+        }
+        .print-btn:hover { background-color: #000; }
+
+        /* Khổ giấy A4 */
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            margin: 20px auto;
+            padding: 15mm 20mm;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden; /* Ẩn phần thừa nếu logo quá to */
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #000; /* Viền đen */
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2; /* Nổi lên trên watermark */
+        }
+
+        .company-header-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .company-logo {
+            height: 65px;
+            width: auto;
+            object-fit: contain;
+            filter: grayscale(100%); /* Chuyển logo sang đen trắng */
+        }
+
+        .company-info h3 {
+            margin: 0;
+            text-transform: uppercase;
+            color: #000;
+            font-size: 11pt;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        .company-info p {
+            margin: 2px 0 0 0;
+            font-size: 10pt;
+            color: #333;
+        }
+
+        .event-title {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+        }
+        .event-title h1 {
+            font-family: 'Playfair Display', serif;
+            color: #000; /* Tiêu đề đen */
+            text-transform: uppercase;
+            margin: 0;
+            font-size: 24pt;
+        }
+        .event-title p {
+            margin: 5px 0 0 0;
+            font-style: italic;
+            font-size: 12pt;
+            color: #333;
+        }
+
+        /* Thông tin BGK */
+        .judge-info {
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        .judge-line {
+            display: flex;
+            align-items: baseline;
+            font-size: 12pt;
+        }
+        .dots {
+            flex-grow: 1;
+            border-bottom: 1px dotted #000;
+            margin-left: 10px;
+        }
+
+        /* Bảng chấm điểm */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 10pt;
+            position: relative;
+            z-index: 2;
+            background-color: rgba(255, 255, 255, 0.6); /* Nền bán trong suốt để dễ đọc chữ trên logo nền */
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 8px 5px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #f2f2f2; /* Nền xám nhẹ cho tiêu đề bảng */
+            color: #000;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 9pt;
+        }
+
+        /* Cột */
+        .col-stt { width: 5%; }
+        .col-name { width: 25%; text-align: left; padding-left: 10px; }
+        .col-score { width: 8%; } 
+        .col-total { width: 8%; background-color: #e6e6e6; font-weight: bold; } /* Nền xám đậm hơn cho cột Tổng */
+        .col-note { width: 15%; }
+
+        .unit-name {
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #000;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .performance-name {
+            font-style: italic;
+            font-weight: normal;
+            color: #333;
+        }
+
+        td input {
+            width: 100%;
+            border: none;
+            text-align: center;
+            font-family: 'Roboto', sans-serif;
+            font-size: 12pt;
+            outline: none;
+            background: transparent;
+        }
+
+        /* Hướng dẫn chấm điểm (Footer Note) */
+        .criteria-guide {
+            background-color: rgba(255, 255, 255, 0.8); /* Nền trắng mờ để che bớt logo nếu bị rối */
+            border: 1px dashed #666; /* Viền nét đứt màu xám */
+            padding: 15px;
+            font-size: 10pt;
+            margin-bottom: 30px;
+            border-radius: 5px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .criteria-guide h4 {
+            margin: 0 0 10px 0;
+            text-decoration: underline;
+            color: #000;
+            font-size: 11pt;
+        }
+
+        .criteria-item {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .point-badge {
+            font-weight: bold;
+            color: #000;
+            display: inline-block;
+            min-width: 120px;
+        }
+
+        /* Chữ ký */
+        .signature-section {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        .signature-box {
+            text-align: center;
+            width: 250px;
+        }
+        .signature-box h4 {
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .signature-space {
+            height: 80px;
+        }
+
+        /* Decor */
+        .decor-flower {
+            position: absolute;
+            width: 100px;
+            opacity: 0.15; /* Tăng độ đậm nhẹ vì in đen trắng */
+            z-index: 0;
+        }
+        .top-left { top: 0; left: 0; transform: rotate(-45deg); }
+        .bottom-right { bottom: 0; right: 0; transform: rotate(135deg); }
+
+        /* Watermark Logo */
+        .watermark-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 450px; /* Kích thước logo nền */
+            opacity: 0.4; /* Độ mờ rất nhẹ để không át chữ */
+            z-index: 1;
+            filter: grayscale(100%);
+            pointer-events: none; /* Để có thể click xuyên qua nếu cần */
+        }
+
+        @media print {
+            body { background: none; }
+            .print-btn { display: none; }
+            .page { margin: 0; box-shadow: none; width: 210mm; min-height: 297mm; border: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="print-btn" onclick="window.print()">🖨️ IN PHIẾU CHẤM (B&W)</button>
+
+    <div class="page">
+        <!-- Logo nền (Watermark) -->
+        <img src="Logo.png" class="watermark-logo" alt="Watermark" onerror="this.style.display='none'">
+
+        <!-- Decor nền (Màu xám nhạt) -->
+        <svg class="decor-flower top-left" viewBox="0 0 100 100"><path d="M50 50 Q60 20 80 40 Q90 60 60 70 Q40 90 20 60 Q10 40 40 30 Q70 10 50 50" fill="#999"/></svg>
+        <svg class="decor-flower bottom-right" viewBox="0 0 100 100"><path d="M50 50 Q60 20 80 40 Q90 60 60 70 Q40 90 20 60 Q10 40 40 30 Q70 10 50 50" fill="#999"/></svg>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="company-header-group">
+                <!-- Image tag with error handler for placeholder -->
+                <img src="Logo.png" alt="Logo" class="company-logo" onerror="this.src='https://placehold.co/100x100?text=LOGO'">
+                <div class="company-info">
+                    <h3>CÔNG TY CỔ PHẦN<br>TÀ LÙNG QUANG MINH</h3>
+                </div>
+            </div>
+            <div class="date-info">
+                <p>Ngày 05 tháng 02 năm 2026</p>
+            </div>
+        </div>
+
+        <!-- Title -->
+        <div class="event-title">
+            <h1>PHIẾU CHẤM ĐIỂM VĂN NGHỆ</h1>
+            <p>Chương trình Tiệc Tất Niên - Chào Xuân</p>
+        </div>
+
+        <!-- Judge Info -->
+        <div class="judge-info">
+            <div class="judge-line">
+                <strong>Họ và tên Giám khảo:</strong>
+                <div class="dots"></div>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th class="col-stt" rowspan="2">STT</th>
+                    <th class="col-name" rowspan="2">ĐƠN VỊ / TIẾT MỤC</th>
+                    <th class="col-score" rowspan="2">NỘI DUNG<br>(Tối đa 30đ)</th>
+                    <th class="col-score" rowspan="2">TẬP THỂ<br>(Tối đa 20đ)</th>
+                    <th colspan="3">CHẤT LƯỢNG NGHỆ THUẬT (Tối đa 50đ)</th>
+                    <th class="col-total" rowspan="2">TỔNG<br>(Tối đa 100đ)</th>
+                    <th class="col-note" rowspan="2">GHI CHÚ</th>
+                </tr>
+                <tr>
+                    <th class="col-score">Trang phục<br>Đạo cụ<br>(Tối đa 10đ)</th>
+                    <th class="col-score">Kỹ thuật<br>Cảm xúc<br>(Tối đa 30đ)</th>
+                    <th class="col-score">Sáng tạo<br>Độ khó<br>(Tối đa 10đ)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Đội 1 -->
+                <tr>
+                    <td>1</td>
+                    <td class="col-name">
+                        <span class="unit-name">Đội văn nghệ văn phòng Cao Bằng</span>
+                        <span class="performance-name">Tiết mục: Tết đong đầy</span>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <!-- Đội 2 -->
+                <tr>
+                    <td>2</td>
+                    <td class="col-name">
+                        <span class="unit-name">Đội văn nghệ văn phòng Hạ Long</span>
+                        <span class="performance-name">Tiết mục: Xuân đẹp làm sao</span>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Criteria Guide -->
+        <div class="criteria-guide">
+            <h4>HƯỚNG DẪN TIÊU CHÍ CHẤM ĐIỂM CHI TIẾT:</h4>
+            
+            <div class="criteria-item">
+                <span class="point-badge">1. Nội dung (Tối đa 30đ):</span>
+                Gần với chủ đề của Tiệc Tất Niên, thể hiện và thúc đẩy niềm tự hào về tình yêu đất nước, con người, không khí đón xuân mới.
+            </div>
+            
+            <div class="criteria-item">
+                <span class="point-badge">2. Tập thể (Tối đa 20đ):</span>
+                Tỷ lệ cán bộ công nhân viên tham gia cao, phối hợp tốt/nhuần nhuyễn trên sân khấu.
+            </div>
+
+            <div class="criteria-item">
+                <span class="point-badge">3. Nghệ thuật (Tối đa 50đ):</span>
+                Gồm 3 phần:
+                <br>&nbsp;&nbsp;&nbsp;- <strong>Tối đa 10đ:</strong> Trang phục đẹp mắt, đạo cụ phong phú hấp dẫn.
+                <br>&nbsp;&nbsp;&nbsp;- <strong>Tối đa 30đ:</strong> Kỹ thuật thanh nhạc/diễn xuất tốt, trình diễn lôi cuốn tạo cảm xúc.
+                <br>&nbsp;&nbsp;&nbsp;- <strong>Tối đa 10đ:</strong> Độ khó và độc đáo của tiết mục (thể hiện tính sáng tạo).
+            </div>
+
+            <div class="criteria-item" style="margin-top: 10px; font-style: italic; color: #555;">
+                <strong>* Lưu ý về thời gian:</strong> Không quá 7 phút đối với hát/múa; quá 12 phút đối với kịch.
+            </div>
+        </div>
+
+        <!-- Signature -->
+        <div class="signature-section">
+            <div class="signature-box">
+                <h4>CHỮ KÝ GIÁM KHẢO</h4>
+                <div class="signature-space"></div>
+                <div class="dots"></div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

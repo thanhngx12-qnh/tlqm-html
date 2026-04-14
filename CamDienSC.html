@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sơ Đồ Kho Bãi Cảng (Trắng Đen - Bản In)</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn-print {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .btn-print:hover {
+            background-color: #000;
+        }
+
+        /* Khung giấy A4 - Tỷ lệ chuẩn Landscape */
+        .a4-wrapper {
+            width: 297mm;
+            height: 210mm;
+            background: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Phong cách vẽ Trắng Đen */
+        .line-main {
+            fill: none;
+            stroke: #000;
+            stroke-width: 2;
+        }
+        
+        .line-dash {
+            fill: none;
+            stroke: #000;
+            stroke-width: 1.5;
+            stroke-dasharray: 6 4;
+        }
+
+        .building {
+            fill: #fff;
+            stroke: #000;
+            stroke-width: 2;
+        }
+
+        .cabinet {
+            fill: #fff;
+            stroke: #000;
+            stroke-width: 1.5;
+        }
+
+        text {
+            fill: #000;
+            font-family: Arial, Helvetica, sans-serif;
+            pointer-events: none;
+        }
+
+        .text-bold { font-weight: bold; }
+        .text-center { text-anchor: middle; dominant-baseline: central; }
+
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+            body {
+                background: white;
+                padding: 0;
+            }
+            .btn-print {
+                display: none;
+            }
+            .a4-wrapper {
+                box-shadow: none;
+                width: 100vw;
+                height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="btn-print" onclick="window.print()">🖨️ In Bản Vẽ A4 (Ctrl + P)</button>
+
+    <div class="a4-wrapper">
+        <svg viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg">
+            
+            <!-- ĐƯỜNG RANH GIỚI BÃI -->
+            <path class="line-main" d="
+                M 100 50 
+                L 300 50 
+                L 340 20 
+                L 650 20 
+                L 690 50 
+                L 1150 50 
+                L 1150 650 
+                L 1000 850 
+                L 550 850 
+                L 650 980" />
+                
+            <path class="line-main" d="
+                M 520 980 
+                L 420 850 
+                L 100 850 
+                L 100 500" />
+                
+            <path class="line-main" d="
+                M 100 350 
+                L 100 50" />
+
+            <!-- Đường Kẻ Dọc Ngăn Cách Kho & Miếu -->
+            <line x1="860" y1="50" x2="860" y2="500" class="line-dash" />
+
+            <!-- Đường xuống sông -->
+            <text x="350" y="900" class="text-bold" font-size="16" transform="rotate(52 510 900)">Đường xuống sông</text>
+
+
+            <!-- ================= CÔNG TRÌNH / NHÀ XƯỞNG ================= -->
+            
+            <!-- Nhà sang tải -->
+            <rect class="building" x="1000" y="50" width="130" height="50" />
+            <text x="1065" y="75" class="text-center text-bold" font-size="14">Nhà sang tải</text>
+
+            <!-- Máy bơm PCCC -->
+            <rect class="building" x="770" y="50" width="80" height="70" />
+            <text x="810" y="75" class="text-center" font-size="13">Máy bơm</text>
+            <text x="810" y="95" class="text-center" font-size="13">PCCC</text>
+
+            <!-- Bàn cân (Sát Nhà điều hành) -->
+            <rect class="building" x="380" y="290" width="120" height="50" />
+            <text x="440" y="315" class="text-center text-bold" font-size="15">Bàn cân</text>
+
+            <!-- Nhà điều hành -->
+            <rect class="building" x="340" y="380" width="360" height="110" />
+            <text x="520" y="435" class="text-center text-bold" font-size="18">Nhà điều hành</text>
+
+            <!-- Kho chuyển phát nhanh -->
+            <rect class="building" x="700" y="280" width="160" height="210" />
+            <text x="780" y="375" class="text-center text-bold" font-size="16">Kho</text>
+            <text x="780" y="400" class="text-center text-bold" font-size="16">chuyển phát nhanh</text>
+
+            <!-- Miếu -->
+            <rect class="building" x="880" y="140" width="60" height="60" />
+            <text x="910" y="170" class="text-center text-bold" font-size="14">Miếu</text>
+
+            <!-- Nhà BV -->
+            <rect class="building" x="60" y="260" width="80" height="90" />
+            <text x="90" y="305" class="text-center text-bold" font-size="16" transform="rotate(90 90 305)">Nhà BV</text>
+
+            <!-- Cổng Sân Cảng -->
+            <text x="120" y="425" class="text-center text-bold" font-size="16" transform="rotate(90 120 425)">Cổng</text>
+            <text x="90" y="425" class="text-center text-bold" font-size="16" transform="rotate(90 90 425)">Sân Cảng</text>
+
+            <!-- Bãi Sân Cảng -->
+            <rect class="building" x="730" y="600" width="280" height="150" />
+            <text x="870" y="640" class="text-center text-bold" font-size="18">Bãi Sân Cảng</text>
+            <text x="800" y="680" font-size="15">- Tổng 13 tủ</text>
+            <text x="800" y="710" font-size="15">- Tổng 50 ổ cắm</text>
+
+
+            <!-- ================= HỆ THỐNG TỦ ĐIỆN ================= -->
+            
+            <!-- T10, T11, T12 -->
+            <g>
+                <rect class="cabinet" x="380" y="20" width="40" height="30" />
+                <text x="400" y="35" class="text-center text-bold" font-size="13">T10</text>
+                <text x="400" y="65" class="text-center" font-size="13">3 ổ</text>
+
+                <rect class="cabinet" x="480" y="20" width="40" height="30" />
+                <text x="500" y="35" class="text-center text-bold" font-size="13">T11</text>
+                <text x="500" y="65" class="text-center" font-size="13">4 ổ</text>
+
+                <rect class="cabinet" x="580" y="20" width="40" height="30" />
+                <text x="600" y="35" class="text-center text-bold" font-size="13">T12</text>
+                <text x="600" y="65" class="text-center" font-size="13">4 ổ</text>
+            </g>
+
+            <!-- T13 -->
+            <g>
+                <rect class="cabinet" x="730" y="50" width="30" height="40" />
+                <text x="745" y="70" class="text-center text-bold" font-size="13">T13</text>
+                <text x="745" y="105" class="text-center" font-size="13">4 ổ</text>
+            </g>
+
+            <!-- T9, T8, T7, T6 -->
+            <g>
+                <rect class="cabinet" x="360" y="500" width="40" height="30" />
+                <text x="380" y="515" class="text-center text-bold" font-size="13">T9</text>
+                <text x="380" y="545" class="text-center" font-size="13">5 ổ</text>
+
+                <rect class="cabinet" x="440" y="500" width="40" height="30" />
+                <text x="460" y="515" class="text-center text-bold" font-size="13">T8</text>
+                <text x="460" y="545" class="text-center" font-size="13">2 ổ</text>
+
+                <rect class="cabinet" x="520" y="500" width="40" height="30" />
+                <text x="540" y="515" class="text-center text-bold" font-size="13">T7</text>
+                <text x="540" y="545" class="text-center" font-size="13">3 ổ</text>
+
+                <rect class="cabinet" x="600" y="500" width="40" height="30" />
+                <text x="620" y="515" class="text-center text-bold" font-size="13">T6</text>
+                <text x="620" y="545" class="text-center" font-size="13">3 ổ</text>
+            </g>
+
+            <!-- T14 & T15 -->
+            <g>
+                <rect class="cabinet" x="880" y="210" width="40" height="30" />
+                <text x="900" y="225" class="text-center text-bold" font-size="13">T14</text>
+                <text x="900" y="255" class="text-center" font-size="13">3 ổ</text>
+
+                <text x="1000" y="205" class="text-center text-bold" font-size="13">Cột điện</text>
+                <rect class="cabinet" x="980" y="220" width="40" height="30" />
+                <text x="1000" y="235" class="text-center text-bold" font-size="13">T15</text>
+                <text x="1000" y="265" class="text-center" font-size="13">8 ổ</text>
+            </g>
+
+            <!-- T1, T2, T3 (Dọc mép trái) -->
+            <g>
+                <rect class="cabinet" x="100" y="550" width="30" height="40" />
+                <text x="115" y="570" class="text-center text-bold" font-size="13" transform="rotate(90 115 570)">T1</text>
+                <text x="145" y="570" class="text-center" font-size="13" transform="rotate(90 145 570)">3 ổ</text>
+
+                <rect class="cabinet" x="100" y="630" width="30" height="40" />
+                <text x="115" y="650" class="text-center text-bold" font-size="13" transform="rotate(90 115 650)">T2</text>
+                <text x="145" y="650" class="text-center" font-size="13" transform="rotate(90 145 650)">4 ổ</text>
+
+                <rect class="cabinet" x="100" y="710" width="30" height="40" />
+                <text x="115" y="730" class="text-center text-bold" font-size="13" transform="rotate(90 115 730)">T3</text>
+                <text x="145" y="730" class="text-center" font-size="13" transform="rotate(90 145 730)">4 ổ</text>
+            </g>
+
+            <!-- ================= KHUNG THÔNG TIN BẢN VẼ (TITLE BLOCK) ================= -->
+            <g transform="translate(800, 770)" style="z-index: 0;">
+                <rect width="200" height="70" fill="none" stroke="#000" stroke-width="2" />
+                
+                <text x="100" y="40" class="text-center text-bold" font-size="14">SƠ ĐỒ VỊ TRÍ TỦ CẮM CONT</text>
+                <text x="100" y="58" class="text-center" font-size="14">BÃI SƠN CẢNG</text>
+
+            </g>
+
+        </svg>
+    </div>
+
+</body>
+</html>

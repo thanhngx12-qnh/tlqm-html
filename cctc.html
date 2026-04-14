@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sơ Đồ Tổ Chức - CTCP Tà Lùng Quang Minh</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome cho icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8fafc;
+            overflow: hidden; /* Ẩn thanh cuộn body để dùng custom scroll */
+            height: 100vh;
+        }
+
+        /* --- CSS cho cây sơ đồ (Tree Structure) --- */
+        .tree {
+            width: max-content; /* Tự động mở rộng theo nội dung */
+            padding: 50px;
+            margin: 0 auto;
+        }
+
+        .tree ul {
+            padding-top: 20px; 
+            position: relative;
+            transition: .5s; 
+            display: flex;
+            justify-content: center;
+        }
+
+        .tree li {
+            text-align: center;
+            list-style-type: none;
+            position: relative;
+            padding: 20px 10px 0 10px;
+            transition: .5s;
+        }
+
+        /* Vẽ các đường nối */
+        .tree li::before, .tree li::after {
+            content: '';
+            position: absolute; 
+            top: 0; 
+            right: 50%;
+            border-top: 2px solid #cbd5e1;
+            width: 50%; 
+            height: 20px;
+        }
+
+        .tree li::after {
+            right: auto; 
+            left: 50%;
+            border-left: 2px solid #cbd5e1;
+        }
+
+        .tree li:only-child::after, .tree li:only-child::before {
+            display: none;
+        }
+
+        .tree li:only-child { 
+            padding-top: 0;
+        }
+
+        .tree li:first-child::before, .tree li:last-child::after {
+            border: 0 none;
+        }
+
+        .tree li:last-child::before{
+            border-right: 2px solid #cbd5e1;
+            border-radius: 0 5px 0 0;
+        }
+
+        .tree li:first-child::after{
+            border-radius: 5px 0 0 0;
+        }
+
+        .tree ul ul::before{
+            content: '';
+            position: absolute; 
+            top: 0; 
+            left: 50%;
+            border-left: 2px solid #cbd5e1;
+            width: 0; 
+            height: 20px;
+        }
+
+        /* --- Style cho thẻ (Card) --- */
+        .org-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            border-radius: 8px;
+            display: inline-block;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s;
+            position: relative;
+            z-index: 10;
+            min-width: 140px;
+            max-width: 180px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .org-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+            z-index: 20;
+        }
+
+        /* Phân cấp màu sắc (Visual Hierarchy) */
+        
+        /* Cấp cao nhất: ĐHĐCĐ, HĐQT */
+        .level-1 .org-card { 
+            background: #fff7ed; 
+            border-top: 4px solid #ea580c; /* Cam đậm */
+        }
+        
+        /* Ban Tổng Giám Đốc */
+        .level-2 .org-card { 
+            background: #eff6ff;
+            border-top: 4px solid #2563eb; /* Xanh dương đậm */
+        }
+
+        /* Trưởng phòng / Ban */
+        .level-3 .org-card { 
+            background: #fff;
+            border-top: 4px solid #16a34a; /* Xanh lá */
+        }
+
+        /* Phó phòng / Tổ trưởng */
+        .level-4 .org-card {
+            background: #fff;
+            border-top: 3px solid #0ea5e9; /* Xanh trời */
+            min-width: 120px;
+        }
+
+        /* Nhân viên */
+        .level-5 .org-card {
+            background: #f8fafc;
+            border-top: 2px solid #94a3b8; /* Xám */
+            padding: 8px;
+            min-width: 100px;
+            font-size: 0.9em;
+        }
+        
+        .card-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+        .card-subtitle {
+            font-size: 0.8rem;
+            color: #64748b;
+            line-height: 1.2;
+        }
+
+        /* Container điều khiển */
+        .chart-wrapper {
+            width: 100%;
+            height: calc(100vh - 80px); /* Trừ header */
+            overflow: hidden;
+            position: relative;
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
+            cursor: grab;
+        }
+        .chart-wrapper:active {
+            cursor: grabbing;
+        }
+        
+        .chart-content {
+            transform-origin: top center;
+            width: 100%;
+            height: 100%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="bg-white shadow-md h-[80px] flex items-center justify-between px-6 z-50 relative">
+        <div>
+            <h1 class="text-xl font-bold text-blue-900 uppercase">CTCP Tà Lùng Quang Minh</h1>
+            <p class="text-xs text-gray-500">Dự thảo Sơ đồ tổ chức năm 2026</p>
+        </div>
+        
+        <!-- Controls -->
+        <div class="flex gap-2">
+            <button onclick="resetView()" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded text-sm font-medium transition"><i class="fas fa-sync-alt"></i> Reset</button>
+            <div class="flex border rounded bg-white">
+                <button onclick="zoomOut()" class="px-3 py-1.5 hover:bg-gray-100 border-r transition"><i class="fas fa-minus"></i></button>
+                <span id="zoomLevel" class="px-3 py-1.5 text-sm font-mono flex items-center min-w-[60px] justify-center">100%</span>
+                <button onclick="zoomIn()" class="px-3 py-1.5 hover:bg-gray-100 transition"><i class="fas fa-plus"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Chart Area -->
+    <div class="chart-wrapper" id="chartWrapper">
+        <div class="chart-content" id="chartContent">
+            <div class="tree">
+                <ul>
+                    <!-- LEVEL 1: ĐẠI HỘI ĐỒNG CỔ ĐÔNG -->
+                    <li class="level-1">
+                        <div class="org-card">
+                            <div class="card-title">Đại Hội đồng<br>Cổ đông</div>
+                            <div class="text-orange-600"><i class="fas fa-users-rays"></i></div>
+                        </div>
+                        <ul>
+                            <!-- LEVEL 2: HỘI ĐỒNG QUẢN TRỊ -->
+                            <li class="level-1">
+                                <div class="org-card">
+                                    <div class="card-title">Hội đồng<br>Quản trị</div>
+                                    <div class="text-orange-600"><i class="fas fa-chess-king"></i></div>
+                                </div>
+                                <ul>
+                                    <!-- LEVEL 3: BAN TỔNG GIÁM ĐỐC -->
+                                    <li class="level-2">
+                                        <div class="org-card">
+                                            <div class="card-title">Ban Tổng Giám đốc</div>
+                                            <div class="text-blue-600"><i class="fas fa-user-tie"></i></div>
+                                        </div>
+                                        
+                                        <!-- CÁC PHÒNG BAN TRỰC THUỘC -->
+                                        <ul>
+                                            <!-- 1. BAN GIÁM SÁT VẬN HÀNH -->
+                                            <li class="level-3">
+                                                <div class="org-card border-t-yellow-500">
+                                                    <div class="card-title">Ban Giám sát<br>Vận hành</div>
+                                                    <div class="card-subtitle">Trưởng Ban</div>
+                                                </div>
+                                                <ul>
+                                                    <li class="level-5">
+                                                        <div class="org-card">
+                                                            <div class="card-title">Chuyên viên</div>
+                                                            <div class="card-subtitle">GS Vận hành</div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </li>
+
+                                            <!-- 2. PHÒNG KINH DOANH -->
+                                            <li class="level-3">
+                                                <div class="org-card">
+                                                    <div class="card-title">Phòng Kinh doanh</div>
+                                                    <div class="card-subtitle">Trưởng phòng</div>
+                                                </div>
+                                                <ul>
+                                                    <li class="level-4">
+                                                        <div class="org-card">
+                                                            <div class="card-title">Phó phòng</div>
+                                                            <div class="card-subtitle">Kinh doanh</div>
+                                                        </div>
+                                                        <ul>
+                                                            <li class="level-5"><div class="org-card"><div class="card-title">BP KD Nội địa</div><div class="card-subtitle">NV KD Nội địa</div></div></li>
+                                                            <li class="level-5"><div class="org-card"><div class="card-title">BP KD Quốc tế</div><div class="card-subtitle">NV KD Quốc tế</div></div></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="level-4">
+                                                        <div class="org-card"><div class="card-title">TBP CSKH</div></div>
+                                                        <ul><li class="level-5"><div class="org-card">NV CSKH</div></li></ul>
+                                                    </li>
+                                                    <li class="level-4">
+                                                        <div class="org-card"><div class="card-title">TBP XNK</div></div>
+                                                        <ul><li class="level-5"><div class="org-card">NV XNK</div></li></ul>
+                                                    </li>
+                                                    <li class="level-4">
+                                                        <div class="org-card"><div class="card-title">TBP Marketing</div></div>
+                                                        <ul><li class="level-5"><div class="org-card">Chuyên viên MKT</div></li></ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+
+                                            <!-- 3. PHÒNG TÀI CHÍNH - KẾ TOÁN -->
+                                            <li class="level-3">
+                                                <div class="org-card">
+                                                    <div class="card-title">Phòng TC - KT</div>
+                                                    <div class="card-subtitle">TP TC-KT</div>
+                                                </div>
+                                                <ul>
+                                                    <li class="level-4">
+                                                        <div class="org-card"><div class="card-title">Phó phòng TC-KT</div></div>
+                                                        <ul>
+                                                            <li class="level-5"><div class="org-card">NV Kế toán Thuế</div></li>
+                                                            <li class="level-5"><div class="org-card">NV KT Doanh thu</div></li>
+                                                            <li class="level-5"><div class="org-card">NV KT Thanh toán</div></li>
+                                                            <li class="level-5"><div class="org-card">NV Kế toán tại Cao Bằng</div></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="level-5"><div class="org-card"><div class="card-title">NV Thủ quỹ</div></div></li>
+                                                </ul>
+                                            </li>
+
+                                            <!-- 4. PHÒNG HC-NS -->
+                                            <li class="level-3">
+                                                <div class="org-card">
+                                                    <div class="card-title">Phòng HC - NS</div>
+                                                    <div class="card-subtitle">TP HC-NS</div>
+                                                </div>
+                                                <ul>
+                                                    <li class="level-4">
+                                                        <div class="org-card"><div class="card-title">Phó phòng HC-NS</div></div>
+                                                        <ul>
+                                                            <li class="level-4">
+                                                                <div class="org-card"><div class="card-title">Tổ CNTT</div></div>
+                                                                <ul><li class="level-5"><div class="org-card">NV CNTT</div></li></ul>
+                                                            </li>
+                                                            <li class="level-5"><div class="org-card">CV HC-NS</div></li>
+                                                            <li class="level-5"><div class="org-card">CV Pháp chế</div></li>
+                                                            <li class="level-4">
+                                                                <div class="org-card"><div class="card-title">Tổ tạp vụ</div></div>
+                                                                <ul><li class="level-5"><div class="org-card">NV Tạp vụ</div></li></ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+
+                                            <!-- 5. PHÒNG THẨM ĐỊNH MUA HÀNG -->
+                                            <li class="level-3">
+                                                <div class="org-card">
+                                                    <div class="card-title">Phòng TĐMH</div>
+                                                    <div class="card-subtitle">Trưởng phòng</div>
+                                                </div>
+                                                <ul>
+                                                    <li class="level-4">
+                                                        <div class="org-card"><div class="card-title">Phó phòng TĐMH</div></div>
+                                                        <ul><li class="level-5"><div class="org-card">CV TĐMH<br>Vận hành, Dịch vụ</div></li></ul>
+                                                    </li>
+                                                    <li class="level-4">
+                                                        <div class="org-card"><div class="card-title">Phó phòng TĐMH</div></div>
+                                                        <ul><li class="level-5"><div class="org-card">CV TĐMH<br>Dự án</div></li></ul>
+                                                    </li>
+                                                </ul>
+                                            </li>
+
+                                            <!-- 6. PHÒNG VẬN HÀNH -->
+                                            <li class="level-3">
+                                                <div class="org-card">
+                                                    <div class="card-title">Phòng Vận hành</div>
+                                                    <div class="card-subtitle">Trưởng phòng</div>
+                                                </div>
+                                                <ul>
+                                                    <li class="level-4">
+                                                        <div class="org-card"><div class="card-title">Tổ Cơ giới</div></div>
+                                                        <ul>
+                                                            <li class="level-5"><div class="org-card">NV Cẩu giàn</div></li>
+                                                            <li class="level-5"><div class="org-card">NV Lái xe nâng</div></li>
+                                                            <li class="level-5"><div class="org-card">NV Cẩu TH</div></li>
+                                                            <li class="level-5"><div class="org-card">NV Lái máy gắp</div></li>
+                                                            <li class="level-5"><div class="org-card">NV Phụ cầu</div></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="level-4">
+                                                        <div class="org-card"><div class="card-title">Tổ Điều độ</div></div>
+                                                        <ul>
+                                                            <li class="level-5"><div class="org-card">NV Đón xe</div></li>
+                                                            <li class="level-5"><div class="org-card">NV Điều độ</div></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="level-4">
+                                                        <div class="org-card"><div class="card-title">Tổ Xếp dỡ</div></div>
+                                                        <ul><li class="level-5"><div class="org-card">CN Xếp dỡ</div></li></ul>
+                                                    </li>
+                                                    <li class="level-4">
+                                                        <div class="org-card"><div class="card-title">Tổ Kỹ thuật</div></div>
+                                                        <ul>
+                                                            <li class="level-5"><div class="org-card">NV Cơ khí</div></li>
+                                                            <li class="level-5"><div class="org-card">NV Sửa chữa</div></li>
+                                                            <li class="level-5"><div class="org-card">NV Điện nước</div></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="level-5"><div class="org-card"><div class="card-title">NV Admin</div></div></li>
+                                                </ul>
+                                            </li>
+
+                                            <!-- 7. PHÒNG VẬN TẢI -->
+                                            <li class="level-3">
+                                                <div class="org-card">
+                                                    <div class="card-title">Phòng Vận tải</div>
+                                                    <div class="card-subtitle">Trưởng phòng</div>
+                                                </div>
+                                                <ul>
+                                                    <li class="level-5"><div class="org-card">NV Điều phối xe</div></li>
+                                                    <li class="level-5"><div class="org-card">NV Lái xe</div></li>
+                                                    <li class="level-5"><div class="org-card">NV Lái xe điện</div></li>
+                                                    <li class="level-5"><div class="org-card">NV Admin</div></li>
+                                                </ul>
+                                            </li>
+
+                                            <!-- 8. PHÒNG AN NINH - AN TOÀN -->
+                                            <li class="level-3">
+                                                <div class="org-card">
+                                                    <div class="card-title">Phòng An ninh<br>An toàn</div>
+                                                    <div class="card-subtitle">Trưởng phòng</div>
+                                                </div>
+                                                <ul>
+                                                    <li class="level-5"><div class="org-card">Chuyên viên HSSE</div></li>
+                                                    <li class="level-4">
+                                                        <div class="org-card"><div class="card-title">Tổ trưởng AN</div></div>
+                                                        <ul>
+                                                            <li class="level-5"><div class="org-card">NV AN Chốt</div></li>
+                                                            <li class="level-5"><div class="org-card">NV AN Tuần tra</div></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="level-5"><div class="org-card">Nhân viên Y tế</div></li>
+                                                </ul>
+                                            </li>
+
+                                            <!-- 9. PHÒNG KẾ HOẠCH - DỰ ÁN -->
+                                            <li class="level-3">
+                                                <div class="org-card">
+                                                    <div class="card-title">Phòng KH - DA</div>
+                                                    <div class="card-subtitle">Trưởng phòng</div>
+                                                </div>
+                                                <ul>
+                                                    <li class="level-4">
+                                                        <div class="org-card"><div class="card-title">Phó phòng</div><div class="card-subtitle">Pháp lý dự án</div></div>
+                                                        <ul><li class="level-5"><div class="org-card">CV Kế hoạch</div></li></ul>
+                                                    </li>
+                                                    <li class="level-4">
+                                                        <div class="org-card"><div class="card-title">Trưởng ban QLDA</div></div>
+                                                        <ul>
+                                                            <li class="level-5"><div class="org-card">Kỹ sư XD</div></li>
+                                                            <li class="level-5"><div class="org-card">Kỹ sư ME</div></li>
+                                                            <li class="level-5"><div class="org-card">QS</div></li>
+                                                            <li class="level-5"><div class="org-card">ATLĐ</div></li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="level-5"><div class="org-card">Dự toán, TT</div></li>
+                                                    <li class="level-5"><div class="org-card">QL Thiết kế</div></li>
+                                                    <li class="level-5"><div class="org-card">QL Tiến độ<br>Chất lượng</div></li>
+                                                </ul>
+                                            </li>
+
+                                            <!-- 10. TỔ HỢP DỊCH VỤ -->
+                                            <li class="level-3">
+                                                <div class="org-card border-t-purple-500">
+                                                    <div class="card-title">Tổ hợp Dịch vụ</div>
+                                                    <div class="card-subtitle">Quản lý</div>
+                                                </div>
+                                                <ul>
+                                                    <li class="level-5"><div class="org-card">Bếp</div></li>
+                                                    <li class="level-5"><div class="org-card">Nhà hàng</div></li>
+                                                    <li class="level-5"><div class="org-card">Buồng phòng</div></li>
+                                                    <li class="level-5"><div class="org-card">Lễ tân</div></li>
+                                                </ul>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Pan/Zoom logic -->
+    <script>
+        const wrapper = document.getElementById('chartWrapper');
+        const content = document.getElementById('chartContent');
+        const zoomLevelText = document.getElementById('zoomLevel');
+        
+        let scale = 0.5; // Bắt đầu nhỏ để nhìn tổng quan
+        let panning = false;
+        let pointX = 0;
+        let pointY = 0;
+        let startX = 0;
+        let startY = 0;
+
+        function updateTransform() {
+            content.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+            zoomLevelText.innerText = `${Math.round(scale * 100)}%`;
+        }
+
+        function zoomIn() {
+            scale *= 1.1;
+            updateTransform();
+        }
+
+        function zoomOut() {
+            scale /= 1.1;
+            updateTransform();
+        }
+
+        function resetView() {
+            scale = 0.5; // Mức zoom mặc định để vừa màn hình
+            pointX = 0;
+            pointY = 0;
+            // Căn giữa nội dung
+            const wrapperWidth = wrapper.offsetWidth;
+            const contentWidth = content.scrollWidth * scale;
+            if(contentWidth < wrapperWidth) {
+               pointX = (wrapperWidth - contentWidth) / 2;
+            }
+            updateTransform();
+        }
+
+        // Panning Logic (Kéo thả)
+        wrapper.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            startX = e.clientX - pointX;
+            startY = e.clientY - pointY;
+            panning = true;
+            wrapper.style.cursor = 'grabbing';
+        });
+
+        wrapper.addEventListener('mouseup', () => {
+            panning = false;
+            wrapper.style.cursor = 'grab';
+        });
+
+        wrapper.addEventListener('mouseleave', () => {
+            panning = false;
+            wrapper.style.cursor = 'grab';
+        });
+
+        wrapper.addEventListener('mousemove', (e) => {
+            if (!panning) return;
+            e.preventDefault();
+            pointX = e.clientX - startX;
+            pointY = e.clientY - startY;
+            updateTransform();
+        });
+
+        // Wheel Zoom (Lăn chuột để zoom)
+        wrapper.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const xs = (e.clientX - pointX) / scale;
+            const ys = (e.clientY - pointY) / scale;
+            const delta = -Math.sign(e.deltaY);
+            
+            if (delta > 0) scale *= 1.1;
+            else scale /= 1.1;
+
+            pointX = e.clientX - xs * scale;
+            pointY = e.clientY - ys * scale;
+
+            updateTransform();
+        });
+
+        // Initial Center
+        window.onload = function() {
+            // Tự động căn chỉnh khi mở
+            const treeWidth = document.querySelector('.tree').offsetWidth;
+            const wrapperWidth = wrapper.offsetWidth;
+            
+            // Tính toán scale ban đầu sao cho vừa chiều ngang (nếu sơ đồ quá lớn)
+            if (treeWidth > wrapperWidth) {
+                scale = Math.max(0.3, wrapperWidth / treeWidth * 0.9);
+            } else {
+                scale = 0.8;
+            }
+            
+            // Căn giữa
+            pointX = (wrapperWidth - treeWidth * scale) / 2;
+            pointY = 50; // Padding top một chút
+            
+            updateTransform();
+        }
+    </script>
+</body>
+</html>

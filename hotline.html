@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng Liên Hệ A2 - Flat Design</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Framework -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #e2e8f0; /* Nền xám ngoài để làm nổi bật tờ A2 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+        }
+
+        /* KHUNG A2 CHUẨN (Khổ dọc: 1684px x 2384px) - FLAT DESIGN */
+        .a2-board {
+            width: 1684px;
+            height: 2384px;
+            background-color: #c1121f; /* Đỏ đặc nguyên bản, không gradient */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            
+            /* Tự động thu phóng trên web */
+            transform-origin: center center;
+            transition: transform 0.3s ease;
+        }
+
+        /* HEADER: Khối ngang vuông vức trải dài 100% */
+        .header-brand {
+            width: 100%;
+            background-color: #ffffff; /* Trắng đặc */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 35px;
+            padding: 56px 0;
+            margin-bottom: 100px;
+            border-bottom: 14px solid #ffd700; /* Vạch vàng đặc phân cách */
+        }
+
+        .logo {
+            height: 127px;
+            object-fit: contain;
+        }
+
+        .company-name {
+            color: #c1121f;
+            font-size: 45px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+        
+        .company-name span {
+            color: #b48608; 
+            font-weight: 900;
+        }
+
+        /* KHU VỰC NỘI DUNG CHÍNH */
+        .content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 0 113px 113px 113px;
+            align-items: center;
+        }
+
+        /* TIÊU ĐỀ BẢNG */
+        .board-title {
+            font-size: 113px;
+            font-weight: 900;
+            color: #ffd700; /* Vàng Kim đặc */
+            text-transform: uppercase;
+            letter-spacing: 14px;
+            margin-bottom: 70px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .board-subtitle {
+            font-size: 70px;
+            color: #ffffff;
+            letter-spacing: 7px;
+        }
+
+        /* KHU VỰC DANH SÁCH LIÊN HỆ */
+        .contact-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 56px; 
+            flex-grow: 1;
+        }
+
+        /* THẺ LIÊN HỆ - VUÔNG VỨC & PHẲNG */
+        .contact-card {
+            background-color: #ffffff; /* Nền trắng đặc, độ tương phản tuyệt đối */
+            border-left: 28px solid #ffd700; /* Điểm nhấn khối dọc màu vàng */
+            padding: 63px 70px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .role-title {
+            font-size: 51px;
+            color: #334155; /* Xám đen đặc */
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 21px;
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .role-title i {
+            color: #c1121f; /* Icon màu đỏ */
+            font-size: 56px;
+            width: 70px;
+            text-align: center;
+        }
+
+        .phone-row {
+            display: flex;
+            align-items: center;
+            gap: 42px;
+            margin-left: 100px;
+            margin-top: 21px;
+            margin-bottom: 21px;
+        }
+
+        /* KHU VỰC GẠCH MỜ LÀM CỮ DÁN DECAL (Khổ A2) */
+        .phone-placeholder {
+            display: flex;
+            align-items: center;
+            gap: 28px; /* Khoảng cách giữa các cụm số */
+        }
+
+        .digit-group {
+            display: flex;
+            gap: 12px; /* Khoảng cách giữa các số trong 1 cụm */
+        }
+
+        .digit-box {
+            width: 70px;
+            height: 105px;
+            border: 4px dashed #cbd5e1; /* Nét đứt mờ màu xám nhạt */
+            border-radius: 12px;
+            background-color: #f8fafc; /* Nền rất nhạt để nhận diện vùng dán */
+        }
+
+        .phone-icon {
+            font-size: 100px; 
+            color: #c1121f;
+        }
+
+        /* FOOTER CỦA BẢNG */
+        .footer {
+            margin-top: auto;
+            color: #ffffff;
+            font-size: 34px;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 6px;
+            border-top: 4px solid #ffffff; /* Đường kẻ solid, không dashed */
+            padding-top: 56px;
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        /* Nút Scale / Fullscreen */
+        .fullscreen-btn {
+            position: fixed; bottom: 20px; right: 20px;
+            background-color: #ffffff; color: #c1121f; border: none;
+            padding: 15px 25px; font-family: 'Montserrat', sans-serif;
+            font-size: 14px; font-weight: 800; cursor: pointer; z-index: 1000;
+            display: flex; align-items: center; gap: 8px; text-transform: uppercase;
+        }
+        .fullscreen-btn:hover { background-color: #ffd700; }
+
+    </style>
+</head>
+<body>
+
+    <div class="a2-board" id="board">
+        
+        <!-- Header: Trải ngang 100% cực kỳ phẳng và vuông vức -->
+        <div class="header-brand">
+            <img src="Logo.png" alt="Logo" class="logo" onerror="this.src='https://placehold.co/170x85/c1121f/ffffff?text=LOGO'">
+            <div class="company-name">CÔNG TY CỔ PHẦN <span>TÀ LÙNG QUANG MINH</span></div>
+        </div>
+
+        <div class="content">
+
+            <!-- Tiêu đề bảng -->
+            <div class="board-title">
+                HOTLINE CSKH
+                <div class="board-subtitle">GIẢI ĐÁP THẮC MẮC</div>
+            </div>
+
+            <!-- Danh sách liên hệ -->
+            <div class="contact-list">
+                
+                <!-- Liên hệ 1: Phòng Kinh Doanh -->
+                <div class="contact-card">
+                    <div class="role-title">
+                        <i class="fa-solid fa-briefcase"></i> P. KINH DOANH
+                    </div>
+                    <div class="phone-row">
+                        <i class="fa-solid fa-phone phone-icon"></i>
+                        
+                        <!-- Cữ dán decal số điện thoại (Định dạng: 3 - 3 - 4) -->
+                        <div class="phone-placeholder">
+                            <div class="digit-group">
+                                <div class="digit-box"></div><div class="digit-box"></div><div class="digit-box"></div>
+                            </div>
+                            <div class="digit-group">
+                                <div class="digit-box"></div><div class="digit-box"></div><div class="digit-box"></div>
+                            </div>
+                            <div class="digit-group">
+                                <div class="digit-box"></div><div class="digit-box"></div><div class="digit-box"></div><div class="digit-box"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Liên hệ 2: Phòng Vận Hành (2 Số) -->
+                <div class="contact-card">
+                    <div class="role-title">
+                        <i class="fa-solid fa-truck-fast"></i> P. VẬN HÀNH
+                    </div>
+                    
+                    <!-- Số 1 -->
+                    <div class="phone-row">
+                        <i class="fa-solid fa-phone phone-icon"></i>
+                        <div class="phone-placeholder">
+                            <div class="digit-group">
+                                <div class="digit-box"></div><div class="digit-box"></div><div class="digit-box"></div>
+                            </div>
+                            <div class="digit-group">
+                                <div class="digit-box"></div><div class="digit-box"></div><div class="digit-box"></div>
+                            </div>
+                            <div class="digit-group">
+                                <div class="digit-box"></div><div class="digit-box"></div><div class="digit-box"></div><div class="digit-box"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Số 2 -->
+                    <div class="phone-row">
+                        <i class="fa-solid fa-phone phone-icon"></i>
+                        <div class="phone-placeholder">
+                            <div class="digit-group">
+                                <div class="digit-box"></div><div class="digit-box"></div><div class="digit-box"></div>
+                            </div>
+                            <div class="digit-group">
+                                <div class="digit-box"></div><div class="digit-box"></div><div class="digit-box"></div>
+                            </div>
+                            <div class="digit-group">
+                                <div class="digit-box"></div><div class="digit-box"></div><div class="digit-box"></div><div class="digit-box"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                Phục vụ chuyên nghiệp - Hỗ trợ tận tâm
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Nút hiển thị toàn màn hình -->
+    <button class="fullscreen-btn" id="fsBtn" onclick="toggleFullScreen()">
+        <i class="fa-solid fa-expand"></i> Xem Toàn Màn Hình
+    </button>
+
+    <script>
+        // Tự động thu phóng để vừa màn hình
+        function adjustScale() {
+            const board = document.getElementById('board');
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            
+            const targetWidth = windowWidth - 40;
+            const targetHeight = windowHeight - 40;
+
+            // Scale dựa trên tỷ lệ dọc A2 (1684x2384)
+            const scale = Math.min(targetWidth / 1684, targetHeight / 2384, 1); 
+            board.style.transform = `scale(${scale})`;
+        }
+
+        window.addEventListener('resize', adjustScale);
+        window.addEventListener('DOMContentLoaded', adjustScale);
+
+        // Chức năng Fullscreen
+        const fsBtn = document.getElementById('fsBtn');
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.body.requestFullscreen().catch(err => {
+                    console.log(`Lỗi Fullscreen: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        document.addEventListener('fullscreenchange', () => {
+            if (document.fullscreenElement) {
+                fsBtn.innerHTML = '<i class="fa-solid fa-compress"></i> Thu Nhỏ';
+                document.body.style.backgroundColor = "#000"; 
+            } else {
+                fsBtn.innerHTML = '<i class="fa-solid fa-expand"></i> Xem Toàn Màn Hình';
+                document.body.style.backgroundColor = "#e2e8f0";
+            }
+            setTimeout(adjustScale, 100);
+        });
+    </script>
+
+</body>
+</html>

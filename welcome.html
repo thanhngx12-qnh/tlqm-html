@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>热烈欢迎中国代表团访问</title>
+
+    <!-- Google Fonts: Thêm font Great Vibes cho chữ uốn lượn -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@500;700;800&family=Noto+Serif+SC:wght@700;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Framework -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+        }
+
+        /* KHUNG CHÍNH */
+        .banner-container {
+            width: 1200px;
+            height: 630px;
+            position: relative;
+            background: radial-gradient(circle at 50% 30%, #d32f2f 0%, #b71c1c 40%, #7f0000 100%);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #ffd700;
+            /* Thêm thuộc tính scale */
+            transform-origin: center center;
+            transition: transform 0.3s ease;
+        }
+
+        /* TEXTURE NỀN TÂN CỔ ĐIỂN TRUNG HOA */
+        .bg-pattern {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            /* Họa tiết vảy rồng / mây truyền thống mờ */
+            background-image: radial-gradient(circle at 100% 50%, transparent 20%, rgba(255, 215, 0, 0.08) 21%, rgba(255, 215, 0, 0.08) 34%, transparent 35%, transparent),
+                              radial-gradient(circle at 0% 50%, transparent 20%, rgba(255, 215, 0, 0.08) 21%, rgba(255, 215, 0, 0.08) 34%, transparent 35%, transparent);
+            background-size: 80px 80px;
+            z-index: 1;
+            opacity: 0.5;
+        }
+
+        /* ÁNH SÁNG TÂM ĐIỂM */
+        .glow-center {
+            position: absolute;
+            top: 40%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px; height: 400px;
+            background: radial-gradient(ellipse at center, rgba(255, 100, 0, 0.3) 0%, transparent 70%);
+            z-index: 2;
+            filter: blur(40px);
+        }
+
+        /* KHUNG VIỀN TRONG (INNER BORDER) */
+        .inner-border {
+            position: absolute;
+            top: 25px; bottom: 25px; left: 25px; right: 25px;
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            z-index: 3;
+            pointer-events: none;
+        }
+        
+        .corner-ornament {
+            position: absolute;
+            width: 40px; height: 40px;
+            border: 3px solid #ffd700;
+            z-index: 4;
+        }
+        .tl { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+        .tr { top: 20px; right: 20px; border-left: none; border-bottom: none; }
+        .bl { bottom: 20px; left: 20px; border-right: none; border-top: none; }
+        .br { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+
+        /* NỘI DUNG CHÍNH */
+        .content {
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            text-align: center;
+        }
+
+        /* LOGO & BRANDING */
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            height: 75px;
+            background: #fff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            border: 2px solid #ffd700;
+        }
+
+        /* TEXT TIẾNG TRUNG VÀ WELCOME */
+        .welcome-badge {
+            font-family: 'Great Vibes', cursive; /* Đổi sang font uốn lượn */
+            color: #ffd700;
+            font-size: 42px; /* Tăng kích thước vì font script thường nhỏ */
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        .welcome-badge::before, .welcome-badge::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffd700);
+        }
+        .welcome-badge::after {
+            background: linear-gradient(270deg, transparent, #ffd700);
+        }
+
+        .title-chinese-main {
+            font-family: 'Noto Serif SC', serif; /* Font thư pháp hiện đại tiếng Trung */
+            font-size: 96px;
+            line-height: 1.1;
+            font-weight: 900;
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+            
+            /* Gradient Vàng Kim Loại rực rỡ */
+            background: linear-gradient(to bottom, #ffffff 0%, #ffef96 20%, #ffd700 50%, #d4af37 80%, #997a00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            
+            /* Bóng chữ 3D */
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.4)) drop-shadow(0 6px 8px rgba(0,0,0,0.8));
+        }
+
+        .title-chinese-sub {
+            font-family: 'Noto Serif SC', serif;
+            font-size: 48px;
+            color: #ffffff;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-shadow: 2px 2px 0px #590000, 4px 4px 10px rgba(0,0,0,0.6);
+            margin-bottom: 30px;
+        }
+        
+        .title-chinese-sub span {
+            color: #ffd700; /* Làm nổi bật tên công ty 富英物流公司 */
+        }
+
+        /* DẢI PHÂN CÁCH (Divider) */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            width: 60%;
+        }
+        .divider-line {
+            flex-grow: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.6), transparent);
+        }
+        .divider-icon {
+            color: #ffd700;
+            font-size: 20px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+        }
+
+        /* FOOTER / THỜI GIAN */
+        .footer {
+            position: absolute;
+            bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Montserrat', sans-serif;
+            color: #ffd700;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            background: rgba(0,0,0,0.3);
+            padding: 8px 25px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,215,0,0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        /* DECOR HOA VĂN SVG */
+        .cloud-deco {
+            position: absolute;
+            width: 180px;
+            opacity: 0.15;
+            z-index: 5;
+            pointer-events: none;
+        }
+        .cloud-l { top: 30%; left: 30px; }
+        .cloud-r { top: 30%; right: 30px; transform: scaleX(-1); }
+
+        /* HẠT BỤI VÀNG BAY (ANIMATION) */
+        .particles {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 4; pointer-events: none;
+            background-image: radial-gradient(circle, #ffd700 1px, transparent 2px);
+            background-size: 100px 100px;
+            animation: floatUp 20s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes floatUp {
+            0% { background-position: 0 0; }
+            100% { background-position: 100px -500px; }
+        }
+
+        /* NÚT FULLSCREEN */
+        .fullscreen-btn {
+            position: absolute; 
+            bottom: 20px; 
+            right: 20px;
+            background: rgba(0,0,0,0.5); 
+            color: #ffd700; 
+            border: 1px solid rgba(255,215,0,0.4);
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px; 
+            font-weight: 600; 
+            cursor: pointer; 
+            z-index: 100; 
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
+        }
+        .fullscreen-btn:hover { 
+            background: rgba(255,215,0,0.2); 
+            border-color: #ffd700; 
+            box-shadow: 0 0 10px rgba(255,215,0,0.5); 
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="banner-container" id="banner">
+        
+        <!-- NỀN & TRANG TRÍ -->
+        <div class="bg-pattern"></div>
+        <div class="glow-center"></div>
+        <div class="particles"></div>
+
+        <!-- KHUNG VIỀN -->
+        <div class="inner-border"></div>
+        <div class="corner-ornament tl"></div>
+        <div class="corner-ornament tr"></div>
+        <div class="corner-ornament bl"></div>
+        <div class="corner-ornament br"></div>
+
+        <!-- Đám mây trang trí SVG mờ 2 bên -->
+        <svg class="cloud-deco cloud-l" viewBox="0 0 100 50" fill="#ffd700">
+            <path d="M20,30 Q10,30 10,20 Q10,10 25,10 Q30,0 45,0 Q60,0 65,10 Q80,10 80,20 Q80,30 70,30 Z"/>
+            <path d="M40,40 Q30,40 30,35 Q30,30 40,30 Q50,30 60,35 Q60,40 50,40 Z"/>
+        </svg>
+        <svg class="cloud-deco cloud-r" viewBox="0 0 100 50" fill="#ffd700">
+            <path d="M20,30 Q10,30 10,20 Q10,10 25,10 Q30,0 45,0 Q60,0 65,10 Q80,10 80,20 Q80,30 70,30 Z"/>
+            <path d="M40,40 Q30,40 30,35 Q30,30 40,30 Q50,30 60,35 Q60,40 50,40 Z"/>
+        </svg>
+
+        <!-- NỘI DUNG CHÍNH -->
+        <div class="content">
+            
+            <div class="header-brand">
+                <img src="Logo.png" alt="Company Logo" class="logo" onerror="this.src='https://placehold.co/100x50?text=LOGO'">
+            </div>
+
+            <!-- Chuyển thành chữ viết thường để font uốn lượn đẹp hơn -->
+            <div class="welcome-badge">Welcome to Vietnam</div>
+
+            <!-- CHỮ TIẾNG TRUNG -->
+            <h1 class="title-chinese-main">热烈欢迎</h1>
+            <h2 class="title-chinese-sub">中国代表团到访<span>富英物流公司</span></h2>
+
+            <div class="divider">
+                <div class="divider-line"></div>
+                <i class="fa-solid fa-handshake divider-icon"></i>
+                <div class="divider-line"></div>
+            </div>
+
+        </div>
+
+        <!-- THỜI GIAN / ĐỊA ĐIỂM (Cập nhật) -->
+        <div class="footer">
+            <i class="fa-solid fa-location-dot"></i> 高平，驼隆 &nbsp;|&nbsp; <i class="fa-regular fa-calendar-check"></i> 2026年03月19日
+        </div>
+
+        <!-- Nút Fullscreen -->
+        <button class="fullscreen-btn" id="fsBtn" onclick="toggleFullScreen()">
+        </button>
+
+    </div>
+
+    <!-- Kịch bản Javascript cho Scale và Fullscreen -->
+    <script>
+        function adjustScale() {
+            const banner = document.getElementById('banner');
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            
+            const isFullscreen = document.fullscreenElement != null;
+            const targetWidth = isFullscreen ? windowWidth : windowWidth - 40;
+            const targetHeight = isFullscreen ? windowHeight : windowHeight - 40;
+
+            const scale = Math.min(targetWidth / 1200, targetHeight / 630, 1.5); 
+            banner.style.transform = `scale(${scale})`;
+        }
+
+        window.addEventListener('resize', adjustScale);
+        window.addEventListener('DOMContentLoaded', adjustScale);
+
+        const fsBtn = document.getElementById('fsBtn');
+        const fsIcon = fsBtn.querySelector('i');
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.body.requestFullscreen().catch(err => {
+                    console.log(`Lỗi Fullscreen: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        document.addEventListener('fullscreenchange', () => {
+            if (document.fullscreenElement) {
+                fsBtn.innerHTML = '';
+                document.body.style.backgroundColor = "#000"; 
+            } else {
+                fsBtn.innerHTML = '';
+                document.body.style.backgroundColor = "#1a1a1a";
+            }
+            setTimeout(adjustScale, 100);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banner Đón Tiếp - Đại học Hạ Long (FontAwesome)</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Framework cho Icons hiện đại -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* RESET & BODY CHUNG */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #334155; /* Nền tối để làm nổi bật các banner sáng */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 80px;
+            padding: 60px 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .option-title {
+            color: #f8fafc;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: rgba(0,0,0,0.4);
+            padding: 10px 30px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* KHUNG BANNER CHUNG */
+        .banner-base {
+            width: 1200px;
+            height: 630px;
+            position: relative;
+            overflow: hidden;
+            background: #ffffff;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        
+        .banner-base img { object-fit: contain; }
+
+        /* =========================================================
+           OPTION 1: BẢN HIỆN TẠI (Chuẩn mực, phân bổ 2 bên)
+           ========================================================= */
+        .opt1 {
+            background: radial-gradient(circle at 50% 0%, #ffffff 0%, #f1f5f9 60%, #e2e8f0 100%);
+            border: 2px solid #cbd5e1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .opt1 .network-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(30, 58, 138, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(30, 58, 138, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px; z-index: 1;
+        }
+
+        .opt1 .glow {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 800px; height: 500px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
+            z-index: 2; pointer-events: none;
+        }
+
+        .opt1 .content { z-index: 10; display: flex; flex-direction: column; width: 100%; height: 100%; padding: 30px 50px; position: relative; }
+        
+        .opt1 .header-logos { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(30, 58, 138, 0.15); }
+        .opt1 .logo-box { display: flex; align-items: center; gap: 15px; }
+        .opt1 .logo { height: 85px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
+        
+        .opt1 .logo-text { display: flex; flex-direction: column; }
+        .opt1 .logo-text .host { font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 4px; font-weight: 500; }
+        .opt1 .logo-text .name { font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #1e3a8a; }
+
+        .opt1 .welcome-section { display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; text-align: center; }
+        .opt1 .welcome-badge { font-family: 'Montserrat', sans-serif; font-size: 32px; color: #b48608; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 4px; position: relative; }
+        .opt1 .welcome-badge::before, .opt1 .welcome-badge::after { content: ""; position: absolute; top: 50%; width: 80px; height: 2px; background-color: #b48608; }
+        .opt1 .welcome-badge::before { right: 105%; } .opt1 .welcome-badge::after { left: 105%; }
+        
+        .opt1 .guest-title { font-size: 40px; font-weight: 800; color: #0f172a; text-transform: uppercase; line-height: 1.3; margin-bottom: 15px; letter-spacing: 1px; }
+        .opt1 .highlight-school { background: #1e3a8a; padding: 8px 30px; border-radius: 50px; color: #ffffff; display: inline-block; margin-top: 5px; box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3); letter-spacing: 2px; }
+        .opt1 .purpose-text { font-size: 18px; color: #475569; font-weight: 500; margin-top: 25px; margin-bottom: 15px; font-style: italic; }
+        .opt1 .company-title { font-size: 30px; font-weight: 900; color: #1e3a8a; text-transform: uppercase; letter-spacing: 2px; }
+
+        .opt1 .footer { margin-top: auto; display: flex; justify-content: space-between; align-items: center; padding-top: 20px; border-top: 1px solid rgba(30, 58, 138, 0.15); }
+        .opt1 .date-location { font-size: 14px; color: #475569; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+        .opt1 .date-location span { color: #b48608; font-size: 16px; margin-right: 4px; }
+        .opt1 .slogan { font-size: 14px; color: #1e3a8a; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+        
+        .opt1 .corner { position: absolute; width: 40px; height: 40px; border: 3px solid #1e3a8a; z-index: 5; opacity: 0.8; }
+        .opt1 .tl { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+        .opt1 .tr { top: 20px; right: 20px; border-left: none; border-bottom: none; }
+        .opt1 .bl { bottom: 20px; left: 20px; border-right: none; border-top: none; }
+        .opt1 .br { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+
+
+        /* =========================================================
+           OPTION 2: CHUYÊN NGHIỆP HIỆN ĐẠI (Split Layout/Chia cột)
+           ========================================================= */
+        .opt2 {
+            background: #ffffff;
+            display: flex;
+            flex-direction: row;
+        }
+        
+        /* Cột trái: Chữ */
+        .opt2 .left-panel {
+            width: 65%;
+            padding: 60px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .opt2 .welcome-tag {
+            display: inline-block;
+            background: #1e3a8a;
+            color: white;
+            padding: 8px 20px;
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            align-self: flex-start;
+            border-radius: 4px;
+        }
+
+        .opt2 .title-main {
+            font-family: 'Playfair Display', serif;
+            font-size: 52px;
+            color: #b48608;
+            line-height: 1.2;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .opt2 .guest-title {
+            font-size: 34px;
+            color: #1e3a8a;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.4;
+            margin-bottom: 25px;
+        }
+
+        .opt2 .desc {
+            font-size: 16px;
+            color: #475569;
+            line-height: 1.6;
+            font-weight: 500;
+            margin-bottom: 40px;
+            max-width: 90%;
+            border-left: 4px solid #b48608;
+            padding-left: 20px;
+        }
+
+        .opt2 .footer-info {
+            margin-top: auto;
+            font-size: 14px;
+            color: #1e3a8a;
+            font-weight: 700;
+            display: flex;
+            gap: 25px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+        
+        .opt2 .footer-info i {
+            color: #b48608;
+            margin-right: 6px;
+            font-size: 16px;
+        }
+
+        /* Cột phải: Khối Nền Xanh chứa Logo */
+        .opt2 .right-panel {
+            width: 35%;
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            position: relative;
+            padding: 40px;
+        }
+        
+        .opt2 .right-panel::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -30px;
+            width: 60px; height: 100%;
+            background: #ffffff;
+            transform: skewX(-5deg);
+        }
+
+        .opt2 .logo-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            width: 220px;
+            height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 5;
+            border-bottom: 4px solid #b48608;
+        }
+
+        .opt2 .logo-large {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .opt2 .link-icon {
+            font-size: 28px;
+            color: #b48608;
+            z-index: 5;
+            background: rgba(255,255,255,0.1);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 2px dashed rgba(180, 134, 8, 0.5);
+        }
+
+
+        /* =========================================================
+           OPTION 3: GIAO DIỆN TỐI GIẢN (Logos Trung Tâm)
+           ========================================================= */
+        .opt3 {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px 60px;
+            border-top: 10px solid #1e3a8a;
+            border-bottom: 10px solid #b48608;
+        }
+
+        .opt3 .bg-shape { position: absolute; border-radius: 50%; z-index: 1; }
+        .opt3 .shape1 { width: 600px; height: 600px; background: rgba(30, 58, 138, 0.03); top: -200px; right: -100px; }
+        .opt3 .shape2 { width: 400px; height: 400px; border: 2px dashed rgba(180, 134, 8, 0.2); bottom: -100px; left: -100px; }
+
+        .opt3 .content-wrapper { z-index: 10; position: relative; display: flex; flex-direction: column; height: 100%; align-items: center; }
+        
+        /* Header Logos Center */
+        .opt3 .header-center { display: flex; align-items: center; justify-content: center; gap: 50px; margin-bottom: 40px; margin-top: 10px; }
+        .opt3 .logo-center { height: 110px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05)); }
+        
+        .opt3 .handshake { font-size: 40px; color: #1e3a8a; opacity: 0.6; }
+
+        .opt3 .welcome-text { font-family: 'Playfair Display', serif; font-size: 42px; color: #1e3a8a; font-weight: 700; margin-bottom: 10px; }
+        .opt3 .guest-name { font-size: 46px; color: #b48608; font-weight: 900; text-transform: uppercase; margin-bottom: 30px; letter-spacing: 2px; text-shadow: 2px 2px 0px rgba(0,0,0,0.05); }
+        .opt3 .divider { width: 80px; height: 3px; background: #1e3a8a; margin-bottom: 30px; }
+
+        .opt3 .host-info { font-size: 18px; color: #475569; margin-bottom: 5px; font-style: italic; }
+        .opt3 .host-name { font-size: 28px; color: #1e3a8a; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+
+        .opt3 .footer-bar { display: flex; justify-content: space-between; width: 100%; margin-top: auto; color: #64748b; font-size: 14px; font-weight: 600; padding-top: 20px; border-top: 1px solid rgba(30, 58, 138, 0.1); }
+        .opt3 .footer-bar span { color: #1e3a8a; }
+        .opt3 .footer-bar i { margin-right: 6px; font-size: 15px; color: #b48608; }
+
+    </style>
+</head>
+<body>
+
+    <!-- ==============================================
+         OPTION 1: BẢN HIỆN TẠI (TRẮNG/BẠC)
+         ============================================== -->
+    <div class="wrapper">
+        <div class="option-title">Option 1: Chuẩn Mực - Sang Trọng (Bản Hiện Tại)</div>
+        <div class="banner-base opt1">
+            <div class="network-bg"></div>
+            <div class="glow"></div>
+            <div class="corner tl"></div>
+            <div class="corner tr"></div>
+            <div class="corner bl"></div>
+            <div class="corner br"></div>
+
+            <div class="content">
+                <div class="header-logos">
+                    <div class="logo-box">
+                        <img src="Logo.png" alt="Logo Tà Lùng Quang Minh" class="logo">
+                        <div class="logo-text">
+                            <span class="host">Đơn vị đón tiếp</span>
+                            <span class="name">Công ty CP Tà Lùng Quang Minh</span>
+                        </div>
+                    </div>
+                    <div class="logo-box" style="flex-direction: row-reverse; text-align: right;">
+                        <img src="https://sv.uhl.edu.vn/FileManager/img/abc.png" alt="Logo Đại học Hạ Long" class="logo">
+                        <div class="logo-text">
+                            <span class="host">Đơn vị khách mời</span>
+                            <span class="name">Trường Đại học Hạ Long</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="welcome-section">
+                    <div class="welcome-badge">Nhiệt Liệt Chào Mừng</div>
+                    <h1 class="guest-title">
+                        Đoàn Công Tác<br>
+                        <span class="highlight-school">Trường Đại học Hạ Long</span>
+                    </h1>
+                    <p class="purpose-text">Đến thăm, làm việc và trao đổi kinh nghiệm tại</p>
+                    <h2 class="company-title">Công Ty Cổ Phần Tà Lùng Quang Minh</h2>
+                </div>
+
+                <div class="footer">
+                    <div class="date-location">
+                        <span><i class="fa-solid fa-location-dot"></i></span> Cửa khẩu Quốc tế Tà Lùng, Cao Bằng &nbsp;&nbsp;|&nbsp;&nbsp; <span><i class="fa-solid fa-calendar-days"></i></span> Ngày 04 tháng 03 năm 2026
+                    </div>
+                    <div class="slogan">"KẾT NỐI BIÊN GIỚI - VƯƠN TỚI TOÀN CẦU"</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ==============================================
+         OPTION 2: HIỆN ĐẠI (CHIA CỘT)
+         ============================================== -->
+    <div class="wrapper">
+        <div class="option-title">Option 2: Bố cục Hội Nghị Quốc Tế (Chia Cột)</div>
+        <div class="banner-base opt2">
+            
+            <div class="left-panel">
+                <div class="welcome-tag">Nhiệt Liệt Chào Mừng</div>
+                <h1 class="title-main">Đoàn Công Tác</h1>
+                <h2 class="guest-title">Trường Đại học Hạ Long</h2>
+                
+                <p class="desc">
+                    Đến thăm, làm việc và trao đổi kinh nghiệm thực tiễn về logistics và chuỗi cung ứng tại Công ty Cổ phần Tà Lùng Quang Minh.
+                </p>
+
+                <div class="footer-info">
+                    <div><i class="fa-solid fa-location-dot"></i> CKQT Tà Lùng, Cao Bằng</div>
+                    <div><i class="fa-solid fa-calendar-days"></i> Ngày 04 tháng 03 năm 2026</div>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="logo-card">
+                    <img src="https://sv.uhl.edu.vn/FileManager/img/abc.png" class="logo-large" alt="Đại học Hạ Long">
+                </div>
+                
+                <div class="link-icon"><i class="fa-solid fa-link"></i></div>
+                
+                <div class="logo-card">
+                    <img src="Logo.png" class="logo-large" alt="Tà Lùng Quang Minh">
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ==============================================
+         OPTION 3: TỐI GIẢN (LOGOS TRUNG TÂM)
+         ============================================== -->
+    <div class="wrapper">
+        <div class="option-title">Option 3: Giao diện Tối Giản - Hội Tụ</div>
+        <div class="banner-base opt3">
+            
+            <div class="bg-shape shape1"></div>
+            <div class="bg-shape shape2"></div>
+
+            <div class="content-wrapper">
+                <!-- Logos ở giữa -->
+                <div class="header-center">
+                    <img src="https://sv.uhl.edu.vn/FileManager/img/abc.png" class="logo-center" alt="Đại học Hạ Long">
+                    <div class="handshake"><i class="fa-regular fa-handshake"></i></div>
+                    <img src="Logo.png" class="logo-center" alt="Tà Lùng Quang Minh">
+                </div>
+
+                <div class="welcome-text">Trân trọng đón tiếp đoàn công tác</div>
+                <div class="guest-name">Trường Đại học Hạ Long</div>
+                
+                <div class="divider"></div>
+                
+                <div class="host-info">Đến thăm và làm việc tại</div>
+                <div class="host-name">Công ty Cổ phần Tà Lùng Quang Minh</div>
+
+                <div class="footer-bar">
+                    <div><span><i class="fa-solid fa-location-dot"></i> Địa điểm:</span> Cửa khẩu Quốc tế Tà Lùng, tỉnh Cao Bằng</div>
+                    <div><span><i class="fa-solid fa-calendar-days"></i> Thời gian:</span> Ngày 04 tháng 03 năm 2026</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

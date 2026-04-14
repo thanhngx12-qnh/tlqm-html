@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phiếu Niêm Phong - Tà Lùng Quang Minh (Ngang)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #d32f2f;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            z-index: 9999;
+        }
+        .print-btn:hover { background-color: #b71c1c; }
+
+        @page {
+            size: A4 landscape;
+            margin: 10mm;
+        }
+
+        .page {
+            width: 297mm;
+            height: 210mm;
+            background: white;
+            margin: 20px auto;
+            padding: 10mm;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Chia đều khoảng cách dọc */
+        }
+
+        /* --- STYLES PHIẾU NIÊM PHONG (Landscape Layout) --- */
+        .seal-container {
+            width: 100%;
+            height: 42mm; /* Chiều cao mỗi phiếu */
+            border: 3px double #d32f2f;
+            position: relative;
+            padding: 5px 15px;
+            overflow: hidden;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Nền chữ chìm bảo mật */
+        .security-pattern {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            opacity: 0.05;
+            z-index: 0;
+            transform: rotate(-5deg) scale(1.1);
+            pointer-events: none;
+            font-weight: 900;
+            font-size: 20pt;
+            color: #000;
+            line-height: 1.5;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        /* Logo chìm (Watermark) */
+        .watermark-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 90%; /* Chiều cao chiếm 90% phiếu */
+            width: auto;
+            opacity: 0.08;
+            z-index: 0;
+            filter: grayscale(100%);
+            pointer-events: none;
+        }
+
+        /* Đường cắt */
+        .cut-line {
+            position: absolute;
+            bottom: -12px; /* Đặt sát mép dưới của container */
+            left: 0;
+            width: 100%;
+            border-bottom: 1px dashed #999;
+            text-align: center;
+            font-size: 8pt;
+            color: #999;
+            z-index: 10;
+        }
+        .cut-line span {
+            background: #fff;
+            padding: 0 5px;
+            position: relative;
+            top: 7px;
+        }
+
+        /* Nội dung phiếu (Horizontal Layout) */
+        .seal-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row; /* Dàn ngang */
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Cột 1: Logo & Tiêu đề (25%) */
+        .col-header {
+            width: 25%;
+            border-right: 1px solid #d32f2f;
+            padding-right: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .logo-img {
+            height: 30px;
+            margin-bottom: 2px;
+            filter: grayscale(100%);
+        }
+
+        .company-text h3 {
+            margin: 0;
+            font-size: 7pt;
+            text-transform: uppercase;
+            color: #333;
+        }
+
+        .seal-title {
+            font-size: 14pt;
+            font-weight: 900;
+            color: #d32f2f;
+            text-transform: uppercase;
+            margin-top: 2px;
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+
+        /* Cột 2: Thông tin điền (50%) - Tăng rộng hơn chút vì bỏ 1 chữ ký */
+        .col-body {
+            width: 50%;
+            font-size: 9pt;
+            line-height: 1.4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Cột 3: Chữ ký (25%) */
+        .col-footer {
+            width: 25%;
+            display: flex;
+            justify-content: center; /* Căn giữa chữ ký */
+            align-items: flex-start;
+            padding-left: 10px;
+            border-left: 1px dotted #ccc;
+        }
+
+        .sign-box {
+            text-align: center;
+            width: 100%;
+        }
+        .sign-title {
+            font-weight: bold;
+            font-size: 8pt;
+            text-transform: uppercase;
+            margin-bottom: 25px; /* Chừa chỗ ký */
+        }
+        .sign-placeholder {
+            font-style: italic;
+            font-size: 7pt;
+            color: #666;
+        }
+
+        /* Dấu giáp lai hint */
+        .stamp-hint {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border: 1px dashed #d32f2f;
+            border-radius: 50%;
+            opacity: 0.2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 6pt;
+            color: #d32f2f;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        @media print {
+            body { background: none; }
+            .print-btn { display: none; }
+            .page { width: 297mm; height: 210mm; margin: 0; box-shadow: none; border: none; padding: 10mm; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="print-btn" onclick="window.print()">🖨️ IN PHIẾU NIÊM PHONG</button>
+
+    <div class="page">
+        
+        <!-- PHIẾU 1 -->
+        <div class="seal-container">
+            <!-- Logo chìm -->
+            <img src="Logo.png" class="watermark-logo" onerror="this.style.display='none'">
+            
+            <div class="security-pattern">
+                NIÊM PHONG SEALED NIÊM PHONG SEALED NIÊM PHONG SEALED NIÊM PHONG SEALED
+                NIÊM PHONG SEALED NIÊM PHONG SEALED NIÊM PHONG SEALED NIÊM PHONG SEALED
+            </div>
+            
+            <div class="seal-content">
+                <!-- Cột Trái -->
+                <div class="col-header">
+                    <img src="Logo.png" alt="Logo" class="logo-img" onerror="this.style.display='none'">
+                    <div class="company-text"><h3>CTY CP TÀ LÙNG QUANG MINH</h3></div>
+                    <div class="seal-title">PHIẾU NIÊM PHONG</div>
+                </div>
+
+                <!-- Cột Giữa -->
+                <div class="col-body">
+                    <div><strong>Vật phẩm/Khu vực:</strong> ..........................................................................................</div>
+                    <div><strong>Lý do:</strong> .....................................................................................................................</div>
+                    <div><strong>Thời gian:</strong> .......h....... ngày ....... tháng ....... năm 20.......</div>
+                </div>
+
+                <!-- Cột Phải -->
+                <div class="col-footer">
+                    <div class="sign-box">
+                        <div class="sign-title">NGƯỜI NIÊM PHONG</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cut-line"><span>✄ Cắt tại đây</span></div>
+        </div>
+
+        <!-- PHIẾU 2 -->
+        <div class="seal-container">
+            <img src="Logo.png" class="watermark-logo" onerror="this.style.display='none'">
+            <div class="security-pattern">
+                NIÊM PHONG SEALED NIÊM PHONG SEALED NIÊM PHONG SEALED NIÊM PHONG SEALED
+                NIÊM PHONG SEALED NIÊM PHONG SEALED NIÊM PHONG SEALED NIÊM PHONG SEALED
+            </div>
+            
+            <div class="seal-content">
+                <div class="col-header">
+                    <img src="Logo.png" alt="Logo" class="logo-img" onerror="this.style.display='none'">
+                    <div class="company-text"><h3>CTY CP TÀ LÙNG QUANG MINH</h3></div>
+                    <div class="seal-title">PHIẾU NIÊM PHONG</div>
+                </div>
+                <div class="col-body">
+                    <div><strong>Vật phẩm/Khu vực:</strong> ..........................................................................................</div>
+                    <div><strong>Lý do:</strong> .....................................................................................................................</div>
+                    <div><strong>Thời gian:</strong> .......h....... ngày ....... tháng ....... năm 20.......</div>
+                </div>
+                <div class="col-footer">
+                    <div class="sign-box">
+                        <div class="sign-title">NGƯỜI NIÊM PHONG</div>
+                    </div>
+                </div>
+            </div>
+            <div class="cut-line"><span>✄ Cắt tại đây</span></div>
+        </div>
+
+        <!-- PHIẾU 3 -->
+        <div class="seal-container">
+            <img src="Logo.png" class="watermark-logo" onerror="this.style.display='none'">
+            <div class="security-pattern">
+                NIÊM PHONG SEALED NIÊM PHONG SEALED NIÊM PHONG SEALED NIÊM PHONG SEALED
+                NIÊM PHONG SEALED NIÊM PHONG SEALED NIÊM PHONG SEALED NIÊM PHONG SEALED
+            </div>
+            
+            <div class="seal-content">
+                <div class="col-header">
+                    <img src="Logo.png" alt="Logo" class="logo-img" onerror="this.style.display='none'">
+                    <div class="company-text"><h3>CTY CP TÀ LÙNG QUANG MINH</h3></div>
+                    <div class="seal-title">PHIẾU NIÊM PHONG</div>
+                </div>
+                <div class="col-body">
+                    <div><strong>Vật phẩm/Khu vực:</strong> ..........................................................................................</div>
+                    <div><strong>Lý do:</strong> .....................................................................................................................</div>
+                    <div><strong>Thời gian:</strong> .......h....... ngày ....... tháng ....... năm 20.......</div>
+                </div>
+                <div class="col-footer">
+                    <div class="sign-box">
+                        <div class="sign-title">NGƯỜI NIÊM PHONG</div>
+                    </div>
+                </div>
+            </div>
+            <div class="cut-line"><span>✄ Cắt tại đây</span></div>
+        </div>
+
+        <!-- PHIẾU 4 -->
+        <div class="seal-container">
+            <img src="Logo.png" class="watermark-logo" onerror="this.style.display='none'">
+            <div class="security-pattern">
+                NIÊM PHONG SEALED NIÊM PHONG SEALED NIÊM PHONG SEALED NIÊM PHONG SEALED
+                NIÊM PHONG SEALED NIÊM PHONG SEALED NIÊM PHONG SEALED NIÊM PHONG SEALED
+            </div>
+            
+            <div class="seal-content">
+                <div class="col-header">
+                    <img src="Logo.png" alt="Logo" class="logo-img" onerror="this.style.display='none'">
+                    <div class="company-text"><h3>CTY CP TÀ LÙNG QUANG MINH</h3></div>
+                    <div class="seal-title">PHIẾU NIÊM PHONG</div>
+                </div>
+                <div class="col-body">
+                    <div><strong>Vật phẩm/Khu vực:</strong> ..........................................................................................</div>
+                    <div><strong>Lý do:</strong> .....................................................................................................................</div>
+                    <div><strong>Thời gian:</strong> .......h....... ngày ....... tháng ....... năm 20.......</div>
+                </div>
+                <div class="col-footer">
+                    <div class="sign-box">
+                        <div class="sign-title">NGƯỜI NIÊM PHONG</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Tiệc Tất Niên (12x18)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@400;500;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border-radius: 4px;
+            z-index: 9999;
+        }
+        .print-btn:hover { background-color: #000; }
+
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+
+        .page {
+            width: 297mm;
+            height: 210mm;
+            background: white;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 18mm;
+            position: relative;
+        }
+
+        /* KHUNG MENU CHÍNH */
+        .menu-card {
+            width: 120mm;
+            height: 180mm;
+            border: 1px dashed #999;
+            padding: 6mm; /* ➜ tăng vùng an toàn */
+            position: relative;
+            background-color: #fff;
+        }
+
+        .inner-content {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 6mm 6mm 7mm; /* ➜ top / sides / bottom */
+            z-index: 1;
+        }
+
+        /* Header */
+        .header-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 6mm; /* ➜ thoáng hơn */
+            width: 100%;
+            z-index: 2;
+        }
+
+        .top-logo {
+            width: 46px;
+            height: auto;
+            filter: grayscale(100%);
+        }
+
+        .company-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 9pt;
+            text-transform: uppercase;
+            color: #000;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            text-align: left;
+            line-height: 1.25;
+            white-space: nowrap;
+        }
+
+        .menu-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 38pt;
+            color: #000;
+            margin: 2mm 0 1mm;
+            line-height: 1;
+            z-index: 2;
+        }
+
+        .sub-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #000;
+            margin-bottom: 2mm;
+            width: 100%;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .date {
+            font-family: 'Playfair Display', serif;
+            font-size: 10pt;
+            font-style: italic;
+            color: #000;
+            margin-bottom: 6mm; /* ➜ tạo nhịp trước danh sách */
+            z-index: 2;
+        }
+
+        /* Danh sách món ăn */
+        .menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            width: 100%;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 3.5mm; /* ➜ thay vì margin-bottom từng dòng */
+            z-index: 2;
+        }
+
+        .menu-list li {
+            font-size: 11pt;
+            color: #000;
+            font-weight: 500;
+            font-family: 'Playfair Display', serif;
+            line-height: 1.35;
+        }
+
+        /* Footer */
+        .footer {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 12pt;
+            color: #000;
+            margin-top: 6mm; /* ➜ cách danh sách rõ hơn */
+            z-index: 2;
+        }
+
+        /* Logo nền */
+        .bg-watermark {
+            position: absolute;
+            top: 54%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 68%;
+            opacity: 0.05;
+            z-index: 0;
+            filter: grayscale(100%);
+        }
+
+        @media print {
+            body { background: none; }
+            .print-btn { display: none; }
+            .page { width: 297mm; height: 210mm; box-shadow: none; margin: 0; }
+        }
+
+        .date {
+            margin-bottom: 8mm; /* tách rõ phần trên */
+        }
+
+        .menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+            width: 100%;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2mm; /* ➜ sát nhau hơn */
+        }
+
+        .menu-list li {
+            font-size: 11pt;
+            line-height: 1.25; /* ➜ ép dòng gọn hơn */
+        }
+
+        .footer {
+            margin-top: 8mm; /* tách rõ phần dưới */
+        }
+
+        
+
+    </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">🖨️ IN MENU (B&W)</button>
+
+<div class="page">
+    
+    <!-- MENU 1 -->
+    <div class="menu-card">
+        <div class="inner-content">
+            
+            <img src="Logo.png" class="bg-watermark" onerror="this.style.display='none'">
+
+            <div class="header-group">
+                <img src="Logo.png" class="top-logo" alt="Logo" onerror="this.src='https://placehold.co/100x100?text=LOGO'">
+                <div class="company-name">Công ty Cổ phần Tà Lùng Quang Minh</div>
+            </div>
+            
+            <h1 class="menu-title">Menu</h1>
+            <div class="sub-title">TIỆC TẤT NIÊN 2025</div>
+            <div class="date">Ngày 05 tháng 02 năm 2026</div>
+
+            <ul class="menu-list">
+                <li>Gà trống mán luộc</li>
+                <li>Vịt đầu xanh chao dầu</li>
+                <li>Chân giò lợn đen hầm thảo mộc</li>
+                <li>Ba chỉ lợn đen quay mắc mật</li>
+                <li>Cá suối chiên giòn lá lốt</li>
+                <li>Lẩu xương hầm rau rừng</li>
+                <li>Chim rừng quay</li>
+                <li>Bánh chưng nếp nương</li>
+                <li>Bánh phở tươi chấm bò sốt vang</li>
+                <li>Chả mực giã tay Hạ Long</li>
+                <li>Tôm sú biển hấp sả tươi</li>
+                <li>Mực khô nướng xé tay</li>
+                <li>Hoa quả ngọt lành vùng cao Trà Lĩnh</li>
+            </ul>
+
+            <div class="footer">Chúc quý khách ngon miệng!</div>
+        </div>
+    </div>
+
+    <!-- MENU 2 -->
+    <div class="menu-card">
+        <div class="inner-content">
+            
+            <img src="Logo.png" class="bg-watermark" onerror="this.style.display='none'">
+
+            <div class="header-group">
+                <img src="Logo.png" class="top-logo" alt="Logo" onerror="this.src='https://placehold.co/100x100?text=LOGO'">
+                <div class="company-name">Công ty Cổ phần Tà Lùng Quang Minh</div>
+            </div>
+            
+            <h1 class="menu-title">Menu</h1>
+            <div class="sub-title">TIỆC TẤT NIÊN 2025</div>
+            <div class="date">Ngày 05 tháng 02 năm 2026</div>
+
+            <ul class="menu-list">
+                <li>Gà trống mán luộc</li>
+                <li>Vịt đầu xanh chao dầu</li>
+                <li>Chân giò lợn đen hầm thảo mộc</li>
+                <li>Ba chỉ lợn đen quay mắc mật</li>
+                <li>Cá suối chiên giòn lá lốt</li>
+                <li>Lẩu xương hầm rau rừng</li>
+                <li>Chim rừng quay</li>
+                <li>Bánh chưng nếp nương</li>
+                <li>Bánh phở tươi chấm bò sốt vang</li>
+                <li>Chả mực giã tay Hạ Long</li>
+                <li>Tôm sú biển hấp sả tươi</li>
+                <li>Mực khô nướng xé tay</li>
+                <li>Hoa quả ngọt lành vùng cao Trà Lĩnh</li>
+            </ul>
+
+            <div class="footer">Chúc quý khách ngon miệng!</div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

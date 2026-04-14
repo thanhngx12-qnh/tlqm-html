@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banner Khai Xuân 2026 - Tà Lùng Quang Minh</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* KHUNG CHÍNH - 1200x630 */
+        .banner-container {
+            width: 1200px;
+            height: 630px;
+            position: relative;
+            /* Nền đỏ tươi tắn, năng động cho Khai Xuân */
+            background: linear-gradient(135deg, #d90000 0%, #a30000 50%, #7a0000 100%);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 4px solid #ffd700;
+        }
+
+        /* TIA SÁNG ĐỘNG LỰC (Sunburst nền) */
+        .sunburst {
+            position: absolute;
+            top: -20%; left: -20%; width: 140%; height: 140%;
+            background: repeating-conic-gradient(
+                from 0deg at 50% 50%, 
+                rgba(255, 215, 0, 0.08) 0deg 5deg, 
+                transparent 5deg 10deg
+            );
+            z-index: 1;
+            animation: rotateBg 60s linear infinite; /* Quay rất chậm tạo cảm giác tỏa sáng */
+        }
+
+        /* KHUNG VIỀN SVG MỎNG CHUYÊN NGHIỆP */
+        .border-deco {
+            position: absolute;
+            top: 15px; bottom: 15px; left: 15px; right: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        /* NỘI DUNG CHÍNH */
+        .content {
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            padding: 25px 40px 15px 40px;
+            position: relative;
+        }
+
+        /* HEADER: Logo + Tên công ty */
+        .header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+        
+        /* Giữ nguyên khối trắng cho Logo Navy */
+        .logo {
+            height: 70px;
+            background-color: #ffffff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border: 1px solid #ffd700;
+            object-fit: contain;
+        }
+
+        .company-name {
+            font-size: 22px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fff;
+            font-weight: 400;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* BODY SECTION */
+        .main-body {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            flex-grow: 1;
+            padding: 0 20px;
+        }
+
+        /* Cột trái: Text */
+        .text-column {
+            width: 65%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Cột phải: Hình Ngựa */
+        .image-column {
+            width: 35%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* TEXT STYLING */
+        .notice-tag {
+            display: inline-block;
+            background-color: #ffd700;
+            color: #7a0000;
+            font-weight: 800;
+            font-size: 16px;
+            padding: 5px 15px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            align-self: flex-start;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .title-primary {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 65px;
+            line-height: 1.1;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.6);
+            margin-bottom: 10px;
+        }
+
+        .title-secondary {
+            font-size: 42px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            /* Gradient vàng kim loại */
+            background: linear-gradient(to bottom, #ffffe0 0%, #ffd700 40%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 4px 2px rgba(100, 0, 0, 0.8));
+            letter-spacing: 1px;
+        }
+
+        .highlight-box {
+            background: rgba(0, 0, 0, 0.25);
+            border-left: 5px solid #ffd700;
+            padding: 15px 20px;
+            border-radius: 0 10px 10px 0;
+            backdrop-filter: blur(5px);
+            margin-bottom: 20px;
+            max-width: 90%;
+        }
+
+        .highlight-text {
+            color: #fff;
+            font-size: 18px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        
+        .highlight-text strong {
+            color: #ffd700;
+        }
+
+        /* IMAGE STYLING */
+        .glow-circle {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .horse-img {
+            height: 300px; /* Hình ngựa lớn hơn, uy dũng hơn */
+            z-index: 2;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.6));
+            /* Lật ngựa hướng về bên trái (hướng về phía text) nếu cần, tùy thuộc file ảnh của bạn */
+            /* transform: scaleX(-1); */ 
+        }
+
+        /* FOOTER */
+        .footer {
+            border-top: 1px solid rgba(255, 215, 0, 0.3);
+            width: 100%;
+            padding-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .slogan {
+            /* font-family: 'Playfair Display', serif; */
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            font-style: italic;
+            color: #ffd700;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 5px;
+        }
+
+        .contact-info {
+            font-size: 13px;
+            color: #ffffff;
+            font-weight: 500;
+            display: flex;
+            gap: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .contact-icon {
+            color: #ffd700;
+            font-size: 16px;
+        }
+
+        .qr-placeholder {
+            width: 60px;
+            height: 60px;
+            background: #fff;
+            padding: 3px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #333;
+            text-align: center;
+            font-weight: bold;
+            border: 2px solid #ffd700;
+        }
+
+        /* ẢNH DECOR */
+        .flower-branch {
+            position: absolute;
+            z-index: 5;
+            width: 220px;
+            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.4));
+            opacity: 0.9;
+        }
+        .f-tl { top: -20px; left: -20px; transform: rotate(-15deg); }
+        .f-tr { top: -20px; right: -20px; transform: scaleX(-1) rotate(-15deg); }
+
+        img { display: block; }
+    </style>
+</head>
+<body>
+
+    <div class="banner-container">
+        <!-- Nền tia sáng động lực -->
+        <div class="sunburst"></div>
+        
+        <!-- Viền mỏng -->
+        <div class="border-deco"></div>
+
+        <!-- Hoa trang trí nhẹ ở góc trên -->
+
+        <div class="content">
+            <!-- HEADER -->
+            <div class="header">
+                <img src="logo.png" alt="Logo" class="logo">
+                <div class="company-name">Công Ty Cổ Phần Tà Lùng Quang Minh</div>
+            </div>
+
+            <!-- MAIN BODY -->
+            <div class="main-body">
+                <!-- Cột Trái: Thông điệp -->
+                <div class="text-column">
+                    <div class="notice-tag">Thông Báo Khai Xuân</div>
+                    <h1 class="title-primary">Chính Thức</h1>
+                    <h2 class="title-secondary">Hoạt Động Trở Lại!</h2>
+                    
+                    <div class="highlight-box">
+                        <p class="highlight-text">
+                            Sẵn sàng phục vụ với <strong>100% năng lượng!</strong><br>
+                            Tiếp nhận mọi yêu cầu vận tải, kho bãi & thủ tục XNK.<br>
+                            Khởi đầu năm mới với tinh thần <strong>"Mã Đáo Thành Công"</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Cột Phải: Hình ảnh năng lượng -->
+                <div class="image-column">
+                    <div class="glow-circle"></div>
+                    <img src="horse.png" alt="Golden Horse" class="horse-img">
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <div class="footer">
+                <div>
+                    <div class="slogan">"Kết nối biên giới - Vươn tới toàn cầu"</div>
+                    <div class="contact-info">
+                        <span class="contact-item"><span class="contact-icon">🌐</span> talunglogistics.com</span>
+                        <span class="contact-item"><span class="contact-icon">📍</span> CKQT Tà Lùng, Phục Hòa, Cao Bằng</span>
+                        <span class="contact-item"><span class="contact-icon">📞</span> Hotline: +84 96 3320 355</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

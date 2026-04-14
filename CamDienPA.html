@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sơ Đồ Kho Bãi Phú Anh (Trắng Đen - Bản In)</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn-print {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .btn-print:hover {
+            background-color: #000;
+        }
+
+        /* Khung giấy A4 - Tỷ lệ chuẩn Landscape */
+        .a4-wrapper {
+            width: 297mm;
+            height: 210mm;
+            background: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Phong cách vẽ Trắng Đen */
+        .line-main {
+            fill: none;
+            stroke: #000;
+            stroke-width: 2;
+        }
+
+        .line-gate {
+            fill: none;
+            stroke: #000;
+            stroke-width: 2;
+        }
+        
+        .line-hatch {
+            fill: none;
+            stroke: #000;
+            stroke-width: 1.5;
+        }
+
+        .building {
+            fill: #fff;
+            stroke: #000;
+            stroke-width: 2;
+        }
+
+        .cabinet {
+            fill: #fff;
+            stroke: #000;
+            stroke-width: 1.5;
+        }
+
+        text {
+            fill: #000;
+            font-family: Arial, Helvetica, sans-serif;
+            pointer-events: none;
+        }
+
+        .text-bold { font-weight: bold; }
+        .text-center { text-anchor: middle; dominant-baseline: central; }
+
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+            body {
+                background: white;
+                padding: 0;
+            }
+            .btn-print {
+                display: none;
+            }
+            .a4-wrapper {
+                box-shadow: none;
+                width: 100vw;
+                height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="btn-print" onclick="window.print()">🖨️ In Bản Vẽ A4 (Ctrl + P)</button>
+
+    <div class="a4-wrapper">
+        <svg viewBox="0 0 1200 950" xmlns="http://www.w3.org/2000/svg">
+            
+            <!-- ĐƯỜNG RANH GIỚI BÃI CHÍNH (Căn chỉnh đường dưới cùng bằng phẳng) -->
+            <path class="line-main" d="
+                M 550 840 
+                L 950 840 
+                L 950 910 
+                L 1050 910 
+                L 1050 840 
+                L 1100 840 
+                L 1100 50 
+                L 100 50 
+                L 100 420 
+                L 50 420 
+                L 50 520 
+                L 100 520 
+                L 100 840 
+                L 450 840" />
+
+            <!-- Cửa kéo Cổng PA2 (Vát chéo nhô lên từ mốc 450) -->
+            <line class="line-gate" x1="450" y1="840" x2="530" y2="760" />
+            <!-- Các vạch gạch chéo trên cổng PA2 -->
+            <path class="line-hatch" d="
+                M 456 834 L 476 814 
+                M 472 818 L 492 798 
+                M 488 802 L 508 782 
+                M 504 786 L 524 766" />
+
+
+            <!-- ================= CHỮ KHU VỰC & CỔNG ================= -->
+            
+            <text x="450" y="190" class="text-center text-bold" font-size="18">Bãi PA 3</text>
+            <text x="350" y="690" class="text-center text-bold" font-size="18">Bãi PA 2</text>
+            
+            <!-- Tên các cổng -->
+            <text x="75" y="470" class="text-center text-bold" font-size="16" transform="rotate(-90 75 470)">Cổng PA3</text>
+            <text x="500" y="830" class="text-center text-bold" font-size="16" transform="rotate(-45 500 830)">Cổng PA2</text>
+            <text x="1000" y="875" class="text-center text-bold" font-size="16">Cổng PA1</text>
+
+
+            <!-- ================= CÔNG TRÌNH / NHÀ XƯỞNG ================= -->
+            
+            <!-- Info Box: Bãi Phú Anh -->
+            <rect class="building" x="780" y="120" width="220" height="140" />
+            <text x="890" y="150" class="text-center text-bold" font-size="18">Bãi Phú Anh</text>
+            <text x="810" y="190" font-size="16">- Tổng 5 tủ</text>
+            <text x="810" y="220" font-size="16">- 20 ổ cắm</text>
+
+            <!-- Bàn cân (Góc trên trái) -->
+            <rect class="building" x="130" y="170" width="45" height="110" />
+            <text x="153" y="225" class="text-center text-bold" font-size="15" transform="rotate(90 153 225)">Bàn cân</text>
+
+            <!-- Nhà BV 1 (Bên trên cổng PA3) -->
+            <rect class="building" x="100" y="340" width="35" height="40" />
+            <text x="118" y="360" class="text-center text-bold" font-size="14" transform="rotate(90 118 360)">BV</text>
+
+            <!-- Nhà BV 2 (Bên dưới cổng PA3) -->
+            <rect class="building" x="100" y="550" width="35" height="40" />
+            <text x="118" y="570" class="text-center text-bold" font-size="14" transform="rotate(90 118 570)">BV</text>
+
+            <!-- Nhà điều hành -->
+            <rect class="building" x="240" y="340" width="320" height="150" />
+            <text x="400" y="415" class="text-center text-bold" font-size="20">Nhà điều hành</text>
+
+            <!-- Nhà sang tải PA2 (Sát xuống mặt đường dưới Y=840) -->
+            <rect class="building" x="160" y="780" width="260" height="60" />
+            <text x="290" y="810" class="text-center text-bold" font-size="16">Nhà sang tải PA2</text>
+
+            <!-- Miếu -->
+            <rect class="building" x="660" y="620" width="50" height="60" />
+            <text x="685" y="650" class="text-center text-bold" font-size="14" transform="rotate(90 685 650)">Miếu</text>
+
+
+            <!-- ================= HỆ THỐNG TỦ ĐIỆN (5 Tủ / 20 Ổ cắm) ================= -->
+            
+            <!-- T1 (5 ổ) - Giữa Nhà điều hành -->
+            <g>
+                <rect class="cabinet" x="380" y="490" width="40" height="30" />
+                <text x="400" y="505" class="text-center text-bold" font-size="14">T1</text>
+                <text x="400" y="540" class="text-center" font-size="14">5 ổ</text>
+            </g>
+
+            <!-- T2 (3 ổ) - Dọc mép trái -->
+            <g>
+                <rect class="cabinet" x="100" y="670" width="35" height="45" />
+                <text x="118" y="692" class="text-center text-bold" font-size="14" transform="rotate(-90 118 692)">T2</text>
+                <text x="145" y="692" class="text-center" font-size="14" transform="rotate(-90 145 692)">3 ổ</text>
+            </g>
+
+            <!-- T3 (4 ổ) - Gắn bên trái mép dưới Miếu -->
+            <g>
+                <text x="590" y="665" class="text-center" font-size="14" transform="rotate(-90 590 665)">4 ổ</text>
+                <rect class="cabinet" x="625" y="640" width="35" height="40" />
+                <text x="643" y="660" class="text-center text-bold" font-size="14" transform="rotate(-90 643 660)">T3</text>
+            </g>
+
+            <!-- T4, T5 (4 ổ) - Sát mép đường dưới (Y=840) -->
+            <g>
+                <text x="800" y="790" class="text-center" font-size="14">4 ổ</text>
+                <rect class="cabinet" x="785" y="805" width="30" height="35" />
+                <text x="800" y="825" class="text-center text-bold" font-size="14">T4</text>
+                
+                <text x="830" y="790" class="text-center" font-size="14">4 ổ</text>
+                <rect class="cabinet" x="815" y="805" width="30" height="35" />
+                <text x="830" y="825" class="text-center text-bold" font-size="14">T5</text>
+            </g>
+
+
+            <!-- ================= KHUNG THÔNG TIN BẢN VẼ (TITLE BLOCK) ================= -->
+            <!-- Chuyển xuống góc dưới cùng bên phải ngoài khu vực bãi để in làm footer -->
+            <g transform="translate(600, 860)">
+                <rect width="300" height="70" fill="none" stroke="#000" stroke-width="2" />
+                <line x1="0" y1="25" x2="300" y2="25" stroke="#000" stroke-width="1.5" />
+                <line x1="180" y1="25" x2="180" y2="70" stroke="#000" stroke-width="1.5" />
+                
+                <text x="150" y="12" class="text-center text-bold" font-size="14">CÔNG TY CỔ PHẦN TÀ LÙNG QUANG MINH</text>
+                
+                <text x="90" y="40" class="text-center text-bold" font-size="13">SƠ ĐỒ VỊ TRÍ TỦ ĐIỆN</text>
+                <text x="90" y="58" class="text-center text-bold" font-size="13">BÃI PHÚ ANH</text>
+
+                <text x="190" y="40" font-size="12">Ngày: ...../...../20...</text>
+            </g>
+
+        </svg>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banner Phú Anh x MISA - Modern Tech (Brighter)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;700&family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #e0f2fe; /* Nền body sáng hơn */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+        }
+
+        /* KHUNG 16:9 (1280x720) */
+        .banner-container {
+            width: 1280px;
+            height: 720px;
+            position: relative;
+            /* Gradient Xanh sáng rực rỡ hơn */
+            background: linear-gradient(135deg, #003366 0%, #0052cc 50%, #0073e6 100%);
+            box-shadow: 0 0 80px rgba(0, 82, 204, 0.4);
+            overflow: hidden;
+            color: white;
+            border: 1px solid #60a5fa;
+        }
+
+        /* --- BACKGROUND TECH ELEMENTS --- */
+        /* Mạng lưới Circuit */
+        .circuit-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+        }
+
+        /* Vùng sáng ambient (Tăng độ sáng) */
+        .glow-spot {
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.3) 0%, transparent 70%);
+            top: -20%;
+            left: -10%;
+            z-index: 0;
+            filter: blur(60px);
+        }
+        
+        .glow-spot-2 {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, transparent 70%);
+            bottom: -10%;
+            right: -10%;
+            z-index: 0;
+            filter: blur(60px);
+        }
+
+        /* --- SAFE AREA --- */
+        .safe-area {
+            position: absolute;
+            top: 0;
+            left: 6.25%;
+            width: 87.5%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        /* --- HEADER LABEL (Sharp Tag) --- */
+        .top-label {
+            background: rgba(255, 255, 255, 0.15); /* Sáng hơn */
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #e0f2fe; 
+            padding: 8px 30px;
+            font-family: 'Chakra Petch', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 4px;
+            margin-bottom: 50px;
+            position: relative;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            backdrop-filter: blur(4px);
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
+        }
+        
+        .top-label::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: #7dd3fc;
+        }
+
+        /* --- PARTNERSHIP LOGOS (Square/Boxy) --- */
+        .logos-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+
+        .logo-box {
+            width: 260px;
+            height: 110px;
+            background: #fff;
+            border-radius: 2px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* Giảm bóng đen */
+            border: 1px solid #e2e8f0;
+        }
+        
+        .logo-box::after {
+            content: '';
+            position: absolute;
+            top: -1px; left: -1px;
+            width: 15px; height: 15px;
+            border-top: 3px solid #0052cc; /* Đổi màu góc sang xanh */
+            border-left: 3px solid #0052cc;
+        }
+        .logo-box::before {
+            content: '';
+            position: absolute;
+            bottom: -1px; right: -1px;
+            width: 15px; height: 15px;
+            border-bottom: 3px solid #0052cc;
+            border-right: 3px solid #0052cc;
+        }
+
+        .logo-img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        /* Dấu X (Cross) */
+        .x-icon {
+            width: 40px;
+            height: 40px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .x-icon::before, .x-icon::after {
+            content: '';
+            position: absolute;
+            width: 100%; height: 3px;
+            background: #93c5fd; /* Sáng hơn */
+            box-shadow: 0 0 10px #93c5fd;
+        }
+        .x-icon::before { transform: rotate(45deg); }
+        .x-icon::after { transform: rotate(-45deg); }
+
+
+        /* --- MAIN TITLE --- */
+        .main-title {
+            text-align: center;
+            font-size: 56px;
+            font-weight: 900;
+            line-height: 1.1;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            color: #fff;
+            letter-spacing: -1px;
+            text-shadow: 0 4px 15px rgba(0, 50, 150, 0.6);
+        }
+        
+        .main-title span {
+            color: #7dd3fc; /* Cyan sáng hơn */
+            text-shadow: 0 0 20px rgba(125, 211, 252, 0.6);
+        }
+
+        .sub-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            color: #bae6fd; /* Xanh nhạt */
+            font-weight: 500;
+            margin-bottom: 60px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .sub-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: #7dd3fc;
+            margin: 15px auto 0;
+            box-shadow: 0 0 10px #7dd3fc;
+        }
+
+        /* --- MODULES CARDS (BRIGHTER GLASS) --- */
+        .modules-row {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+        }
+
+        .module-card {
+            width: 240px;
+            height: 160px;
+            /* Nền kính sáng hơn: Pha trắng thay vì pha đen */
+            background: rgba(255, 255, 255, 0.1); 
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-left: 1px solid rgba(255, 255, 255, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 2px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        
+        .module-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+            border-color: #7dd3fc;
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.4);
+        }
+
+        /* Dải màu định danh */
+        .module-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 4px;
+        }
+        
+        .mod-office::before { background: #38bdf8; box-shadow: 2px 0 15px #38bdf8; }
+        .mod-hr::before { background: #fb7185; box-shadow: 2px 0 15px #fb7185; }
+        .mod-purchase::before { background: #34d399; box-shadow: 2px 0 15px #34d399; }
+
+        .module-icon {
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Thêm background nhẹ cho icon để nổi hơn */
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+        }
+
+        .module-icon svg {
+            width: 80%;
+            height: 80%;
+            /* fill: #fff; */
+        }
+        
+        /* Màu icon tươi hơn */
+        .mod-office svg { fill: #38bdf8; filter: drop-shadow(0 0 5px #38bdf8); }
+        .mod-hr svg { fill: #fb7185; filter: drop-shadow(0 0 5px #fb7185); }
+        .mod-purchase svg { fill: #34d399; filter: drop-shadow(0 0 5px #34d399); }
+
+        .module-text {
+            font-family: 'Chakra Petch', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            text-transform: uppercase;
+            color: #fff;
+            line-height: 1.3;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        /* --- FOOTER DECOR (Tech Lines) --- */
+        .tech-lines-bottom {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            opacity: 0.7; /* Tăng độ rõ */
+        }
+        
+        .line-deco { height: 1px; background: #60a5fa; width: 100px; box-shadow: 0 0 5px #60a5fa; }
+        .dot-deco { width: 4px; height: 4px; background: #fff; border-radius: 0; box-shadow: 0 0 5px #fff; }
+
+    </style>
+</head>
+<body>
+
+    <div class="banner-container">
+        <!-- Background -->
+        <div class="circuit-bg"></div>
+        <div class="glow-spot"></div>
+        <div class="glow-spot-2"></div>
+
+        <div class="safe-area">
+            
+            <!-- Label Tag -->
+            <div class="top-label">HỢP TÁC CHIẾN LƯỢC</div>
+
+            <!-- Logos Boxy Style -->
+            <div class="logos-container">
+                <!-- Logo Phú Anh -->
+                <div class="logo-box">
+                    <img 
+                        src="Logo.png" 
+                        alt="Phú Anh Logistics" 
+                        class="logo-img"
+                        onerror="this.src='https://placehold.co/200x80?text=PHU+ANH'"
+                    >
+                </div>
+
+                <div class="x-icon"></div>
+
+                <!-- Logo MISA -->
+                <div class="logo-box">
+                    <img 
+                        src="Logo_MISA_JSC_Vie.jpg" 
+                        alt="MISA" 
+                        class="logo-img"
+                        onerror="this.src='https://placehold.co/200x80?text=MISA'"
+                    >
+                </div>
+            </div>
+
+            <!-- Title -->
+            <h1 class="main-title">
+                ĐẨY MẠNH <span>CHUYỂN ĐỔI SỐ</span><br>TOÀN DIỆN DOANH NGHIỆP
+            </h1>
+            
+            <div class="sub-title">Hệ sinh thái quản trị MISA AMIS</div>
+
+            <!-- 3 Modules (Brighter Glass & SVG Icons) -->
+            <div class="modules-row">
+                <!-- Module 1 -->
+                <div class="module-card mod-office">
+                    <div class="module-icon">
+                        <!-- Icon Folder/Office SVG -->
+                        <svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>
+                    </div>
+                    <span class="module-text">Văn Phòng Số</span>
+                </div>
+                
+                <!-- Module 2 -->
+                <div class="module-card mod-hr">
+                    <div class="module-icon">
+                        <!-- Icon People/HR SVG -->
+                        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    </div>
+                    <span class="module-text">Quản Trị<br>Nhân Sự</span>
+                </div>
+                
+                <!-- Module 3 -->
+                <div class="module-card mod-purchase">
+                    <div class="module-icon">
+                        <!-- Icon Cart/Purchase SVG -->
+                        <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                    </div>
+                    <span class="module-text">Quản Lý<br>Mua Hàng</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Tech lines decoration -->
+        <div class="tech-lines-bottom">
+            <div class="line-deco" style="width: 200px"></div>
+            <div class="dot-deco"></div>
+            <div class="dot-deco"></div>
+            <div class="dot-deco"></div>
+            <div class="line-deco" style="width: 200px"></div>
+        </div>
+    </div>
+
+</body>
+</html>

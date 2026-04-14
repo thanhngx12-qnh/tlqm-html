@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quy Trình Triển Khai Đề Xuất Đầu Tư Xây Dựng</title>
+    <style>
+        body {
+            background-color: #f4f4f9;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .swimlane-wrapper {
+            border: 2px solid #000;
+            width: 100%;
+            max-width: 1100px;
+            margin-bottom: 20px;
+            font-family: 'Times New Roman', serif;
+            background-color: #fdfdfd;
+        }
+
+        .swimlane-header {
+            display: flex;
+            background-color: #d9d9d9;
+            border-bottom: 2px solid #000;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .swimlane-col-header {
+            flex: 1;
+            padding: 15px 5px;
+            border-right: 1px solid #000;
+            text-transform: uppercase;
+            font-size: 11pt;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .swimlane-col-header:last-child {
+            border-right: none;
+        }
+
+        .swimlane-body {
+            display: flex;
+            position: relative;
+            min-height: 1000px; /* Tự động tăng dựa trên content nội bộ */
+        }
+
+        .lane {
+            flex: 1;
+            border-right: 1px dashed #999;
+            position: relative;
+            padding: 0;
+        }
+
+        .lane:last-child {
+            border-right: none;
+        }
+
+        /* KHỐI HÌNH (NODES) */
+        .node {
+            width: 120px;
+            padding: 8px 5px;
+            border: 1px solid #000;
+            background-color: #fff;
+            text-align: center;
+            margin: 0 auto;
+            font-size: 9pt;
+            position: absolute;
+            left: 0;
+            right: 0;
+            z-index: 2;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            box-sizing: border-box;
+            line-height: 1.2;
+        }
+
+        .start-end {
+            border-radius: 15px;
+            background-color: #e2efda;
+            font-weight: bold;
+            height: 40px;
+        }
+
+        .process {
+            background-color: #ffffff;
+            height: 55px;
+        }
+
+        .decision {
+            background-color: #fff2cc;
+            transform: rotate(45deg);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0;
+            margin: 0 auto;
+            position: absolute;
+            left: 0;
+            right: 0;
+            z-index: 2;
+            border: 1px solid black;
+            box-shadow: 2px -2px 5px rgba(0,0,0,0.1);
+        }
+
+        .decision-content {
+            transform: rotate(-45deg);
+            width: 110px;
+            text-align: center;
+            font-size: 9pt;
+            font-weight: bold;
+            line-height: 1.1;
+        }
+
+        .predefined {
+            background-color: #ffffff;
+            height: 60px;
+            position: relative;
+            font-weight: bold;
+        }
+
+        .predefined::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 8px;
+            width: 1px;
+            background-color: black;
+        }
+
+        .predefined::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 8px;
+            width: 1px;
+            background-color: black;
+        }
+
+        /* ĐƯỜNG NỐI & MŨI TÊN (CONNECTORS & ARROWS) */
+        .connector-v {
+            position: absolute;
+            width: 1.5px;
+            background-color: #000;
+            z-index: 1;
+        }
+
+        .connector-h {
+            position: absolute;
+            height: 1.5px;
+            background-color: #000;
+            z-index: 1;
+        }
+
+        .arrow-down {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 8px solid black;
+            z-index: 3;
+        }
+
+        .arrow-head-right {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 8px solid black;
+            z-index: 3;
+        }
+
+        .decision-label {
+            font-size: 8.5pt;
+            font-style: italic;
+            background-color: #fdfdfd;
+            padding: 1px 4px;
+            position: absolute;
+            z-index: 4;
+            font-weight: bold;
+            border: 1px dashed #ccc;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="swimlane-wrapper">
+    <div class="swimlane-header">
+        <div class="swimlane-col-header">Ban Lãnh đạo / TGĐ</div>
+        <div class="swimlane-col-header">Phòng KH - DA<br>(Chủ trì)</div>
+        <div class="swimlane-col-header">Các phòng ban liên quan<br>(Vận hành, Kế toán, TĐMS)</div>
+    </div>
+
+    <div class="swimlane-body">
+        <!-- BACKGROUND LANES -->
+        <div class="lane"></div>
+        <div class="lane"></div>
+        <div class="lane"></div>
+
+        <!-- ================= NODES ================= -->
+        
+        <!-- Lane 1 Nodes -->
+        <div class="node start-end" style="top: 20px;">Giao chủ trương đầu tư</div>
+        
+        <div class="decision" style="top: 615px;">
+            <div class="decision-content">Phê duyệt phương án?</div>
+        </div>
+
+        <div class="node start-end" style="top: 730px; background-color: #f2dbdb;">Hủy bỏ / Lưu HS</div>
+
+
+        <!-- Lane 2 Nodes -->
+        <div class="node process" style="top: 90px;">Bước 1. Tiếp nhận & Làm rõ chủ trương</div>
+        <div class="node process" style="top: 170px;">Bước 2. Khảo sát hiện trạng & Thu thập DL</div>
+        <div class="node process" style="top: 250px;">Bước 3. Xây dựng các phương án sơ bộ</div>
+        <div class="node process" style="top: 330px;">Bước 4. Lập hồ sơ đề xuất đầu tư</div>
+        <div class="node process" style="top: 490px;">Bước 6. Hoàn thiện HS & Trình duyệt</div>
+        
+        <div class="node predefined" style="top: 740px; height: 65px;">Bước 7-10. Triển khai dự án<br><span style="font-size: 7.5pt; font-weight: normal;">(Thầu, Ký HĐ, Thi công)</span></div>
+        <div class="node start-end" style="top: 935px;">Đưa vào sử dụng & Kết thúc</div>
+
+
+        <!-- Lane 3 Nodes -->
+        <div class="node process" style="top: 410px; height: 60px;">Bước 5. Thẩm định & Góp ý chuyên môn</div>
+        <div class="node process" style="top: 840px;">Bước 11. Tiếp nhận bàn giao & Hậu kiểm</div>
+
+
+        <!-- ================= CONNECTORS ================= -->
+
+        <!-- Start -> B1 -->
+        <div class="connector-v" style="left: 16.66%; top: 60px; height: 15px;"></div>
+        <div class="connector-h" style="left: 16.66%; right: 50%; top: 75px;"></div>
+        <div class="connector-v" style="left: 50%; top: 75px; height: 10px;"></div>
+        <div class="arrow-down" style="left: calc(50% - 5px); top: 83px;"></div>
+
+        <!-- B1 -> B2 -->
+        <div class="connector-v" style="left: 50%; top: 145px; height: 20px;"></div>
+        <div class="arrow-down" style="left: calc(50% - 5px); top: 163px;"></div>
+
+        <!-- B2 -> B3 -->
+        <div class="connector-v" style="left: 50%; top: 225px; height: 20px;"></div>
+        <div class="arrow-down" style="left: calc(50% - 5px); top: 243px;"></div>
+
+        <!-- B3 -> B4 -->
+        <div class="connector-v" style="left: 50%; top: 305px; height: 20px;"></div>
+        <div class="arrow-down" style="left: calc(50% - 5px); top: 323px;"></div>
+
+        <!-- B4 -> B5 (L2 -> L3) -->
+        <div class="connector-v" style="left: 50%; top: 385px; height: 10px;"></div>
+        <div class="connector-h" style="left: 50%; right: 16.66%; top: 395px;"></div>
+        <div class="connector-v" style="left: 83.33%; top: 395px; height: 10px;"></div>
+        <div class="arrow-down" style="left: calc(83.33% - 5px); top: 403px;"></div>
+
+        <!-- B5 -> B6 (L3 -> L2) -->
+        <div class="connector-v" style="left: 83.33%; top: 470px; height: 10px;"></div>
+        <div class="connector-h" style="left: 50%; right: 16.66%; top: 480px;"></div>
+        <div class="connector-v" style="left: 50%; top: 480px; height: 5px;"></div>
+        <div class="arrow-down" style="left: calc(50% - 5px); top: 483px;"></div>
+
+        <!-- B6 -> Decision (L2 -> L1) -->
+        <div class="connector-v" style="left: 50%; top: 545px; height: 15px;"></div>
+        <div class="connector-h" style="left: 16.66%; right: 50%; top: 560px;"></div>
+        <div class="connector-v" style="left: 16.66%; top: 560px; height: 50px;"></div>
+        <div class="arrow-down" style="left: calc(16.66% - 5px); top: 608px;"></div>
+
+        <!-- ================= DECISION PATHS ================= -->
+        <!-- Center of Decision is ~ 655px -->
+
+        <!-- Path 1: Yêu cầu sửa (Right -> Up -> B3) -->
+        <div class="decision-label" style="top: 630px; left: calc(16.66% + 60px);">Yêu cầu sửa</div>
+        <div class="connector-h" style="left: calc(16.66% + 56px); top: 655px; width: 35px;"></div>
+        <div class="connector-v" style="left: calc(16.66% + 90px); top: 278px; height: 378px;"></div>
+        <div class="connector-h" style="left: calc(16.66% + 90px); right: calc(50% + 60px); top: 278px;"></div>
+        <div class="arrow-head-right" style="right: calc(50% + 53px); top: 274px;"></div>
+
+        <!-- Path 2: Không duyệt (Left -> Down -> End) -->
+        <div class="decision-label" style="top: 630px; left: 4%;">Không duyệt</div>
+        <div class="connector-h" style="left: 8%; right: calc(83.34% + 56px); top: 655px;"></div>
+        <div class="connector-v" style="left: 8%; top: 655px; height: 95px;"></div>
+        <div class="connector-h" style="left: 8%; right: calc(83.34% + 60px); top: 750px;"></div>
+        <div class="arrow-head-right" style="right: calc(83.34% + 53px); top: 746px;"></div>
+
+        <!-- Path 3: Phê duyệt (Bottom -> B7-10) -->
+        <div class="decision-label" style="top: 700px; left: 18%;">Được duyệt</div>
+        <div class="connector-v" style="left: 16.66%; top: 711px; height: 15px;"></div>
+        <div class="connector-h" style="left: 16.66%; right: 50%; top: 726px;"></div>
+        <div class="connector-v" style="left: 50%; top: 726px; height: 10px;"></div>
+        <div class="arrow-down" style="left: calc(50% - 5px); top: 733px;"></div>
+
+        <!-- ================= TRIỂN KHAI VÀ KẾT THÚC ================= -->
+
+        <!-- B7-10 -> B11 (L2 -> L3) -->
+        <div class="connector-v" style="left: 50%; top: 805px; height: 15px;"></div>
+        <div class="connector-h" style="left: 50%; right: 16.66%; top: 820px;"></div>
+        <div class="connector-v" style="left: 83.33%; top: 820px; height: 15px;"></div>
+        <div class="arrow-down" style="left: calc(83.33% - 5px); top: 833px;"></div>
+
+        <!-- B11 -> End (L3 -> L2) -->
+        <div class="connector-v" style="left: 83.33%; top: 895px; height: 15px;"></div>
+        <div class="connector-h" style="left: 50%; right: 16.66%; top: 910px;"></div>
+        <div class="connector-v" style="left: 50%; top: 910px; height: 15px;"></div>
+        <div class="arrow-down" style="left: calc(50% - 5px); top: 928px;"></div>
+
+    </div>
+</div>
+
+</body>
+</html>

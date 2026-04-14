@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banner Đón Tiếp - 3 Option Mới (FontAwesome)</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Framework -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* RESET & BODY CHUNG */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #334155;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 80px;
+            padding: 60px 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .option-title {
+            color: #f8fafc;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: rgba(0,0,0,0.4);
+            padding: 10px 30px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* KHUNG BANNER CHUNG */
+        .banner-base {
+            width: 1200px;
+            height: 630px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            background: #fff;
+        }
+        
+        .banner-base img { object-fit: contain; }
+
+        /* =========================================================
+           OPTION 1: GLASSMORPHISM & WAVES (Kính mờ & Lượn sóng)
+           ========================================================= */
+        .opt-wave {
+            background: linear-gradient(135deg, #f0f4ff 0%, #c3d2ff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Sóng SVG dưới đáy */
+        .opt-wave .wave-bottom {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: auto;
+            z-index: 1;
+        }
+
+        /* Khối kính mờ (Glassmorphism) */
+        .opt-wave .glass-card {
+            width: 1080px;
+            height: 520px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(30, 58, 138, 0.15);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 50px;
+        }
+
+        /* Header trong thẻ kính */
+        .opt-wave .glass-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(30, 58, 138, 0.1);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .opt-wave .glass-logo {
+            height: 75px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+        }
+
+        .opt-wave .host-tag, .opt-wave .guest-tag {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #64748b;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        /* Nội dung giữa */
+        .opt-wave .glass-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .opt-wave .welcome-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+            color: white;
+            padding: 6px 25px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .opt-wave .guest-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 42px;
+            color: #0f172a;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .opt-wave .guest-school {
+            font-size: 38px;
+            font-weight: 900;
+            color: #1e3a8a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .opt-wave .purpose {
+            font-size: 16px;
+            color: #475569;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .opt-wave .company-name {
+            font-size: 26px;
+            font-weight: 800;
+            color: #b48608;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Footer trong thẻ kính */
+        .opt-wave .glass-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid rgba(30, 58, 138, 0.1);
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .opt-wave .glass-footer i { color: #3b82f6; margin-right: 6px; font-size: 15px; }
+        .opt-wave .footer-item { display: flex; align-items: center; gap: 20px; }
+
+
+        /* =========================================================
+           OPTION 2: LUXURY CREAM (Tân Cổ Điển)
+           ========================================================= */
+        .opt-luxury {
+            background-color: #fdfbf7; /* Màu kem sang trọng */
+            padding: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .opt-luxury .inner-frame {
+            width: 100%;
+            height: 100%;
+            border: 2px solid #b48608;
+            position: relative;
+            padding: 8px;
+        }
+
+        .opt-luxury .inner-frame-2 {
+            width: 100%;
+            height: 100%;
+            border: 1px solid #1e3a8a;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 50px;
+            position: relative;
+        }
+
+        /* Góc hoa văn */
+        .opt-luxury .corner-decor {
+            position: absolute;
+            font-size: 24px;
+            color: #b48608;
+        }
+        .opt-luxury .cd-tl { top: -12px; left: -12px; background: #fdfbf7; padding: 0 5px; }
+        .opt-luxury .cd-tr { top: -12px; right: -12px; background: #fdfbf7; padding: 0 5px; }
+        .opt-luxury .cd-bl { bottom: -12px; left: -12px; background: #fdfbf7; padding: 0 5px; }
+        .opt-luxury .cd-br { bottom: -12px; right: -12px; background: #fdfbf7; padding: 0 5px; }
+
+        /* Logos Center */
+        .opt-luxury .logos-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 25px;
+        }
+
+        .opt-luxury .logo-lux { height: 90px; }
+        .opt-luxury .logo-divider { height: 60px; width: 1px; background-color: #cbd5e1; }
+
+        /* Welcome Text */
+        .opt-luxury .text-content {
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .opt-luxury .welcome-txt {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 26px;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .opt-luxury .main-guest {
+            font-family: 'Playfair Display', serif;
+            font-size: 46px;
+            font-weight: 700;
+            color: #1e3a8a;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        .opt-luxury .sub-txt {
+            font-size: 16px;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .opt-luxury .host-name {
+            font-size: 28px;
+            font-weight: 800;
+            color: #b48608;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Footer Lux */
+        .opt-luxury .footer-lux {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: auto;
+            border-top: 1px dashed #cbd5e1;
+            padding-top: 20px;
+            color: #1e3a8a;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .opt-luxury .footer-lux i { color: #b48608; margin-right: 8px; }
+
+
+        /* =========================================================
+           OPTION 3: MODERN DIAGONAL (Cắt chéo Động lực)
+           ========================================================= */
+        .opt-diag {
+            background-color: #ffffff;
+            display: flex;
+            position: relative;
+        }
+
+        /* Mảng chéo màu Navy bên phải */
+        .opt-diag .navy-shape {
+            position: absolute;
+            top: 0; right: 0;
+            width: 42%;
+            height: 100%;
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+            clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-left: 50px;
+        }
+
+        /* Họa tiết lưới mờ trên mảng chéo */
+        .opt-diag .navy-shape::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px; z-index: -1;
+        }
+
+        /* Cột Trái (Màu trắng) */
+        .opt-diag .left-content {
+            width: 65%;
+            height: 100%;
+            padding: 50px;
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .opt-diag .host-logo-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+
+        .opt-diag .diag-logo { height: 75px; }
+
+        .opt-diag .host-title {
+            font-size: 13px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .opt-diag .host-name-txt {
+            font-size: 18px;
+            font-weight: 800;
+            color: #1e3a8a;
+            text-transform: uppercase;
+        }
+
+        .opt-diag .diag-welcome {
+            font-family: 'Playfair Display', serif;
+            font-size: 40px;
+            color: #b48608;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .opt-diag .diag-guest-name {
+            font-size: 44px;
+            font-weight: 900;
+            color: #0f172a;
+            text-transform: uppercase;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .opt-diag .diag-purpose {
+            font-size: 16px;
+            color: #475569;
+            font-weight: 500;
+            border-left: 3px solid #b48608;
+            padding-left: 15px;
+            max-width: 85%;
+        }
+
+        .opt-diag .diag-footer {
+            margin-top: auto;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e3a8a;
+            display: flex;
+            gap: 30px;
+        }
+
+        .opt-diag .diag-footer i { color: #b48608; margin-right: 5px; }
+
+        /* Cột Phải (Màu Navy - Khách mời) */
+        .opt-diag .guest-badge {
+            background: #ffffff;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+            border: 5px solid #b48608;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .opt-diag .guest-logo {
+            max-width: 70%;
+            max-height: 70%;
+        }
+
+        .opt-diag .guest-badge::after {
+            content: "\f2b5"; /* FontAwesome Handshake */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            bottom: -20px;
+            background: #b48608;
+            color: #fff;
+            width: 40px; height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            font-size: 18px;
+            border: 3px solid #1e3a8a;
+        }
+
+        .opt-diag .right-info {
+            text-align: center;
+            color: #e2e8f0;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- ==============================================
+         OPTION 1: KÍNH MỜ & LƯỢN SÓNG (Glassmorphism)
+         ============================================== -->
+    <div class="wrapper">
+        <div class="option-title"><i class="fa-solid fa-water"></i> Option 1: Kính Mờ & Lượn Sóng</div>
+        <div class="banner-base opt-wave">
+            <!-- SVG Wave Background -->
+            <svg class="wave-bottom" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#1e3a8a" fill-opacity="1" d="M0,192L48,197.3C96,203,192,213,288,197.3C384,181,480,139,576,133.3C672,128,768,160,864,186.7C960,213,1056,235,1152,213.3C1248,192,1344,128,1392,96L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+
+            <!-- Khối kính mờ chứa nội dung -->
+            <div class="glass-card">
+                <div class="glass-header">
+                    <div>
+                        <span class="host-tag">Đơn vị tiếp đón</span>
+                        <img src="Logo.png" alt="Tà Lùng Quang Minh" class="glass-logo">
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="guest-tag">Đơn vị khách mời</span>
+                        <img src="https://sv.uhl.edu.vn/FileManager/img/abc.png" alt="Đại học Hạ Long" class="glass-logo">
+                    </div>
+                </div>
+
+                <div class="glass-body">
+                <div class="welcome-badge">Nhiệt Liệt Chào Mừng</div>
+                <div class="guest-title">Đoàn Công Tác</div>
+                <div class="guest-school">Trường Đại học Hạ Long</div>
+                <div class="purpose">Đến thăm, làm việc và trao đổi kinh nghiệm tại</div>
+                <div class="company-name">Công Ty Cổ Phần Tà Lùng Quang Minh</div>
+            </div>
+
+            <div class="glass-footer">
+                <div class="footer-item">
+                    <span><i class="fa-solid fa-map-location-dot"></i> Cửa khẩu Quốc tế Tà Lùng, xã Phục Hòa, Cao Bằng</span>
+                </div>
+                <div class="footer-item">
+                    <span><i class="fa-regular fa-calendar-check"></i> Ngày 04 tháng 03 năm 2026</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ==============================================
+     OPTION 2: TÂN CỔ ĐIỂN (Luxury Cream)
+     ============================================== -->
+    <div class="wrapper">
+        <div class="option-title"><i class="fa-solid fa-crown"></i> Option 2: Tân Cổ Điển Hoàng Gia</div>
+        <div class="banner-base opt-luxury">
+            <div class="inner-frame">
+                <div class="inner-frame-2">
+                    
+                    <!-- Góc trang trí -->
+                    <i class="fa-solid fa-fan corner-decor cd-tl"></i>
+                    <i class="fa-solid fa-fan corner-decor cd-tr"></i>
+                    <i class="fa-solid fa-fan corner-decor cd-bl"></i>
+                    <i class="fa-solid fa-fan corner-decor cd-br"></i>
+
+                    <!-- Logos -->
+                    <div class="logos-wrap">
+                        <img src="Logo.png" alt="Tà Lùng Quang Minh" class="logo-lux">
+                        <div class="logo-divider"></div>
+                        <img src="https://sv.uhl.edu.vn/FileManager/img/abc.png" alt="Đại học Hạ Long" class="logo-lux">
+                    </div>
+
+                    <!-- Nội dung -->
+                <div class="text-content">
+                    <div class="welcome-txt">Trân trọng đón tiếp đoàn công tác</div>
+                    <div class="main-guest">Trường Đại học Hạ Long</div>
+                    <div class="sub-txt">Đến thăm và làm việc tại</div>
+                    <div class="host-name">Công Ty CP Tà Lùng Quang Minh</div>
+                </div>
+
+                <!-- Footer -->
+                <div class="footer-lux">
+                    <span><i class="fa-solid fa-location-dot"></i> CKQT Tà Lùng, Cao Bằng</span>
+                    <span><i class="fa-solid fa-calendar-days"></i> Ngày 04 tháng 03 năm 2026</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ==============================================
+     OPTION 3: CẮT CHÉO ĐỘNG LỰC (Modern Diagonal)
+     ============================================== -->
+    <div class="wrapper">
+        <div class="option-title"><i class="fa-solid fa-bolt"></i> Option 3: Cắt Chéo Công Nghệ & Động Lực</div>
+        <div class="banner-base opt-diag">
+            
+            <!-- Nửa Trái -->
+            <div class="left-content">
+                <div class="host-logo-box">
+                    <img src="Logo.png" alt="Tà Lùng Quang Minh" class="diag-logo">
+                    <div>
+                        <div class="host-title">Đơn vị đón tiế</div>
+                        <div class="host-name-txt">Công ty Cổ phần Tà Lùng Quang Minh</div>
+                    </div>
+                </div>
+
+                <div class="diag-welcome">Nhiệt liệt chào mừng</div>
+                <div class="diag-guest-name">Đoàn Công Tác<br>Trường Đại học Hạ Long</div>
+                
+                <div class="diag-purpose">
+                Hoạt động giao lưu, thăm quan thực tế và trao đổi chuyên môn.
+            </div>
+
+            <div class="diag-footer">
+                <span><i class="fa-solid fa-map-pin"></i> Cửa khẩu Quốc tế Tà Lùng, xã Phục Hòa, Cao Bằng</span>
+                <span><i class="fa-solid fa-clock"></i> Ngày 04 tháng 03 năm 2026</span>
+            </div>
+        </div>
+
+        <!-- Nửa Phải Cắt Chéo -->
+            <div class="navy-shape">
+                <div class="guest-badge">
+                    <img src="https://sv.uhl.edu.vn/FileManager/img/abc.png" alt="Đại học Hạ Long" class="guest-logo">
+                </div>
+                
+                <div class="right-info">
+                    ĐỐI TÁC HỌC THUẬT<br>
+                    <span style="color: #b48608; font-size: 12px; margin-top: 5px; display: inline-block;">KẾT NỐI & PHÁT TRIỂN</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMIS WeSign - Hướng dẫn sử dụng (Light)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* =========================================
+           1. THIẾT LẬP CƠ BẢN & MÀU SẮC (LIGHT THEME)
+           ========================================= */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-body: #e2e8f0;        /* Xám nhạt nền ngoài */
+            --bg-slide: #ffffff;       /* Trắng tinh cho slide */
+            --bg-card: #f8fafc;        /* Xám rất nhạt cho các thẻ */
+            
+            --text-main: #0f172a;      /* Đen/Xanh đen đậm */
+            --text-muted: #475569;     /* Xám chữ thường */
+            
+            --primary: #0284c7;        /* Xanh dương AMIS (Sky 600) */
+            --primary-light: #e0f2fe;  /* Xanh dương nhạt (Sky 100) */
+            
+            --danger: #e11d48;         /* Đỏ cảnh báo (Rose 600) */
+            --danger-light: #ffe4e6;   /* Đỏ nhạt (Rose 100) */
+        }
+
+        body {
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #presentation-area {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-body);
+            position: relative;
+        }
+        
+        /* Bỏ viền đen, thay bằng màu nền đồng bộ */
+        #presentation-area:fullscreen {
+            background-color: var(--bg-body); 
+        }
+
+        #slide-wrapper {
+            width: 1280px;
+            height: 720px;
+            position: relative;
+            transform-origin: center center;
+        }
+
+        /* Slide Container */
+        .slide-container {
+            align-items: center;
+            background-color: var(--bg-slide);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            justify-content: center;
+            overflow: hidden;
+            padding: 50px 70px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            border: 1px solid #f1f5f9;
+            
+            /* Logic Ẩn/Hiện Slide */
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.95);
+            transition: all 0.4s ease-in-out;
+            z-index: 0;
+        }
+
+        .slide-container.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+            z-index: 10;
+        }
+
+        /* Hiệu ứng mảng màu nền trang trí */
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: -150px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary-light) 0%, rgba(255,255,255,0) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .slide-container::after {
+            content: '';
+            position: absolute;
+            bottom: -200px;
+            left: -100px;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #f1f5f9 0%, rgba(255,255,255,0) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .slide-container > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Logo Góc */
+        .company-logo {
+            position: absolute;
+            top: 40px;
+            right: 50px;
+            height: 55px;
+            z-index: 10;
+            object-fit: contain;
+            max-width: 250px;
+        }
+
+        /* =========================================
+           2. TYPOGRAPHY (CHỮ)
+           ========================================= */
+        h1, h2, h3, h4 {
+            color: var(--text-main);
+            margin: 0;
+            font-weight: 700;
+        }
+
+        p, li {
+            color: var(--text-muted);
+            font-size: 19px;
+            line-height: 1.6;
+        }
+
+        .slide-title {
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 30px;
+            text-align: left;
+            width: 100%;
+            letter-spacing: -0.5px;
+        }
+        
+        .slide-title.warning-title {
+            color: var(--danger);
+        }
+
+        .text-primary { color: var(--primary); }
+        .text-danger { color: var(--danger); }
+
+        /* Khối "Lời nói/Nhấn mạnh" dưới cùng */
+        .speaker-note {
+            display: none; 
+            width: 100%;
+            background: var(--bg-card);
+            border-left: 4px solid var(--primary);
+            padding: 15px 25px;
+            border-radius: 0 8px 8px 0;
+            margin-top: auto;
+            font-style: italic;
+            border: 1px solid #e2e8f0;
+            border-left-width: 4px;
+        }
+        .speaker-note p {
+            font-size: 17px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+        .speaker-note.warning-note {
+            border-left-color: var(--danger);
+            background: var(--danger-light);
+            border-color: #fecdd3;
+        }
+        .speaker-note.warning-note p {
+            color: #9f1239;
+        }
+
+        .content-area {
+            align-items: flex-start;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            width: 100%;
+        }
+
+        /* =========================================
+           3. LAYOUTS
+           ========================================= */
+        
+        .title-layout {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+        .title-layout h1 {
+            font-size: 64px;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-main);
+        }
+        .title-layout .subtitle {
+            font-size: 24px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .title-layout .presenter-info {
+            background: var(--primary-light);
+            padding: 15px 40px;
+            border-radius: 30px;
+            margin-top: 40px;
+            border: 1px solid #bae6fd;
+        }
+        .title-layout .presenter-info p {
+            font-size: 20px;
+            color: var(--primary);
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 50px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .image-wrapper {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .tech-box {
+            background-color: var(--bg-card);
+            padding: 25px 30px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--primary);
+        }
+        .tech-box h3 {
+            color: var(--primary);
+            font-size: 22px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .tech-box p {
+            font-size: 19px;
+            color: var(--text-main);
+        }
+
+        .modern-list {
+            list-style: none;
+        }
+        .modern-list li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 15px;
+            font-size: 20px;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+        .modern-list li::before {
+            content: "\f058"; 
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-size: 22px;
+        }
+
+        .tiled-2-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .warning-tile {
+            background: #ffffff;
+            border: 1px solid #fecdd3;
+            box-shadow: 0 10px 25px rgba(225, 29, 72, 0.05);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            border-top: 5px solid var(--danger);
+        }
+        .warning-tile .icon-circle {
+            width: 80px;
+            height: 80px;
+            background: var(--danger-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: var(--danger);
+            font-size: 35px;
+        }
+        .warning-tile h3 {
+            font-size: 26px;
+            color: var(--text-main);
+            margin-bottom: 15px;
+        }
+        .warning-tile p {
+            font-size: 18px;
+        }
+
+        .slide-container.bleed-image-layout {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 60px;
+            padding: 0;
+            align-items: start;
+        }
+        .bleed-image-layout > .content-container {
+            padding: 60px 0 60px 60px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background: #ffffff;
+            z-index: 2;
+        }
+        .bleed-image-layout > .image-container {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+        .bleed-image-layout img.bleed-image-side {
+            width: 100%;
+            height: 720px;
+            object-fit: cover;
+            border-radius: 0;
+        }
+
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .step-item {
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border-radius: 12px;
+            padding: 20px 30px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .step-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.05);
+        }
+        .step-number {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary-light);
+            -webkit-text-stroke: 1px var(--primary);
+            width: 60px;
+            flex-shrink: 0;
+        }
+        .step-title {
+            font-size: 21px;
+            font-weight: 700;
+            color: var(--text-main);
+            width: 320px;
+            flex-shrink: 0;
+        }
+        .step-desc {
+            font-size: 19px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .qa-layout {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+        .qa-layout h2 {
+            font-size: 65px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        .qa-layout .contact-info {
+            background: var(--bg-card);
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 25px 50px;
+            margin-top: 40px;
+            display: inline-block;
+        }
+        .qa-layout .contact-info p {
+            color: var(--text-main);
+            font-size: 22px;
+            margin: 0;
+        }
+        .qa-layout .contact-info span {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* =========================================
+           4. CONTROLS (THANH ĐIỀU KHIỂN)
+           ========================================= */
+        .controls {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.7);
+            padding: 10px 25px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 1000;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            backdrop-filter: blur(8px);
+            opacity: 0.2;
+            transition: opacity 0.3s ease;
+        }
+        
+        .controls:hover {
+            opacity: 1;
+        }
+
+        .controls button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .controls button:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .controls button:active {
+            transform: scale(0.9);
+        }
+
+        #slideCounter {
+            color: white;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            min-width: 50px;
+            text-align: center;
+            user-select: none;
+        }
+        
+        #fullscreenBtn {
+            margin-left: 5px;
+            border-left: 1px solid rgba(255,255,255,0.2);
+            border-radius: 0;
+            width: auto;
+            padding-left: 25px;
+        }
+        #fullscreenBtn:hover {
+            background: transparent;
+            color: var(--primary-light);
+        }
+    </style>
+</head>
+<body>
+
+<div id="presentation-area">
+    <div id="slide-wrapper">
+
+        <!-- Slide 1: Trang bìa -->
+        <div class="slide-container active" id="slide1">
+            <img class="company-logo" src="Logo.png" alt="Logo Công ty" onerror="this.style.display='none'">
+            <div class="title-layout">
+                <p class="subtitle">Công ty Cổ phần Tà Lùng Quang Minh</p>
+                <h1>HƯỚNG DẪN SỬ DỤNG<br><span class="text-primary">PHẦN MỀM KÝ ĐIỆN TỬ AMIS WESIGN</span></h1>
+                
+                <div class="presenter-info">
+                    <p><i class="fa-solid fa-microphone-lines" style="margin-right: 10px;"></i> Người trình bày: <strong>Nguyễn Xuân Thành</strong> - Bộ phận CNTT</p>
+                </div>
+            </div>
+            <div class="speaker-note">
+                <p><i class="fa-solid fa-lightbulb" style="color: var(--primary); margin-right: 5px;"></i> Lời nói: Xin chào Ban Lãnh đạo và các anh chị quản lý. Hôm nay em sẽ hướng dẫn sử dụng phần mềm ký điện tử AMIS WeSign ạ.</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Tổng quan WeSign -->
+        <div class="slide-container bleed-image-layout" id="slide2">
+            <div class="content-container">
+                <img class="company-logo" src="Logo.png" alt="Logo Công ty" style="right: auto; left: 60px; top: 40px; position: absolute;" onerror="this.style.display='none'">
+                <h2 class="slide-title" style="margin-top: 60px;">PHẦN 1 - TỔNG QUAN VỀ AMIS WESIGN</h2>
+                
+                <div class="content-area">
+                    <div class="tech-box" style="width: 100%;">
+                        <h3>AMIS WeSign là gì?</h3>
+                        <p>Là công cụ số hóa việc trình duyệt và ký văn bản nội bộ nhanh chóng, <strong>mọi lúc mọi nơi.</strong></p>
+                    </div>
+                    
+                    <h3 style="font-size: 22px; margin: 15px 0; color: var(--text-main);">LỢI ÍCH MANG LẠI:</h3>
+                    <ul class="modern-list">
+                        <li>Giải quyết nhanh các văn bản ngay cả khi lãnh đạo đi công tác.</li>
+                        <li>Lưu trữ tập trung, tìm kiếm và tra cứu tức thời.</li>
+                        <li>Tiết kiệm chi phí in ấn và giảm lãng phí giấy tờ hành chính.</li>
+                    </ul>
+                </div>
+                
+                <div class="speaker-note" style="margin-top: auto;">
+                    <p><i class="fa-solid fa-comment-dots" style="color: var(--primary); margin-right: 5px;"></i> Lời nói: Thay vì phải cầm tờ trình chạy khắp các tầng tìm sếp, bây giờ các anh chị chỉ việc ngồi tại chỗ nhấn nút gửi. Sếp ngồi cafe hay đang trên xe cũng rút điện thoại ra bấm duyệt được ngay.</p>
+                </div>
+            </div>
+            <div class="image-container">
+                 <img class="bleed-image-side" src="https://fspl.co.in/wp-content/uploads/2019/09/esign-img.jpg" alt="Mô phỏng ký điện tử">
+            </div>
+        </div>
+
+        <!-- Slide 3: Phạm vi áp dụng -->
+        <div class="slide-container" id="slide3">
+            <img class="company-logo" src="Logo.png" alt="Logo Công ty" onerror="this.style.display='none'">
+            <h2 class="slide-title"><i class="fa-solid fa-flag" style="margin-right: 15px;"></i> LƯU Ý QUAN TRỌNG: PHẠM VI ÁP DỤNG</h2>
+            <div class="content-area">
+                <div class="two-column">
+                    <div>
+                        <div class="tech-box">
+                            <h3>Chỉ ký điện tử cho văn bản nội bộ</h3>
+                            <p>Hệ thống hiện tại được quy định áp dụng cho các luồng văn bản nội bộ mang tính thông tin và chủ trương.</p>
+                        </div>
+                        <ul class="modern-list">
+                            <li>Báo cáo đề xuất</li>
+                            <li>Thông báo nội bộ</li>
+                            <li>Quyết định nội bộ</li>
+                            <li>Phiếu trình chủ trương</li>
+                            <li>Các văn bản nội bộ khác</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="image-wrapper" style="height: 380px;">
+                            <img src="https://static.vecteezy.com/system/resources/thumbnails/074/109/173/small/a-business-concept-showing-digital-document-approval-and-quality-assurance-with-check-marks-symbolizing-verification-compliance-and-efficient-performance-evaluation-for-corporate-management-free-photo.jpg" alt="Phê duyệt văn bản điện tử">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="speaker-note">
+                <p><i class="fa-solid fa-comment-dots" style="color: var(--primary); margin-right: 5px;"></i> Lời nói: Mọi người lưu ý kĩ phần này. Hiện tại công ty mình chỉ áp dụng ký điện tử cho các văn bản nội bộ mang tính thông tin, chủ trương. Chúng ta bước đầu làm quen với số hóa nội bộ trước khi áp dụng cho các nghiệp vụ phức tạp hơn.</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Cảnh báo Ký cứng -->
+        <div class="slide-container" id="slide4">
+            <img class="company-logo" src="Logo.png" alt="Logo Công ty" onerror="this.style.display='none'">
+            <h2 class="slide-title warning-title"><i class="fa-solid fa-triangle-exclamation" style="margin-right: 15px;"></i> TUYỆT ĐỐI KÝ CỨNG 100% (KÝ TƯƠI, ĐÓNG DẤU)</h2>
+            <div class="content-area">
+                <p style="font-size: 22px; color: var(--text-main); margin-bottom: 10px;">Không sử dụng WeSign cho các loại hồ sơ sau:</p>
+                
+                <div class="tiled-2-col">
+                    <div class="warning-tile">
+                        <div class="icon-circle"><i class="fa-solid fa-money-check-dollar"></i></div>
+                        <h3>Hồ sơ Tài chính</h3>
+                        <p>Các tài liệu liên quan đến: Đề nghị Tạm ứng, Thanh toán, Hoàn ứng, Chứng từ kế toán.</p>
+                    </div>
+                    <div class="warning-tile">
+                        <div class="icon-circle"><i class="fa-solid fa-file-contract"></i></div>
+                        <h3>Hồ sơ Pháp lý</h3>
+                        <p>Các hợp đồng kinh tế ký kết với đối tác, khách hàng hoặc nhà cung cấp.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="speaker-note warning-note">
+                <p><i class="fa-solid fa-comment-dots" style="margin-right: 5px;"></i> Nhấn mạnh: Các anh chị kế toán và các bộ phận lưu ý, BẤT CỨ cái gì liên quan đến tiền, tạm ứng, thanh toán, hợp đồng thì tuyệt đối vẫn phải in ra giấy, ký tươi đóng dấu. WeSign KHÔNG thay thế được chứng từ gốc trong các trường hợp này.</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Thực hành -->
+        <div class="slide-container" id="slide5">
+            <img class="company-logo" src="Logo.png" alt="Logo Công ty" onerror="this.style.display='none'">
+            <h2 class="slide-title">PHẦN 2 - CÁC THAO TÁC THỰC HÀNH TRÊN PHẦN MỀM</h2>
+            <div class="content-area" style="justify-content: center;">
+                <div class="steps-container">
+                    <div class="step-item">
+                        <div class="step-number">01</div>
+                        <div class="step-title">Truy cập & Quản lý</div>
+                        <p class="step-desc">Theo dõi trạng thái: Cần xử lý, Chờ người khác ký, Hoàn thành.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">02</div>
+                        <div class="step-title">Thiết lập chữ ký cá nhân</div>
+                        <p class="step-desc">Hướng dẫn cách vẽ tay hoặc tải ảnh chữ ký có sẵn lên hệ thống.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">03</div>
+                        <div class="step-title">Trình ký văn bản</div>
+                        <p class="step-desc">Tải tài liệu ➔ Khai báo người ký ➔ Đặt vị trí chữ ký ➔ Gửi.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">04</div>
+                        <div class="step-title">Ký / Từ chối ký</div>
+                        <p class="step-desc">Kiểm tra nội dung ➔ Ký duyệt ngay hoặc Từ chối kèm lý do.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">05</div>
+                        <div class="step-title">Tích hợp tự động</div>
+                        <p class="step-desc">Trình ký trực tiếp từ ứng dụng AMIS Công việc & AMIS Quy trình.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="speaker-note">
+                <p><i class="fa-solid fa-display" style="color: var(--primary); margin-right: 5px;"></i> Demo trực tiếp: Bây giờ em sẽ demo trên phần mềm để mọi người dễ hình dung. Các anh chị có thể mở máy tính hoặc điện thoại lên và làm theo em luôn nhé. Chỗ nào chưa rõ cứ giơ tay hỏi ngay.</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: Kết thúc -->
+        <div class="slide-container" id="slide6">
+            <img class="company-logo" src="Logo.png" alt="Logo Công ty" onerror="this.style.display='none'">
+            <div class="qa-layout">
+                <h2>CẢM ƠN CÁC ANH/CHỊ ĐÃ LẮNG NGHE!</h2>
+                <p style="font-size: 24px; color: var(--text-muted);">Mọi thắc mắc và hỗ trợ kỹ thuật sau buổi đào tạo xin liên hệ:</p>
+                
+                <div class="contact-info">
+                    <p><i class="fa-solid fa-headset" style="color: var(--primary); font-size: 28px; margin-right: 15px; vertical-align: middle;"></i> <span>Nguyễn Xuân Thành</span> - Bộ phận CNTT</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Thanh Điều Khiển -->
+<div class="controls">
+    <button id="prevBtn" title="Slide trước (Phím mũi tên trái)"><i class="fa-solid fa-chevron-left"></i></button>
+    <span id="slideCounter">1 / 6</span>
+    <button id="nextBtn" title="Slide tiếp theo (Phím mũi tên phải hoặc Space)"><i class="fa-solid fa-chevron-right"></i></button>
+    <button id="fullscreenBtn" title="Toàn màn hình (Phím F)"><i class="fa-solid fa-expand"></i></button>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide-container');
+        const totalSlides = slides.length;
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const counter = document.getElementById('slideCounter');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const fullscreenIcon = fullscreenBtn.querySelector('i');
+        const presentationArea = document.getElementById('presentation-area');
+        const slideWrapper = document.getElementById('slide-wrapper');
+
+        // Hàm tự động co giãn slide theo kích thước màn hình
+        function resizeSlides() {
+            const areaWidth = presentationArea.clientWidth;
+            const areaHeight = presentationArea.clientHeight;
+            
+            // Tính toán tỷ lệ scale (Slide gốc là thiết kế 1280x720)
+            let scale = Math.min(areaWidth / 1280, areaHeight / 720);
+            
+            // Chỉ chừa lề 5% khi ở chế độ xem bình thường. Khi Fullscreen sẽ kịch kim
+            if (!document.fullscreenElement) {
+                scale *= 0.95; 
+            }
+            
+            slideWrapper.style.transform = `scale(${scale})`;
+        }
+
+        window.addEventListener('resize', resizeSlides);
+        resizeSlides();
+
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+            counter.textContent = `${currentSlide + 1} / ${totalSlides}`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlides();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlides();
+            }
+        }
+
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+                e.preventDefault(); 
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullscreen();
+            }
+        });
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                presentationArea.requestFullscreen().catch(err => {
+                    console.log(`Lỗi khi mở toàn màn hình: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+        document.addEventListener('fullscreenchange', () => {
+            if (document.fullscreenElement) {
+                fullscreenIcon.classList.remove('fa-expand');
+                fullscreenIcon.classList.add('fa-compress');
+            } else {
+                fullscreenIcon.classList.remove('fa-compress');
+                fullscreenIcon.classList.add('fa-expand');
+            }
+            // Gọi lại hàm resize để nó xoá lề 5% ngay khi vừa bấm Fullscreen
+            setTimeout(resizeSlides, 100);
+        });
+
+        updateSlides();
+    });
+</script>
+
+</body>
+</html>

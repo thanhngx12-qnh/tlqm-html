@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banner Đón Tiếp - Đại học Hạ Long</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #64748b; /* Nền xám ngoài để dễ nhìn banner sáng */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* KHUNG CHÍNH 1200x630 */
+        .banner-container {
+            width: 1200px;
+            height: 630px;
+            position: relative;
+            /* CẬP NHẬT: Nền Trắng/Bạc sang trọng, làm nổi bật logo Navy */
+            background: radial-gradient(circle at 50% 0%, #ffffff 0%, #f1f5f9 60%, #e2e8f0 100%);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid #cbd5e1;
+        }
+
+        /* HỌA TIẾT NỀN LƯỚI TOÀN CẦU (Logistics Network) */
+        .network-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(30, 58, 138, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(30, 58, 138, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+        }
+
+        /* ÁNH SÁNG MỜ Ở GIỮA */
+        .glow {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px; height: 500px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* NỘI DUNG CHÍNH */
+        .content {
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            padding: 30px 50px;
+            position: relative;
+        }
+
+        /* 1. KHU VỰC LOGO (Header) */
+        .header-logos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(30, 58, 138, 0.15); /* Line chia màu Navy nhạt */
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* CẬP NHẬT: Bỏ nền trắng của logo vì nền banner đã sáng */
+        .logo {
+            height: 85px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text .host {
+            font-size: 12px;
+            color: #64748b; /* Xám đậm */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .logo-text .name {
+            font-size: 16px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #1e3a8a; /* Xanh Navy */
+        }
+
+        /* 2. KHU VỰC TEXT CHÀO MỪNG (Center) */
+        .welcome-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .welcome-badge {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            color: #b48608; /* Vàng Gold đậm */
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            position: relative;
+        }
+
+        /* 2 đường gạch ngang trang trí chữ Welcome */
+        .welcome-badge::before, .welcome-badge::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 80px;
+            height: 2px;
+            background-color: #b48608;
+        }
+        .welcome-badge::before { right: 105%; }
+        .welcome-badge::after { left: 105%; }
+
+        .guest-title {
+            font-size: 40px;
+            font-weight: 800;
+            color: #0f172a; /* Xanh đen */
+            text-transform: uppercase;
+            line-height: 1.3;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        /* CẬP NHẬT: Ribbon nổi bật tên trường thành khối Navy */
+        .highlight-school {
+            background: #1e3a8a; /* Xanh Navy */
+            padding: 8px 30px;
+            border-radius: 50px;
+            color: #ffffff; 
+            display: inline-block;
+            margin-top: 5px;
+            box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+            letter-spacing: 2px;
+        }
+
+        .purpose-text {
+            font-size: 18px;
+            color: #475569; /* Xám Navy */
+            font-weight: 500;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .company-title {
+            font-size: 30px;
+            font-weight: 900;
+            color: #1e3a8a; /* Xanh Navy */
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* 3. FOOTER INFO */
+        .footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(30, 58, 138, 0.15);
+        }
+
+        .date-location {
+            font-size: 14px;
+            color: #475569;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .date-location span {
+            color: #b48608; /* Icon màu Vàng */
+        }
+
+        .slogan {
+            font-size: 14px;
+            color: #1e3a8a;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        /* GÓC TRANG TRÍ CHUYÊN NGHIỆP */
+        .corner {
+            position: absolute;
+            width: 40px; height: 40px;
+            border: 3px solid #1e3a8a; /* Khung góc màu Navy */
+            z-index: 5;
+            opacity: 0.8;
+        }
+        .tl { top: 20px; left: 20px; border-right: none; border-bottom: none; }
+        .tr { top: 20px; right: 20px; border-left: none; border-bottom: none; }
+        .bl { bottom: 20px; left: 20px; border-right: none; border-top: none; }
+        .br { bottom: 20px; right: 20px; border-left: none; border-top: none; }
+
+        img { object-fit: contain; }
+
+    </style>
+</head>
+<body>
+
+    <div class="banner-container">
+        <!-- Họa tiết nền -->
+        <div class="network-bg"></div>
+        <div class="glow"></div>
+
+        <!-- Các góc định vị trang trí -->
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+
+        <div class="content">
+            
+            <!-- HEADER: Logo 2 bên -->
+            <div class="header-logos">
+                <!-- Bên Trái: Đơn vị chủ nhà -->
+                <div class="logo-box">
+                    <img src="Logo.png" alt="Logo Tà Lùng Quang Minh" class="logo">
+                    <div class="logo-text">
+                        <span class="host">Đơn vị đón tiếp</span>
+                        <span class="name">Công ty CP Tà Lùng Quang Minh</span>
+                    </div>
+                </div>
+
+                <!-- Bên Phải: Đơn vị khách -->
+                <div class="logo-box" style="flex-direction: row-reverse; text-align: right;">
+                    <img src="https://sv.uhl.edu.vn/FileManager/img/abc.png" alt="Logo Đại học Hạ Long" class="logo">
+                    <div class="logo-text">
+                        <span class="host">Đơn vị khách mời</span>
+                        <span class="name">Trường Đại học Hạ Long</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BODY: Nội dung chào mừng -->
+            <div class="welcome-section">
+                <div class="welcome-badge">Nhiệt Liệt Chào Mừng</div>
+                
+                <h1 class="guest-title">
+                    Đoàn Công Tác<br>
+                    <span class="highlight-school">Trường Đại học Hạ Long</span>
+                </h1>
+                
+                <p class="purpose-text">Đến thăm, làm việc và trao đổi kinh nghiệm tại</p>
+                
+                <h2 class="company-title">Công Ty Cổ Phần Tà Lùng Quang Minh</h2>
+            </div>
+
+            <!-- FOOTER: Ngày tháng & Slogan -->
+            <div class="footer">
+                <div class="date-location">
+                    <span>📍</span> Cửa khẩu Quốc tế Tà Lùng, Cao Bằng
+                    &nbsp;&nbsp;|&nbsp;&nbsp;
+                    <span>🗓️</span> Ngày 04, tháng 03 năm 2026
+                </div>
+                <div class="slogan">"KẾT NỐI BIÊN GIỚI - VƯƠN TỚI TOÀN CẦU"</div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

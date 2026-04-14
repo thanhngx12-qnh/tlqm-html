@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gáy Sách 19x3cm - Tà Lùng Quang Minh</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            z-index: 9999;
+        }
+        .print-btn:hover { background-color: #000; }
+
+        @page {
+            size: A4 portrait;
+            margin: 10mm;
+        }
+
+        .page {
+            width: 210mm;
+            height: 297mm;
+            background: white;
+            margin: 20px auto;
+            padding: 10mm;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            gap: 10mm; /* Khoảng cách giữa các gáy sách */
+            flex-wrap: wrap;
+            page-break-after: always; /* Ngắt trang sau mỗi page */
+        }
+
+        /* KHUNG GÁY SÁCH (190mm x 30mm) */
+        .spine-container {
+            width: 30mm;
+            height: 190mm;
+            border: 1px solid #999; /* Viền cắt mảnh */
+            position: relative;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Căn nội dung từ trên xuống */
+            padding: 10mm 0;
+            overflow: hidden;
+        }
+
+        /* --- CÁC PHẦN TỬ CHUNG --- */
+        .spine-logo {
+            width: 18mm;
+            height: auto;
+            filter: grayscale(100%);
+            margin-bottom: 5mm;
+        }
+
+        .spine-year {
+            font-size: 14pt;
+            font-weight: 900;
+            writing-mode: vertical-rl; /* Chữ chạy dọc */
+            text-orientation: upright; /* Số đứng thẳng */
+            letter-spacing: 2px;
+            margin-top: auto; /* Đẩy xuống đáy */
+            margin-bottom: 5mm;
+        }
+
+        /* Text dọc (Xoay 90 độ để đọc từ dưới lên) */
+        .vertical-text-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .vertical-text {
+            transform: rotate(-90deg);
+            white-space: nowrap;
+            font-size: 14pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Tên công ty chạy dọc (Mẫu điền khuyết) */
+        .vertical-company-name {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg); /* Xoay để đọc từ dưới lên */
+            font-size: 10pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10mm;
+            height: 60mm; /* Chiếm 1 phần chiều cao */
+            text-align: center;
+        }
+
+        /* Mẫu dòng kẻ để viết tay */
+        .lines-area {
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 8mm;
+            margin-top: 5mm;
+            flex-grow: 1;
+        }
+        .write-line {
+            width: 100%;
+            border-bottom: 1px dotted #000;
+            position: relative;
+        }
+        /* Dấu chấm giả lập ..... */
+        .write-line::after {
+            content: "................";
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%) rotate(90deg); /* Dòng chấm chạy dọc */
+            font-size: 12pt;
+            letter-spacing: 2px;
+            white-space: nowrap;
+            display: none; /* Tắt nếu dùng border-bottom */
+        }
+
+        /* Đường cắt */
+        .cut-mark {
+            position: absolute;
+            font-size: 8px;
+            color: #999;
+        }
+        .cut-top { top: -15px; left: 50%; transform: translateX(-50%); }
+        .cut-bottom { bottom: -15px; left: 50%; transform: translateX(-50%); }
+
+        @media print {
+            body { background: none; }
+            .print-btn { display: none; }
+            .page { width: 210mm; height: 297mm; margin: 0; box-shadow: none; border: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="print-btn" onclick="window.print()">🖨️ IN GÁY SÁCH (4 TRANG)</button>
+
+    <!-- TRANG 1 -->
+    <div class="page">
+        
+        <!-- MẪU 1: HỒ SƠ TÀI LIỆU -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            
+            <div class="vertical-text-container">
+                <div class="vertical-text">HỒ SƠ TÀI LIỆU</div>
+            </div>
+
+            <div class="spine-year">2026</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+        <!-- MẪU 2: BÁO CÁO TỔNG HỢP -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            
+            <div class="vertical-text-container">
+                <div class="vertical-text">BÁO CÁO TỔNG HỢP</div>
+            </div>
+
+            <div class="spine-year">2026</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+        <!-- MẪU 3: TÊN CÔNG TY (Dành cho bìa chung) -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            
+            <div class="vertical-text-container">
+                <div class="vertical-text" style="font-size: 11pt;">CTY CP TÀ LÙNG QUANG MINH</div>
+            </div>
+
+            <div class="spine-year" style="opacity: 0;">2026</div> <!-- Ẩn năm để cân đối -->
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+        <!-- MẪU 4: DÒNG KẺ (Viết tay nội dung) -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            
+            <div class="lines-area" style="justify-content: center;">
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+            </div>
+
+            <div class="spine-year">....</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+        <!-- MẪU 5: DÒNG KẺ (Viết tay nội dung) -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            
+            <div class="lines-area" style="justify-content: center;">
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+            </div>
+
+            <div class="spine-year">....</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+    </div>
+
+    <!-- TRANG 2 (CÁC MẪU VĂN PHÒNG) -->
+    <div class="page">
+        
+        <!-- MẪU 6: HỢP ĐỒNG KINH TẾ -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            
+            <div class="vertical-text-container">
+                <div class="vertical-text">HỢP ĐỒNG KINH TẾ</div>
+            </div>
+
+            <div class="spine-year">2026</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+        <!-- MẪU 7: CHỨNG TỪ KẾ TOÁN -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            
+            <div class="vertical-text-container">
+                <div class="vertical-text">CHỨNG TỪ KẾ TOÁN</div>
+            </div>
+
+            <div class="spine-year">2026</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+        <!-- MẪU 8: HỒ SƠ NHÂN SỰ -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            
+            <div class="vertical-text-container">
+                <div class="vertical-text">HỒ SƠ NHÂN SỰ</div>
+            </div>
+
+            <div class="spine-year">2026</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+        <!-- MẪU 9: CÔNG VĂN ĐI / ĐẾN -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            
+            <div class="vertical-text-container">
+                <div class="vertical-text">CÔNG VĂN ĐI / ĐẾN</div>
+            </div>
+
+            <div class="spine-year">2026</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+        <!-- MẪU 10: HỒ SƠ PHÁP LÝ -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            
+            <div class="vertical-text-container">
+                <div class="vertical-text">HỒ SƠ PHÁP LÝ</div>
+            </div>
+
+            <div class="spine-year">2026</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+    </div>
+
+    <!-- TRANG 3 (CÁC MẪU DỰ ÁN) -->
+    <div class="page">
+        <!-- MẪU 11: HỒ SƠ DỰ ÁN -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            <div class="vertical-text-container">
+                <div class="vertical-text">HỒ SƠ DỰ ÁN</div>
+            </div>
+            <div class="spine-year">2026</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+        <!-- MẪU 12: HỒ SƠ ĐẤU THẦU -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            <div class="vertical-text-container">
+                <div class="vertical-text">HỒ SƠ ĐẤU THẦU</div>
+            </div>
+            <div class="spine-year">2026</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+        <!-- MẪU 13: BÁO CÁO TÀI CHÍNH -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            <div class="vertical-text-container">
+                <div class="vertical-text">BÁO CÁO TÀI CHÍNH</div>
+            </div>
+            <div class="spine-year">2026</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+        <!-- MẪU 14: QUYẾT ĐỊNH & TỜ TRÌNH -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            <div class="vertical-text-container">
+                <div class="vertical-text" style="font-size: 13pt;">QUYẾT ĐỊNH & TỜ TRÌNH</div>
+            </div>
+            <div class="spine-year">2026</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+        <!-- MẪU 15: LƯU TRỮ CHUNG -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            <div class="vertical-text-container">
+                <div class="vertical-text">LƯU TRỮ CHUNG</div>
+            </div>
+            <div class="spine-year">2026</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+    </div>
+
+    <!-- TRANG 4: MẪU ĐIỀN KHUYẾT (LOGO + TÊN CÔNG TY + DÒNG KẺ) -->
+    <div class="page">
+        <!-- Mẫu 16 -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            
+            <div class="vertical-company-name">CTY CP TÀ LÙNG QUANG MINH</div>
+            
+            <div class="lines-area">
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+            </div>
+
+            <div class="spine-year">2026</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+        <!-- Mẫu 17 -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            
+            <div class="vertical-company-name">CTY CP TÀ LÙNG QUANG MINH</div>
+            
+            <div class="lines-area">
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+            </div>
+
+            <div class="spine-year">2026</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+        <!-- Mẫu 18 -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            
+            <div class="vertical-company-name">CTY CP TÀ LÙNG QUANG MINH</div>
+            
+            <div class="lines-area">
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+            </div>
+
+            <div class="spine-year">2026</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+        <!-- Mẫu 19 -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            
+            <div class="vertical-company-name">CTY CP TÀ LÙNG QUANG MINH</div>
+            
+            <div class="lines-area">
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+            </div>
+
+            <div class="spine-year">2026</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+
+        <!-- Mẫu 20 -->
+        <div class="spine-container">
+            <div class="cut-mark cut-top">✂</div>
+            <img src="Logo.png" alt="Logo" class="spine-logo" onerror="this.src='https://placehold.co/50x50?text=LOGO'">
+            
+            <div class="vertical-company-name">CTY CP TÀ LÙNG QUANG MINH</div>
+            
+            <div class="lines-area">
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+                <div class="write-line"></div>
+            </div>
+
+            <div class="spine-year">2026</div>
+            <div class="cut-mark cut-bottom">✂</div>
+        </div>
+    </div>
+
+</body>
+</html>

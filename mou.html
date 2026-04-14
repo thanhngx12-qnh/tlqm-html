@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banner Họp Chuẩn Bị Ký Kết MOU Vận Tải - Tà Lùng Quang Minh (Bản Sáng)</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,500&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Framework -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* RESET & BODY */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #94a3b8; /* Nền xám ngoài để làm nổi bật banner sáng */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden; /* Ngăn cuộn trang khi scale */
+        }
+
+        /* KHUNG BANNER CHÍNH - 1200x630 */
+        .banner-container {
+            width: 1200px;
+            height: 630px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            /* Nền Sáng - Trắng/Bạc thanh lịch */
+            background: radial-gradient(circle at 80% 20%, #ffffff 0%, #f8fafc 50%, #e2e8f0 100%);
+            display: flex;
+            border: 2px solid #cbd5e1;
+            
+            /* Thiết lập Scale */
+            transform-origin: center center;
+            transition: transform 0.3s ease;
+        }
+
+        /* BACKGROUND ELEMENTS */
+        /* Bản đồ thế giới / Mạng lưới mờ màu Navy */
+        .network-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(rgba(30, 58, 138, 0.08) 1px, transparent 1px),
+                radial-gradient(rgba(30, 58, 138, 0.08) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            z-index: 1;
+            opacity: 0.8;
+        }
+
+        /* Chữ MOU khổng lồ làm Watermark */
+        .watermark-mou {
+            position: absolute;
+            bottom: -60px;
+            right: -20px;
+            font-size: 350px;
+            font-weight: 900;
+            color: rgba(30, 58, 138, 0.03); /* Xanh Navy mờ */
+            z-index: 1;
+            line-height: 1;
+            user-select: none;
+            letter-spacing: -10px;
+        }
+
+        /* Tia sáng */
+        .glow {
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 60%);
+            z-index: 2; filter: blur(30px);
+        }
+
+        /* KHUNG NỘI DUNG */
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
+            padding: 50px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* CỘT TRÁI - TEXT CHÍNH (65%) */
+        .left-col {
+            width: 62%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Header Logo */
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .logo-box {
+            background: #fff;
+            padding: 8px 12px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .logo { height: 55px; object-fit: contain; }
+
+        .company-name {
+            display: flex; flex-direction: column;
+        }
+        .c-prefix { font-size: 13px; color: #64748b; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
+        .c-name { font-size: 20px; color: #1e3a8a; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Tiêu đề cuộc họp */
+        .meeting-tag {
+            display: inline-block;
+            background: rgba(30, 58, 138, 0.08);
+            border: 1px solid rgba(30, 58, 138, 0.2);
+            color: #1e3a8a;
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            align-self: flex-start;
+        }
+
+        .main-title {
+            font-size: 46px;
+            font-weight: 900;
+            color: #0f172a; /* Xanh đen đậm */
+            text-transform: uppercase;
+            line-height: 1.3;
+            margin-bottom: 5px;
+        }
+
+        .highlight-mou {
+            font-family: 'Playfair Display', serif;
+            font-size: 58px;
+            background: linear-gradient(to right, #b48608, #d97706); /* Vàng Gold đậm cho nền sáng */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #475569;
+            font-weight: 500;
+            line-height: 1.6;
+            margin-top: 15px;
+            padding-left: 20px;
+            border-left: 4px solid #1e3a8a; /* Đổi viền sang Navy */
+            max-width: 90%;
+        }
+
+        /* Footer / Info Bar */
+        .info-bar {
+            margin-top: auto; /* Đẩy xuống đáy */
+            display: flex;
+            gap: 40px;
+            background: rgba(255, 255, 255, 0.85); /* Nền trắng mờ */
+            backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px rgba(30, 58, 138, 0.05);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #1e3a8a; /* Chữ màu Navy */
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .info-icon {
+            width: 40px; height: 40px;
+            background: rgba(180, 134, 8, 0.1);
+            color: #b48608;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 18px;
+        }
+
+        /* CỘT PHẢI - ĐỒ HỌA TRỰC QUAN (38%) */
+        .right-col {
+            width: 38%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Cấu trúc các vòng tròn kết nối */
+        .circle-group {
+            position: relative;
+            width: 350px;
+            height: 350px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .circle-1, .circle-2 {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px dashed rgba(30, 58, 138, 0.2); /* Đổi màu vòng tròn sang Navy/Gold */
+            animation: spin 30s linear infinite;
+        }
+
+        .circle-1 { width: 350px; height: 350px; }
+        .circle-2 { width: 280px; height: 280px; border-style: solid; border-color: rgba(180, 134, 8, 0.3); animation-direction: reverse; animation-duration: 40s;}
+
+        .glass-shield {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 1);
+            box-shadow: 0 15px 35px rgba(30, 58, 138, 0.1), inset 0 0 20px rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+        }
+
+        .glass-shield i {
+            font-size: 85px;
+            background: linear-gradient(135deg, #1e3a8a, #0f172a); /* Icon bắt tay màu Navy Gradient */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.15));
+        }
+
+        /* Các Node vệ tinh (Tượng trưng cho các đối tác) */
+        .node {
+            position: absolute;
+            width: 55px; height: 55px;
+            background: #ffffff;
+            border: 2px solid #1e3a8a;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            color: #1e3a8a; font-size: 20px;
+            z-index: 10;
+            box-shadow: 0 5px 15px rgba(30, 58, 138, 0.15);
+        }
+        
+        .node-1 { top: 0; left: 50px; }
+        .node-2 { bottom: 30px; right: 20px; }
+        .node-3 { top: 120px; right: -20px; background: #b48608; border-color: #fff; color: #fff;} /* 1 node vàng làm điểm nhấn */
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* =========================================
+           NÚT FULLSCREEN CHUYÊN NGHIỆP
+           ========================================= */
+        .fullscreen-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(90deg, #1e3a8a, #0f172a);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(30, 58, 138, 0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .fullscreen-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(30, 58, 138, 0.4);
+            background: linear-gradient(90deg, #0f172a, #020617);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="banner-container" id="banner">
+        <!-- Background Elements -->
+        <div class="network-bg"></div>
+        <div class="watermark-mou">MOU</div>
+        <div class="glow"></div>
+
+        <!-- Nội dung chính -->
+        <div class="content-wrapper">
+            
+            <!-- Left Text Column -->
+            <div class="left-col">
+                <!-- Branding -->
+                <div class="header-logo">
+                    <div class="logo-box">
+                        <img src="Logo.png" alt="Logo Tà Lùng Quang Minh" class="logo" onerror="this.src='https://placehold.co/100x50?text=LOGO'">
+                    </div>
+                    <div class="company-name">
+                        <span class="c-prefix">Công ty Cổ phần</span>
+                        <span class="c-name">Tà Lùng Quang Minh</span>
+                    </div>
+                </div>
+
+                <!-- Main Titles -->
+                <div class="meeting-tag"><i class="fa-solid fa-truck-fast"></i> Họp chiến lược vận tải</div>
+                <h1 class="main-title">Họp bàn công tác chuẩn bị</h1>
+                <div class="highlight-mou">MOU Đối Tác Vận Tải</div>
+                
+                <div class="subtitle">
+                    Triển khai kế hoạch, đánh giá năng lực phương tiện và thống nhất các điều khoản chiến lược trước thềm Lễ ký kết Thỏa thuận Hợp tác (MOU) Vận tải cùng các Đối tác.
+                </div>
+
+                <!-- Footer / Date Location -->
+                <div class="info-bar">
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fa-regular fa-clock"></i></div>
+                        <div>
+                            <div style="font-size: 11px; color:#64748b; text-transform:uppercase;">Thời gian</div>
+                            <div>08:30 - Ngày 10/03/2026</div>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <div>
+                            <div style="font-size: 11px; color:#64748b; text-transform:uppercase;">Địa điểm</div>
+                            <div>Phòng họp công ty</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Graphic Column -->
+            <div class="right-col">
+                <div class="circle-group">
+                    <!-- Vòng xoay -->
+                    <div class="circle-1"></div>
+                    <div class="circle-2"></div>
+                    
+                    <!-- Nodes (Đối tác Vận tải) -->
+                    <div class="node node-1"><i class="fa-solid fa-truck-fast"></i></div>
+                    <div class="node node-2"><i class="fa-solid fa-ship"></i></div>
+                    <div class="node node-3"><i class="fa-solid fa-route"></i></div>
+
+                    <!-- Lõi kính mờ bắt tay -->
+                    <div class="glass-shield">
+                        <i class="fa-regular fa-handshake"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Nút chức năng Fullscreen -->
+    <button class="fullscreen-btn" id="fsBtn" onclick="toggleFullScreen()">
+        <i class="fa-solid fa-expand"></i> <span>Xem toàn màn hình</span>
+    </button>
+
+    <!-- Kịch bản Javascript cho Scale và Fullscreen -->
+    <script>
+        // 1. Tự động thu phóng (Scale) Banner vừa vặn với kích thước màn hình
+        function adjustScale() {
+            const banner = document.getElementById('banner');
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            
+            // Tính toán tỷ lệ scale để banner 1200x630 luôn hiển thị đầy đủ
+            // Chia cho số lớn hơn một chút để tạo khoảng viền (padding) khi xem ở chế độ thường
+            const isFullscreen = document.fullscreenElement != null;
+            const targetWidth = isFullscreen ? windowWidth : windowWidth - 40;
+            const targetHeight = isFullscreen ? windowHeight : windowHeight - 40;
+
+            const scale = Math.min(targetWidth / 1200, targetHeight / 630, 1.5); 
+            banner.style.transform = `scale(${scale})`;
+        }
+
+        // Gọi hàm scale khi tải trang và khi kéo thả kích thước cửa sổ
+        window.addEventListener('resize', adjustScale);
+        window.addEventListener('DOMContentLoaded', adjustScale);
+
+        // 2. Chức năng bật / tắt Toàn màn hình (Fullscreen API)
+        const fsBtn = document.getElementById('fsBtn');
+        const fsIcon = fsBtn.querySelector('i');
+        const fsText = fsBtn.querySelector('span');
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                // Yêu cầu Fullscreen trên toàn bộ thẻ body
+                document.body.requestFullscreen().catch(err => {
+                    console.log(`Lỗi Fullscreen: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Lắng nghe sự kiện thay đổi trạng thái Fullscreen để đổi Text và Icon trên nút
+        document.addEventListener('fullscreenchange', () => {
+            if (document.fullscreenElement) {
+                fsIcon.className = 'fa-solid fa-compress';
+                fsText.textContent = 'Thu nhỏ lại';
+                // Đổi nền body thành đen khi fullscreen để tập trung vào banner
+                document.body.style.backgroundColor = "#0f172a"; 
+            } else {
+                fsIcon.className = 'fa-solid fa-expand';
+                fsText.textContent = 'Xem toàn màn hình';
+                document.body.style.backgroundColor = "#94a3b8";
+            }
+            
+            // Cập nhật lại scale sau khi chuyển chế độ
+            setTimeout(adjustScale, 100);
+        });
+    </script>
+
+</body>
+</html>

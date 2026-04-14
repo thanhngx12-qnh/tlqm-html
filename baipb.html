@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Phát Biểu Chủ Tịch HĐQT</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #fff; /* Nền trắng hoàn toàn */
+            font-family: 'Times New Roman', Times, serif; /* Font thống nhất toàn bài */
+            line-height: 1.5;
+            color: #000; /* Chữ đen hoàn toàn */
+        }
+
+        /* Nút in */
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 9999;
+        }
+        .print-btn:hover { background-color: #000; }
+
+        /* Khổ giấy A4 Portrait */
+        @page {
+            size: A4 portrait;
+            margin: 20mm 25mm; 
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            background: white;
+            margin: 20px auto;
+            padding: 20mm 25mm;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Header */
+        .header {
+            border-bottom: 2px solid #000; /* Viền đen */
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .company-name {
+            font-size: 11pt;
+            text-transform: uppercase;
+            color: #000;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            font-weight: normal;
+        }
+
+        .speech-title {
+            font-size: 18pt;
+            font-weight: 900;
+            color: #000;
+            text-transform: uppercase;
+            margin: 0;
+            line-height: 1.3;
+        }
+
+        /* Nội dung bài phát biểu */
+        .content {
+            font-size: 14pt; /* Tăng nhẹ cỡ chữ cho dễ đọc hơn với Times New Roman */
+            text-align: justify;
+        }
+
+        /* Các phần mục */
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-header {
+            font-size: 13pt;
+            font-weight: bold;
+            color: #000;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            text-decoration: underline;
+            padding-bottom: 3px;
+        }
+
+        /* Đoạn văn lời thoại */
+        .speech-text {
+            margin-bottom: 12px;
+        }
+
+        /* Các điểm nhấn quan trọng */
+        .highlight {
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .mission-box {
+            border-left: 4px solid #000;
+            padding-left: 15px;
+            margin: 15px 0;
+        }
+
+        .mission-role {
+            font-weight: bold;
+            text-decoration: underline;
+            color: #000;
+        }
+
+        /* Kết thúc */
+        .footer-wish {
+            margin-top: 40px;
+            text-align: center;
+            font-style: italic;
+            font-weight: bold;
+            font-size: 15pt;
+            color: #000;
+            border-top: 1px solid #000;
+            padding-top: 20px;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Đánh số trang */
+        .page-number {
+            position: absolute;
+            bottom: 10mm;
+            right: 10mm;
+            font-size: 10pt;
+            color: #000;
+        }
+
+        @media print {
+            body { background: none; }
+            .print-btn { display: none; }
+            .page { margin: 0; box-shadow: none; width: 100%; border: none; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="print-btn" onclick="window.print()">🖨️ IN BÀI PHÁT BIỂU</button>
+
+    <div class="page">
+        <!-- Header -->
+        <div class="header">
+            <div class="company-name">Công ty Cổ phần Tà Lùng Quang Minh</div>
+            <h1 class="speech-title">BÀI PHÁT BIỂU CỦA CHỦ TỊCH HĐQT<br>TIỆC TẤT NIÊN 2025</h1>
+        </div>
+
+        <div class="content">
+            
+            <!-- Phần 1 -->
+            <div class="section">
+                <div class="section-header">1. Mở đầu: Lời chào và Ghi nhận thực tế</div>
+                <div class="speech-text">
+                    "Kính thưa toàn thể anh chị em! Tà Lùng Quang Minh chính thức ra đời vào tháng 10 vừa qua – một khởi đầu đầy khẩn trương. Chỉ trong hơn 3 tháng, tôi đã thấy hình hài của một doanh nghiệp đang dần hoàn thiện, từ những viên gạch đầu tiên tại kho bãi đến bộ máy nhân sự đang dần lấp đầy.
+                </div>
+                <div class="speech-text">
+                    Trân trọng cảm ơn tất cả anh chị em đã đồng lòng cùng công ty trong những ngày đầu <span class="highlight">'xây nền đắp móng'</span> đầy vất vả này."
+                </div>
+            </div>
+
+            <!-- Phần 2 -->
+            <div class="section">
+                <div class="section-header">2. Nội dung chính: Giao nhiệm vụ chiến lược</div>
+                <div class="speech-text">
+                    "Năm 2025 là năm chuẩn bị, và 2026 sẽ là năm chúng ta chính thức vươn ra biển lớn. Để sẵn sàng khai thác dịch vụ, tôi chính thức giao nhiệm vụ cho Ban Giám đốc:
+                </div>
+                
+                <div class="mission-box">
+                    <div class="speech-text">
+                        <span class="mission-role">Với Tổng Giám đốc:</span> Tập trung hoàn thiện cơ sở vật chất và hạ tầng kỹ thuật. Phải đảm bảo hệ thống sẵn sàng vận hành với chất lượng cao nhất ngay từ ngày đầu khai thác.
+                    </div>
+                    <div class="speech-text" style="margin-bottom: 0;">
+                        <span class="mission-role">Với Phó Tổng Giám đốc:</span> Nhiệm vụ của chị là kiện toàn bộ máy nhân sự, chuẩn hóa quy trình kế toán và thẩm định mua sắm. Phải xây dựng một hậu phương chuyên nghiệp, minh bạch để làm điểm tựa vững chắc cho khối vận hành."
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phần 3 -->
+            <div class="section">
+                <div class="section-header">3. Kết thúc: Truyền cảm hứng</div>
+                <div class="speech-text">
+                    "Thách thức phía trước còn rất lớn, nhưng với một đội ngũ trẻ và đầy nhiệt huyết, tôi tin chúng ta sẽ bứt phá thành công.
+                </div>
+                <div class="speech-text">
+                    Trước thềm năm mới Bính Ngọ, kính chúc mọi gia đình <strong>Mạnh khỏe – Bình an</strong>.
+                </div>
+            </div>
+
+            <!-- Lời chúc nhấn mạnh -->
+            <div class="footer-wish">
+                "Chúc Tà Lùng Quang Minh năm 2026:<br>
+                Vận hành an toàn – Khai thác hiệu quả – Bứt phá thành công!<br>
+                Xin trân trọng cảm ơn!"
+            </div>
+        </div>
+
+        <!-- Page Number -->
+        <div class="page-number">Trang 1/1</div>
+    </div>
+
+</body>
+</html>
